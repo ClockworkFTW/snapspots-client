@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const baseURL = "https://www.flickr.com/services/rest";
-const api_key = "4a4bbd94cdc6df74dec0b09876b9b23e";
+const api_key = process.env.REACT_APP_FLICKR_API_KEY;
 const format = "format=json&nojsoncallback=1";
 
 export const getPhotos = async (text) => {

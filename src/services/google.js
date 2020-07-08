@@ -2,7 +2,7 @@ import axios from "axios";
 
 const cors = "https://cors-anywhere.herokuapp.com";
 const api = "https://maps.googleapis.com/maps/api";
-const key = "AIzaSyBl8x4xP326HXYA4_nngCwbnbbIlL8J4Xk";
+const key = process.env.REACT_APP_GOOGLE_API_KEY;
 
 export const autocomplete = async (input, setPredictions) => {
   const endpoint = "place/autocomplete/json";

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { autocomplete } from "../../services/google";
 import { compilePOI } from "../../util";
 
-const Search = ({ setPOI }) => {
+const Search = ({ setPOI, setGeoJSON }) => {
   const [search, setSearch] = useState("");
   const [predictions, setPredictions] = useState([]);
 
@@ -15,9 +15,9 @@ const Search = ({ setPOI }) => {
 
   const handleSelect = async (place_id) => {
     setPredictions([]);
-    const POI = await compilePOI(place_id);
-    console.log(POI);
+    const { POI, geoJSON } = await compilePOI(place_id);
     setPOI(POI);
+    setGeoJSON(geoJSON);
   };
 
   return (

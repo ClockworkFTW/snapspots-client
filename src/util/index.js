@@ -26,7 +26,9 @@ export const compilePOI = async (place_id) => {
     })
   );
 
-  return POI;
+  const geoJSON = compileGeoJSON(POI);
+
+  return { POI, geoJSON };
 };
 
 const filterTag = (tag) => {
@@ -81,3 +83,16 @@ const filterTag = (tag) => {
 
   return match;
 };
+
+const compileGeoJSON = (POI) =>
+  POI.map((place) => ({
+    type: "Feature",
+    geometry: {
+      type: "Point",
+      coordinates: [place.geometry.location.lng, place.geometry.location.lat],
+    },
+    properties: {
+      id: place.id,
+      name: place.name,
+    },
+  }));
