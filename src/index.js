@@ -6,6 +6,12 @@ import "reset-css";
 import App from "./App";
 
 const GlobalStyle = createGlobalStyle`
+  html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
   body {
     font-family: 'Noto Sans JP', sans-serif;
   }

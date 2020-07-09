@@ -3,38 +3,59 @@ import ReactDOM from "react-dom";
 import mapboxgl from "mapbox-gl";
 import styled from "styled-components";
 
+import Popup from "./Popup";
+
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const Map = ({ geoJSON }) => {
   const mapContainerRef = useRef(null);
+  const popUpRef = useRef(new mapboxgl.Popup({ offset: 15 }));
 
-  // initialize map when component mounts
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      // See style options here: https://docs.mapbox.com/api/maps/#styles
-      style: "mapbox://styles/mapbox/streets-v11",
+      style: "mapbox://styles/mapbox/outdoors-v11",
       center: [-122.4194, 37.7749],
       zoom: 10,
     });
 
-    geoJSON.forEach((point) => {
-      const { id, geometry } = point;
-      // create marker node
-      const markerNode = document.createElement("div");
-      ReactDOM.render(<Marker id={id} />, markerNode);
-      // add marker to map
-      new mapboxgl.Marker(markerNode)
-        .setLngLat(geometry.coordinates)
-        .addTo(map);
+    map.on("load", () => {
+      map.addSource("random-points-data", {
+        type: "geojson",
+        data: {
+          type: "FeatureCollection",
+          features: geoJSON,
+        },
+      });
+
+      map.addLayer({
+        id: "random-points-layer",
+        source: "random-points-data",
+        type: "symbol",
+        layout: {
+          "icon-image": "marker-15",
+          "icon-padding": 0,
+          "icon-allow-overlap": true,
+        },
+      });
     });
 
-    // add navigation control (the +/- zoom buttons)
+    map.on("click", "random-points-layer", (e) => {
+      if (e.features.length) {
+        const feature = e.features[0];
+        const popupNode = document.createElement("div");
+        ReactDOM.render(<Popup feature={feature} />, popupNode);
+        popUpRef.current
+          .setLngLat(feature.geometry.coordinates)
+          .setDOMContent(popupNode)
+          .addTo(map);
+      }
+    });
+
     map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
 
-    // clean up on unmount
     return () => map.remove();
-  }, [geoJSON]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [geoJSON]);
 
   return (
     <Wrapper>
@@ -56,14 +77,6 @@ const Container = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-`;
-
-const Marker = styled.div`
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: red;
-  cursor: pointer;
 `;
 
 export default Map;

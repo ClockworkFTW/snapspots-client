@@ -8,7 +8,8 @@ export const compilePOI = async (place_id) => {
 
   POI = await Promise.all(
     POI.map(async (place) => {
-      let photos = await getPhotos(place.name);
+      // let photos = await getPhotos(place.name);
+      let photos = await getPhotos(place.name, place.geometry.location);
 
       photos = await Promise.all(
         photos.map(async (photo) => {
