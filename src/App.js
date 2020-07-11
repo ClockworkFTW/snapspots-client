@@ -5,14 +5,13 @@ import Map from "./components/Map";
 import Places from "./components/Places";
 
 const App = () => {
-  const [POI, setPOI] = useState([]);
-  const [geoJSON, setGeoJSON] = useState([]);
+  const [spots, setSpots] = useState(null);
 
   return (
     <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "40px" }}>
-      <Search setPOI={setPOI} setGeoJSON={setGeoJSON} />
-      <Map geoJSON={geoJSON} />
-      <Places POI={POI} />
+      <Search setSpots={setSpots} />
+      <Map spots={spots} />
+      <Places spots={spots} />
     </div>
   );
 };

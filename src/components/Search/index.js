@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import { autocomplete } from "../../services/google";
-import { compilePOI } from "../../util";
+import { getSpots } from "../../services/spots";
 
-const Search = ({ setPOI, setGeoJSON }) => {
+const Search = ({ setSpots }) => {
   const [search, setSearch] = useState("");
   const [predictions, setPredictions] = useState([]);
 
@@ -15,11 +15,13 @@ const Search = ({ setPOI, setGeoJSON }) => {
   };
 
   const handleSelect = async ({ place_id, description }) => {
+    // reset search bar
     setSearch(description);
     setPredictions([]);
-    const { POI, geoJSON } = await compilePOI(place_id);
-    setPOI(POI);
-    setGeoJSON(geoJSON);
+
+    // fetch spots and set state
+    const spots = await getSpots(place_id);
+    setSpots(spots);
   };
 
   return (

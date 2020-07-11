@@ -7,7 +7,7 @@ import Popup from "./Popup";
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
-const Map = ({ geoJSON }) => {
+const Map = ({ spots }) => {
   const mapContainerRef = useRef(null);
   const popUpRef = useRef(new mapboxgl.Popup({ offset: 15 }));
 
@@ -15,7 +15,7 @@ const Map = ({ geoJSON }) => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/outdoors-v11",
-      center: [-122.4194, 37.7749],
+      center: spots ? spots.coords : [-122.4194, 37.7749],
       zoom: 10,
     });
 
@@ -24,7 +24,7 @@ const Map = ({ geoJSON }) => {
         type: "geojson",
         data: {
           type: "FeatureCollection",
-          features: geoJSON,
+          features: spots ? spots.geoJSON : [],
         },
       });
 
@@ -55,7 +55,7 @@ const Map = ({ geoJSON }) => {
     map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
 
     return () => map.remove();
-  }, [geoJSON]);
+  }, [spots]);
 
   return (
     <Wrapper>
