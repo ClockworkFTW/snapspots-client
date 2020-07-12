@@ -1,19 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Search from "./components/Search";
-import Map from "./components/Map";
-import Places from "./components/Places";
+import Header from "./components/Header";
+import Home from "./routes/Home";
+import SignUp from "./routes/SignUp";
+import SignIn from "./routes/SignIn";
+import Landing from "./routes/Landing";
 
-const App = () => {
-  const [spots, setSpots] = useState(null);
-
-  return (
-    <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "40px" }}>
-      <Search setSpots={setSpots} />
-      <Map spots={spots} />
-      <Places spots={spots} />
-    </div>
-  );
-};
+const App = () => (
+  <Router>
+    <Header />
+    <Switch>
+      <Route path="/" exact>
+        <Landing />
+      </Route>
+      <Route path="/sign-up">
+        <SignUp />
+      </Route>
+      <Route path="/sign-in">
+        <SignIn />
+      </Route>
+      <Route path="/home">
+        <Home />
+      </Route>
+    </Switch>
+  </Router>
+);
 
 export default App;
