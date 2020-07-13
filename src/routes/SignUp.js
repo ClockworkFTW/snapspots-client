@@ -8,14 +8,15 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async () => {
-    const user = await createUser({ username, password, email });
-    console.log(user);
+    const { token, error } = await createUser({ username, password, email });
+    error ? setError(error) : console.log(token);
   };
-
   return (
     <Container>
+      {error && <Error>{error}</Error>}
       <Input
         type="text"
         placeholder="username"
@@ -43,6 +44,10 @@ const SignUp = () => {
 const Container = styled.div`
   max-width: 1400px;
   margin: 0 auto;
+`;
+
+const Error = styled.h1`
+  color: red;
 `;
 
 const Input = styled.input``;

@@ -7,14 +7,16 @@ import { getUser } from "../services/users";
 const SignIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async () => {
-    const user = await getUser({ username, password });
-    console.log(user);
+    const { token, error } = await getUser({ username, password });
+    error ? setError(error) : console.log(token);
   };
 
   return (
     <Container>
+      {error && <Error>{error}</Error>}
       <Input
         type="text"
         placeholder="username"
@@ -36,6 +38,10 @@ const SignIn = () => {
 const Container = styled.div`
   max-width: 1400px;
   margin: 0 auto;
+`;
+
+const Error = styled.h1`
+  color: red;
 `;
 
 const Input = styled.input``;

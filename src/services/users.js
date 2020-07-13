@@ -7,7 +7,7 @@ export const getUser = async (credentials) => {
     const response = await axios.post(`${baseUrl}/sign-in`, credentials);
     return response.data;
   } catch (error) {
-    console.log(error);
+    return error.response.data;
   }
 };
 
@@ -16,6 +16,6 @@ export const createUser = async (credentials) => {
     const response = await axios.post(`${baseUrl}/sign-up`, credentials);
     return response.data;
   } catch (error) {
-    console.log(error);
+    return error.response.data;
   }
 };

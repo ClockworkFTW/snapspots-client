@@ -1,28 +1,37 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route as PublicRoute,
+} from "react-router-dom";
 
+import PrivateRoute from "./routes/PrivateRoute";
 import Header from "./components/Header";
 import Home from "./routes/Home";
 import SignUp from "./routes/SignUp";
 import SignIn from "./routes/SignIn";
 import Landing from "./routes/Landing";
+import CreateSpot from "./routes/CreateSpot";
 
 const App = () => (
   <Router>
     <Header />
     <Switch>
-      <Route path="/" exact>
+      <PublicRoute path="/" exact>
         <Landing />
-      </Route>
-      <Route path="/sign-up">
+      </PublicRoute>
+      <PublicRoute path="/sign-up">
         <SignUp />
-      </Route>
-      <Route path="/sign-in">
+      </PublicRoute>
+      <PublicRoute path="/sign-in">
         <SignIn />
-      </Route>
-      <Route path="/home">
+      </PublicRoute>
+      <PublicRoute path="/home">
         <Home />
-      </Route>
+      </PublicRoute>
+      <PrivateRoute path="/create-spot">
+        <CreateSpot />
+      </PrivateRoute>
     </Switch>
   </Router>
 );
