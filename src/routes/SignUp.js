@@ -1,19 +1,22 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { createUser } from "../services/users";
+import { userSignUp } from "../reducers/user";
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
 
-  const handleSubmit = async () => {
-    const { token, error } = await createUser({ username, password, email });
-    error ? setError(error) : console.log(token);
-  };
+  const error = useSelector((state) => state.user.error);
+
+  const handleSubmit = () =>
+    dispatch(userSignUp({ username, password, email }));
+
   return (
     <Container>
       {error && <Error>{error}</Error>}
