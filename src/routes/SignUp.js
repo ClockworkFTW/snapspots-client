@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { userSignUp } from "../reducers/user";
@@ -9,48 +9,83 @@ const SignUp = () => {
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [passwordOne, setPasswordOne] = useState("");
+  const [passwordTwo, setPasswordTwo] = useState("");
   const [email, setEmail] = useState("");
 
-  const error = useSelector((state) => state.user.error);
+  const disabled = !username || !passwordOne || !passwordTwo || !email;
 
-  const handleSubmit = () =>
-    dispatch(userSignUp({ username, password, email }));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(userSignUp({ username, passwordOne, passwordTwo, email }));
+  };
 
-  return (
-    <Container>
-      {error && <Error>{error}</Error>}
-      <Input
-        type="text"
-        placeholder="username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <Input
-        type="password"
-        placeholder="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <Input
-        type="email"
-        placeholder="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <Button onClick={handleSubmit}>Sign Up</Button>
-      <Link to="/sign-in">Sign In</Link>
-    </Container>
+  const { data, error } = useSelector((state) => state.user);
+
+  return data ? (
+    <Redirect to="/home" />
+  ) : (
+    <Wrapper>
+      <Container>
+        {error && <Error>{error}</Error>}
+        <Form>
+          <Input
+            type="text"
+            placeholder="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="password"
+            value={passwordOne}
+            onChange={(e) => setPasswordOne(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="confirm password"
+            value={passwordTwo}
+            onChange={(e) => setPasswordTwo(e.target.value)}
+          />
+          <Input
+            type="email"
+            placeholder="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Button disabled={disabled} onClick={handleSubmit}>
+            Sign Up
+          </Button>
+        </Form>
+        <p>
+          Already have an account? Sign in <Link to="/sign-in">here</Link>
+        </p>
+      </Container>
+    </Wrapper>
   );
 };
 
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+`;
+
 const Container = styled.div`
-  max-width: 1400px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Error = styled.h1`
   color: red;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
 `;
 
 const Input = styled.input``;

@@ -73,9 +73,9 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case USER_API_PENDING:
       return { ...state, pending: true };
     case USER_API_SUCCESS:
-      return { ...state, pending: false, data: action.data };
+      return { ...state, pending: false, data: action.data, error: null };
     case USER_API_FAILURE:
-      return { ...state, pending: false, error: action.error };
+      return { ...state, pending: false, data: null, error: action.error };
     default:
       return state;
   }

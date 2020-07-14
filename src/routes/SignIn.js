@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { userSignIn } from "../reducers/user";
@@ -11,38 +11,64 @@ const SignIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = () => dispatch(userSignIn({ username, password }));
+  const disabled = !username || !password;
 
-  const error = useSelector((state) => state.user.error);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(userSignIn({ username, password }));
+  };
 
-  return (
-    <Container>
-      {error && <Error>{error}</Error>}
-      <Input
-        type="text"
-        placeholder="username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <Input
-        type="password"
-        placeholder="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <Button onClick={handleSubmit}>Sign In</Button>
-      <Link to="/sign-up">Sign Up</Link>
-    </Container>
+  const { data, error } = useSelector((state) => state.user);
+
+  return data ? (
+    <Redirect to="/home" />
+  ) : (
+    <Wrapper>
+      <Container>
+        {error && <Error>{error}</Error>}
+        <Form>
+          <Input
+            type="text"
+            placeholder="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button disabled={disabled} onClick={handleSubmit}>
+            Sign In
+          </Button>
+        </Form>
+        <p>
+          Don't have an account yet? Sign up <Link to="/sign-up">here</Link>
+        </p>
+      </Container>
+    </Wrapper>
   );
 };
 
-const Container = styled.div`
-  max-width: 1400px;
-  margin: 0 auto;
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
 `;
+
+const Container = styled.div``;
 
 const Error = styled.h1`
   color: red;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
 `;
 
 const Input = styled.input``;
