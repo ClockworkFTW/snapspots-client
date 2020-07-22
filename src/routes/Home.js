@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <Container>
       <Search setSpots={setSpots} />
-      <Map spots={spots} />
+      <Map spots={spots} width="100%" height="600px" zoom="1.5" />
       <Places spots={spots} />
     </Container>
   );

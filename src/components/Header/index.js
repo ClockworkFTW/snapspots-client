@@ -33,15 +33,16 @@ const Header = () => {
 };
 
 const Wrapper = styled.div`
-  max-width: 1400px;
-  margin: 0 auto;
+  margin-bottom: 40px;
+  background: #2c5282;
 `;
 
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
   padding: 20px 0;
 `;
 
@@ -49,7 +50,7 @@ const Logo = styled(L)`
   text-decoration: none;
   font-size: 22px;
   font-weight: 700;
-  color: black;
+  color: white;
 `;
 
 const Links = styled.div``;
@@ -57,7 +58,7 @@ const Links = styled.div``;
 const Link = styled(L)`
   margin-left: 10px;
   text-decoration: none;
-  color: black;
+  color: white;
 `;
 
 const Button = styled.button``;

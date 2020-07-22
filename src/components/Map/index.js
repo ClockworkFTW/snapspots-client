@@ -7,7 +7,7 @@ import Popup from "./Popup";
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
-const Map = ({ spots }) => {
+const Map = ({ spots, width, height, zoom }) => {
   const mapContainerRef = useRef(null);
   const popUpRef = useRef(new mapboxgl.Popup({ offset: 15 }));
 
@@ -15,8 +15,8 @@ const Map = ({ spots }) => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/outdoors-v11",
-      center: spots ? spots.coords : [-122.4194, 37.7749],
-      zoom: 10,
+      center: spots ? spots.coords : [-10, 30],
+      zoom: spots ? 10 : zoom,
     });
 
     map.on("load", () => {
@@ -58,7 +58,7 @@ const Map = ({ spots }) => {
   }, [spots]);
 
   return (
-    <Wrapper>
+    <Wrapper width={width} height={height}>
       <Container className="map-container" ref={mapContainerRef} />
     </Wrapper>
   );
@@ -66,9 +66,8 @@ const Map = ({ spots }) => {
 
 const Wrapper = styled.div`
   position: relative;
-  width: 100%;
-  height: 600px;
-  margin: 40px 0;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
 `;
 
 const Container = styled.div`

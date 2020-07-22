@@ -73,14 +73,4 @@ const Input = styled.input`
 
 const Button = styled.button``;
 
-const Preview = styled.div``;
-
-const Image = styled.img`
-  width: 200px;
-  height: auto;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
 export default PhotoPicker;

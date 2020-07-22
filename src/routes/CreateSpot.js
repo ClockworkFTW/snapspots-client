@@ -1,66 +1,14 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
+import { createSpotAction } from "../reducers/spots";
+
+import { typeOptions, equipmentOptions, timeOptions } from "../config";
+
+import Map from "../components/Map";
 import Dropdown from "../components/Dropdown";
 import PhotoPicker from "../components/PhotoPicker";
-
-const typeOptions = [
-  "Sunset/Sunrise",
-  "Landscape",
-  "Nature",
-  "Water/Coastal",
-  "Wildlife/Animals",
-  "People/Portraits",
-  "Architecture",
-  "City/Urban",
-  "Astrophotography",
-  "Panoramic",
-  "Transport (Cars,Trains)",
-  "Weddings",
-  "Abandoned",
-];
-
-const equipmentOptions = [
-  "Tripod",
-  "Shutter Release Cable",
-  "Filters",
-  "Cleaning Equipment",
-  "Rain Cover",
-  "Flash/speedlight",
-  "Flash Radio Triggers",
-  "Light Modifiers",
-  "Wide Angle Lens",
-  "Telephoto Lens",
-  "Prime Lens",
-  "Macro Lens",
-  "An Assistant",
-];
-
-const timeOptions = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-const examplePhotos = [
-  "https://images.unsplash.com/photo-1594643550894-a64bbe3f5dfc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2550&q=80",
-  "https://images.unsplash.com/photo-1594663216948-e8bbbd26d733?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2516&q=80",
-  "https://images.unsplash.com/photo-1594682138028-6b95651d8c2a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80",
-  "https://images.unsplash.com/photo-1594672011116-298182da5f63?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80",
-  "https://images.unsplash.com/photo-1594401477753-d92b74a95340?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2551&q=80",
-  "https://images.unsplash.com/photo-1594671551002-83d49b4c70ed?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80",
-  "https://images.unsplash.com/photo-1594502645146-919ab24010e8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3582&q=80",
-  "https://images.unsplash.com/photo-1594653804668-2d0d80888fe7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2551&q=80",
-];
 
 const dropdownStyle = {
   display: "inline-block",
@@ -70,6 +18,7 @@ const dropdownStyle = {
 };
 
 const CreateSpot = () => {
+  const [coords, setCoords] = useState(null);
   const [name, setName] = useState("");
   const [keywords, setKeywords] = useState("");
   const [type, setType] = useState([]);
@@ -78,9 +27,21 @@ const CreateSpot = () => {
   const [description, setDescription] = useState("");
   const [photos, setPhotos] = useState([]);
 
+  const dispatch = useDispatch();
+
   const handleSubmit = () => {
-    const spot = { name, keywords, type, equipment, time, description, photos };
-    console.log(spot);
+    const spot = {
+      coords,
+      name,
+      keywords,
+      type,
+      equipment,
+      time,
+      description,
+      photos,
+    };
+
+    dispatch(createSpotAction(spot));
   };
 
   return (
@@ -88,7 +49,7 @@ const CreateSpot = () => {
       <Column>
         <Group>
           <Header>Map</Header>
-          <Map />
+          <Map coords={coords} width="500px" height="500px" zoom="0" />
         </Group>
       </Column>
       <Column style={{ flex: 1, marginLeft: "20px" }}>
@@ -175,12 +136,6 @@ const Row = styled.div`
   display: flex;
   width: 100%;
   margin-bottom: 40px;
-`;
-
-const Map = styled.div`
-  width: 500px;
-  height: 500px;
-  background: #e2e8f0;
 `;
 
 const Group = styled.div`

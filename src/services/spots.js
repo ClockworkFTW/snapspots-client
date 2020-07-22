@@ -10,3 +10,12 @@ export const getSpots = async (place_id) => {
     console.log(error);
   }
 };
+
+export const createSpot = async (spot) => {
+  try {
+    const response = await axios.post(baseUrl, spot);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
