@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import { createSpotAction } from "../reducers/spots";
@@ -18,38 +19,31 @@ const dropdownStyle = {
 };
 
 const CreateSpot = () => {
-  const [coords, setCoords] = useState(null);
-  const [name, setName] = useState("");
-  const [keywords, setKeywords] = useState("");
-  const [type, setType] = useState([]);
-  const [equipment, setEquipment] = useState([]);
-  const [time, setTime] = useState([]);
-  const [description, setDescription] = useState("");
-  const [photos, setPhotos] = useState([]);
-
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  const handleSubmit = () => {
-    const spot = {
-      coords,
-      name,
-      keywords,
-      type,
-      equipment,
-      time,
-      description,
-      photos,
-    };
+  const { user_id } = useSelector((state) => state.user.data);
+  const { error } = useSelector((state) => state.spots);
 
-    dispatch(createSpotAction(spot));
-  };
+  const [spot, setSpot] = useState({
+    name: "",
+    description: "",
+    keywords: "",
+    coords: null,
+    type: [],
+    equipment: [],
+    time: [],
+    photos: [],
+    user: user_id,
+  });
 
   return (
     <Container>
+      {error && <h1>something went wrong</h1>}
       <Column>
         <Group>
           <Header>Map</Header>
-          <Map coords={coords} width="500px" height="500px" zoom="0" />
+          <Map coords={spot.coords} width="500px" height="500px" zoom="0" />
         </Group>
       </Column>
       <Column style={{ flex: 1, marginLeft: "20px" }}>
@@ -59,8 +53,8 @@ const CreateSpot = () => {
             <Input
               type="text"
               placeholder="E.g. 'Golden Gate Bridge'"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={spot.name}
+              onChange={(e) => setSpot({ ...spot, name: e.target.value })}
             />
           </Group>
           <Group>
@@ -68,8 +62,8 @@ const CreateSpot = () => {
             <Input
               type="text"
               placeholder="E.g. landscape, coastal, rocks, sea"
-              value={keywords}
-              onChange={(e) => setKeywords(e.target.value)}
+              value={spot.keywords}
+              onChange={(e) => setSpot({ ...spot, keywords: e.target.value })}
             />
           </Group>
         </Row>
@@ -79,22 +73,22 @@ const CreateSpot = () => {
             <Dropdown
               name="Spot Type"
               options={typeOptions}
-              value={type}
-              setValue={setType}
+              value={spot.type}
+              setValue={(value) => setSpot({ ...spot, type: value })}
               style={dropdownStyle}
             />
             <Dropdown
               name="Recommended Equipment"
               options={equipmentOptions}
-              value={equipment}
-              setValue={setEquipment}
+              value={spot.equipment}
+              setValue={(value) => setSpot({ ...spot, equipment: value })}
               style={dropdownStyle}
             />
             <Dropdown
               name="Best time to visit"
               options={timeOptions}
-              value={time}
-              setValue={setTime}
+              value={spot.time}
+              setValue={(value) => setSpot({ ...spot, time: value })}
               style={dropdownStyle}
             />
           </Group>
@@ -105,19 +99,26 @@ const CreateSpot = () => {
             <Textarea
               type="text"
               placeholder="Enter more information about this spot, anything you like."
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={spot.description}
+              onChange={(e) =>
+                setSpot({ ...spot, description: e.target.value })
+              }
             />
           </Group>
         </Row>
         <Row>
           <Group>
             <Header>Photos</Header>
-            <PhotoPicker photos={photos} setPhotos={setPhotos} />
+            <PhotoPicker
+              photos={spot.photos}
+              setPhotos={(value) => setSpot({ ...spot, photos: value })}
+            />
           </Group>
         </Row>
         <Row>
-          <Button onClick={handleSubmit}>Create Spot</Button>
+          <Button onClick={() => dispatch(createSpotAction(spot, history))}>
+            Create Spot
+          </Button>
         </Row>
       </Column>
     </Container>

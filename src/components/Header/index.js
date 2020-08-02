@@ -18,7 +18,7 @@ const Header = () => {
         <Logo to="/">SnapSpots</Logo>
         <Links>
           <Link to="/home">home</Link>
-          <Link to="/create-spot">create</Link>
+          <Link to="/spot/create">create</Link>
           {user ? (
             <Button onClick={handleSignOut}>sign out</Button>
           ) : (

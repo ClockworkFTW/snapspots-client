@@ -7,16 +7,26 @@ import {
 } from "react-router-dom";
 import styled from "styled-components";
 
+// Actions
 import { userInit } from "./reducers/user";
 
+// Routes
 import PrivateRoute from "./routes/PrivateRoute";
-import Header from "./components/Header";
 import Home from "./routes/Home";
 import SignUp from "./routes/SignUp";
 import SignIn from "./routes/SignIn";
 import Landing from "./routes/Landing";
 import CreateSpot from "./routes/CreateSpot";
+import SpotPage from "./routes/SpotPage";
+
+// Components
+import Header from "./components/Header";
 import Footer from "./components/Footer";
+
+// Font Awesome
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { far } from "@fortawesome/pro-regular-svg-icons";
+library.add(far);
 
 const App = () => {
   const dispatch = useDispatch();
@@ -42,9 +52,12 @@ const App = () => {
           <PublicRoute path="/home">
             <Home />
           </PublicRoute>
-          <PrivateRoute path="/create-spot">
+          <PrivateRoute path="/spot/create" exact>
             <CreateSpot />
           </PrivateRoute>
+          <PublicRoute path="/spot/:id">
+            <SpotPage />
+          </PublicRoute>
         </Switch>
       </Main>
       <Footer />
