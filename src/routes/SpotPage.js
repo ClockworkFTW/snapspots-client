@@ -5,8 +5,8 @@ import styled from "styled-components";
 
 import { getSpotAction } from "../reducers/spots";
 
-import Votes from "../components/Votes";
 import Gallery from "../components/Places/Gallery";
+import { ReviewList, ReviewForm, ReviewRating } from "../components/Review";
 
 const SpotPage = () => {
   const dispatch = useDispatch();
@@ -22,8 +22,8 @@ const SpotPage = () => {
   return spot ? (
     <Container>
       <Info>
-        <Votes spot_id={spot.spot_id} votes={spot.votes} />
         <Group>
+          <ReviewRating rating="3" />
           <Name>{spot.name}</Name>
           {spot.description && <Description>{spot.description}</Description>}
           {spot.type.map((type) => (
@@ -32,6 +32,8 @@ const SpotPage = () => {
         </Group>
       </Info>
       <Gallery photos={spot.photos} name={spot.name} />
+      <ReviewForm spot_id={spot.spot_id} name={spot.name} />
+      <ReviewList reviews={spot.reviews} />
     </Container>
   ) : null;
 };

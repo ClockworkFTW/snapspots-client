@@ -1,4 +1,4 @@
-import { getSpot, createSpot, voteSpot } from "../services/spots";
+import { getSpot, createSpot, reviewSpot } from "../services/spots";
 
 const SPOTS_API_PENDING = "SPOTS_API_PENDING";
 const SPOTS_API_SUCCESS = "SPOTS_API_SUCCESS";
@@ -39,10 +39,10 @@ export const createSpotAction = (spot, history) => async (dispatch) => {
   }
 };
 
-export const voteSpotAction = (vote) => async (dispatch) => {
+export const reviewSpotAction = (review) => async (dispatch) => {
   dispatch(spotsApiPending());
   try {
-    const updatedSpot = await voteSpot(vote);
+    const updatedSpot = await reviewSpot(review);
     dispatch(spotsApiSuccess(updatedSpot));
   } catch (error) {
     dispatch(spotsApiFailure(error));

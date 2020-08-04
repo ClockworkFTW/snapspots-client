@@ -22,19 +22,18 @@ const CreateSpot = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { user_id } = useSelector((state) => state.user.data);
+  const { account_id } = useSelector((state) => state.user.data);
   const { error } = useSelector((state) => state.spots);
 
   const [spot, setSpot] = useState({
+    account_id,
     name: "",
     description: "",
-    keywords: "",
-    coords: null,
+    keywords: [],
     type: [],
     equipment: [],
     time: [],
     photos: [],
-    user: user_id,
   });
 
   return (
@@ -43,7 +42,7 @@ const CreateSpot = () => {
       <Column>
         <Group>
           <Header>Map</Header>
-          <Map coords={spot.coords} width="500px" height="500px" zoom="0" />
+          <Map width="500px" height="500px" zoom="0" />
         </Group>
       </Column>
       <Column style={{ flex: 1, marginLeft: "20px" }}>

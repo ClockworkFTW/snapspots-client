@@ -29,9 +29,9 @@ export const createSpot = async (spot) => {
   }
 };
 
-export const voteSpot = async (vote) => {
+export const reviewSpot = async (review) => {
   try {
-    const response = await axios.post(`${baseUrl}/vote`, vote);
+    const response = await axios.post(`${baseUrl}/review`, review);
     return response.data;
   } catch (error) {
     console.log(error);
