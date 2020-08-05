@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: inherit;
   }
   body {
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: proxima-nova, sans-serif;
   }
 `;
 

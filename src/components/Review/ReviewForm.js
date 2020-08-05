@@ -25,20 +25,26 @@ const ReviewForm = ({ spot_id, name }) => {
     }
   };
 
+  const handleCancel = () => {
+    setRating(0);
+    setComment("");
+    toggle();
+  };
+
   return (
     <Container>
       {!showForm && <Button onClick={toggle}>Write Review</Button>}
       {showForm && (
         <Form>
           <Header>How was {name}?</Header>
-          <ReviewRating rating={rating} setRating={setRating} />
+          <ReviewRating rating={rating} setRating={setRating} size="30" />
           <TextArea
             placeholder="Share your thoughts on this spot so others know what to expect."
             value={comment}
             onChange={(e) => setComment(e.target.value)}
           />
           <Button onClick={handleSubmit}>submit</Button>
-          <Button onClick={toggle}>cancel</Button>
+          <Button onClick={handleCancel}>cancel</Button>
         </Form>
       )}
     </Container>

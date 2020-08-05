@@ -13,7 +13,7 @@ const ReviewList = ({ reviews }) =>
         <Metadata>
           <Name to={`/user/${account_id}`}>{username}</Name>
           <Group>
-            <ReviewRating rating={rating} />
+            <ReviewRating rating={rating} size="24" />
             <Time>{moment(time).format("MMMM Do, YYYY")}</Time>
           </Group>
         </Metadata>
