@@ -68,6 +68,8 @@ const Wrapper = styled.div`
   position: relative;
   width: ${(props) => props.width};
   height: ${(props) => props.height};
+  border-radius: 8px;
+  overflow: hidden;
 `;
 
 const Container = styled.div`

@@ -34,6 +34,7 @@ const CreateSpot = () => {
     equipment: [],
     time: [],
     photos: [],
+    coords: ["37.865101", "-119.538330"],
   });
 
   return (

@@ -65,7 +65,7 @@ const Icon = styled(FontAwesomeIcon)`
 const Count = styled.span`
   margin-left: 10px;
   font-size: ${(props) => `${props.size * 0.7}px`};
-  color: #ffffff;
+  color: #cbd5e0;
 `;
 
 export default ReviewRating;

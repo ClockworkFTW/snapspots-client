@@ -27,7 +27,8 @@ import Footer from "./components/Footer";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/pro-solid-svg-icons";
 import { far } from "@fortawesome/pro-regular-svg-icons";
-library.add(fas, far);
+import { fal } from "@fortawesome/pro-light-svg-icons";
+library.add(fas, far, fal);
 
 const App = () => {
   const dispatch = useDispatch();

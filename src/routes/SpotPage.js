@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { getSpotAction } from "../reducers/spots";
 
 import Slider from "../components/Slider";
+import ActionBar from "../components/ActionBar";
+import Forecast from "../components/Forecast";
 import { ReviewList, ReviewForm, ReviewRating } from "../components/Review";
 
 const SpotPage = () => {
@@ -21,18 +23,20 @@ const SpotPage = () => {
 
   return spot ? (
     <Container>
-      <Slider photos={spot.photos} height="400px">
+      <Slider photos={spot.photos} height="360px">
         <Metadata>
           <Name>{spot.name}</Name>
           <ReviewRating reviews={spot.reviews} size="20" />
-          <Types>
-            {spot.type.map((type) => (
-              <Type key={type}>{type}</Type>
-            ))}
-          </Types>
         </Metadata>
       </Slider>
-      {spot.description && <Description>{spot.description}</Description>}
+      <ActionBar spot={spot} />
+      <Description>{spot.description}</Description>
+      <Types>
+        {spot.type.map((type) => (
+          <Type key={type}>{type}</Type>
+        ))}
+      </Types>
+      <Forecast forecast={spot.forecast} />
       <ReviewForm spot_id={spot.spot_id} name={spot.name} />
       <ReviewList reviews={spot.reviews} />
     </Container>
@@ -67,11 +71,10 @@ const Type = styled.li`
   display: inline-block;
   margin-right: 10px;
   padding: 8px 12px;
-  border-radius: 4px;
-  background: #f6ad55;
-  color: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #ec8936;
+  color: #ec8936;
   font-size: 12px;
-  font-weight: 700;
 `;
 
 export default SpotPage;
