@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 
 const Slider = ({ photos, children, width, height }) => {
@@ -22,8 +23,12 @@ const Slider = ({ photos, children, width, height }) => {
         <Content>{children}</Content>
       ) : (
         <Controls>
-          <Button onClick={prev}>p</Button>
-          <Button onClick={next}>n</Button>
+          <Button onClick={prev}>
+            <FontAwesomeIcon icon={["far", "chevron-left"]} />
+          </Button>
+          <Button onClick={next}>
+            <FontAwesomeIcon icon={["far", "chevron-right"]} />
+          </Button>
         </Controls>
       )}
       <Background photo={photos[photoIndex]} overlay={children} />

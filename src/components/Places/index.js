@@ -1,4 +1,5 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 
 import Slider from "../Slider";
@@ -17,13 +18,16 @@ const Places = ({ spots }) =>
               #{i + 1} - {properties.name}
             </Title>
             <Vicinity>{properties.vicinity}</Vicinity>
-            <ReviewRating reviews={properties.reviews} size="20" />
+            <Group>
+              <Status>Undiscovered</Status>
+              <ReviewRating reviews={properties.reviews} size="20" />
+            </Group>
             <Description>{properties.description}</Description>
           </Content>
-          <Buttons>
-            <Button>like</Button>
-            <Button>show more</Button>
-          </Buttons>
+
+          <Favorite>
+            <FontAwesomeIcon icon={["fal", "heart"]} />
+          </Favorite>
         </Container>
       ))}
     </Wrapper>
@@ -60,6 +64,20 @@ const Title = styled.h1`
   color: #2d3748;
 `;
 
+const Group = styled.div`
+  display: flex;
+`;
+
+const Status = styled.div`
+  display: inline-block;
+  margin-right: 10px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #ffffff;
+  background: #63b3ed;
+`;
+
 const Vicinity = styled.h3`
   margin: 8px 0;
   font-size: 14px;
@@ -72,16 +90,15 @@ const Description = styled.p`
   color: #718096;
 `;
 
-const Buttons = styled.div`
+const Favorite = styled.button`
   position: absolute;
   top: 20px;
   right: 20px;
-  bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  background: none;
+  border: none;
+  outline: none;
+  color: #4a5568;
+  font-size: 20px;
 `;
-
-const Button = styled.button``;
 
 export default Places;
