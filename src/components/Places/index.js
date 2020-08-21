@@ -1,104 +1,43 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styled from "styled-components";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import Slider from "../Slider";
-import { ReviewRating } from "../Review";
+import { createSpotAction } from "../../reducers/spots";
 
-const Places = ({ spots }) =>
-  spots ? (
-    <Wrapper>
+import Place from "./Place";
+
+const Places = ({ spots }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleSelect = (i) => {
+    const spot = spots.geoJSON[i];
+
+    if (spot.id) {
+      history.push(`/spot/${spot.id}`);
+    } else {
+      const newSpot = {
+        custom: false,
+        ...spot.properties,
+        coordinates: spot.geometry.coordinates,
+      };
+
+      dispatch(createSpotAction(newSpot, history));
+    }
+  };
+
+  return spots ? (
+    <div>
       {spots.geoJSON.map(({ properties }, i) => (
-        <Container key={properties.id}>
-          <Photos>
-            <Slider photos={properties.photos} />
-          </Photos>
-          <Content>
-            <Title>
-              #{i + 1} - {properties.name}
-            </Title>
-            <Vicinity>{properties.vicinity}</Vicinity>
-            <Group>
-              <Status>Undiscovered</Status>
-              <ReviewRating reviews={properties.reviews} size="20" />
-            </Group>
-            <Description>{properties.description}</Description>
-          </Content>
-
-          <Favorite>
-            <FontAwesomeIcon icon={["fal", "heart"]} />
-          </Favorite>
-        </Container>
+        <Place
+          key={i}
+          index={i}
+          properties={properties}
+          handleSelect={handleSelect}
+        />
       ))}
-    </Wrapper>
+    </div>
   ) : null;
-
-const Wrapper = styled.div``;
-
-const Container = styled.div`
-  position: relative;
-  display: flex;
-  margin: 20px 0;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.08);
-  background-color: #ffffff;
-`;
-
-const Photos = styled.div`
-  flex: 0 0 300px;
-  height: 200px;
-  border-radius: 8px;
-  overflow: hidden;
-`;
-
-const Content = styled.div`
-  height: 200px;
-  margin-left: 20px;
-  overflow: hidden;
-`;
-
-const Title = styled.h1`
-  font-size: 22px;
-  font-weight: 900;
-  color: #2d3748;
-`;
-
-const Group = styled.div`
-  display: flex;
-`;
-
-const Status = styled.div`
-  display: inline-block;
-  margin-right: 10px;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 12px;
-  color: #ffffff;
-  background: #63b3ed;
-`;
-
-const Vicinity = styled.h3`
-  margin: 8px 0;
-  font-size: 14px;
-  color: #a0aec0;
-`;
-
-const Description = styled.p`
-  margin-top: 10px;
-  line-height: 24px;
-  color: #718096;
-`;
-
-const Favorite = styled.button`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: none;
-  border: none;
-  outline: none;
-  color: #4a5568;
-  font-size: 20px;
-`;
+};
 
 export default Places;
