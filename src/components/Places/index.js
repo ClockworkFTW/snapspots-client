@@ -12,14 +12,19 @@ const Places = ({ spots }) => {
 
   const handleSelect = (i) => {
     const spot = spots.geoJSON[i];
+    const {
+      geometry: { coordinates },
+      properties: { spot_id },
+    } = spot;
 
-    if (spot.id) {
-      history.push(`/spot/${spot.id}`);
+    if (spot_id) {
+      history.push(`/spot/${spot_id}`);
     } else {
       const newSpot = {
         custom: false,
         ...spot.properties,
-        coordinates: spot.geometry.coordinates,
+        latitude: coordinates[1],
+        longitude: coordinates[0],
       };
 
       dispatch(createSpotAction(newSpot, history));

@@ -4,19 +4,20 @@ import styled from "styled-components";
 
 import Slider from "../Slider";
 import { ReviewRating } from "../Review";
+import Status from "./Status";
 
 const Place = ({ index, properties, handleSelect }) => (
-  <Container onClick={() => handleSelect(index)}>
+  <Container>
     <Photos>
       <Slider photos={properties.photos} />
     </Photos>
-    <Content>
+    <Content onClick={() => handleSelect(index)}>
       <Title>
         #{index + 1} - {properties.name}
       </Title>
       <Vicinity>{properties.formatted_address}</Vicinity>
       <Group>
-        <Status>Undiscovered</Status>
+        <Status properties={properties} />
         <ReviewRating reviews={properties.reviews} size="20" />
       </Group>
       <Description>{properties.description}</Description>
@@ -48,6 +49,9 @@ const Content = styled.div`
   height: 200px;
   margin-left: 20px;
   overflow: hidden;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Title = styled.h1`
@@ -58,16 +62,6 @@ const Title = styled.h1`
 
 const Group = styled.div`
   display: flex;
-`;
-
-const Status = styled.div`
-  display: inline-block;
-  margin-right: 10px;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 12px;
-  color: #ffffff;
-  background: #63b3ed;
 `;
 
 const Vicinity = styled.h3`
@@ -91,6 +85,9 @@ const Favorite = styled.button`
   outline: none;
   color: #4a5568;
   font-size: 20px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export default Place;
