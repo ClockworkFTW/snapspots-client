@@ -15,7 +15,7 @@ const Place = ({ index, properties, handleSelect }) => (
       <Title>
         #{index + 1} - {properties.name}
       </Title>
-      <Vicinity>{properties.formatted_address}</Vicinity>
+      <Address>{properties.formatted_address}</Address>
       <Group>
         <Status properties={properties} />
         <ReviewRating reviews={properties.reviews} size="20" />
@@ -64,7 +64,7 @@ const Group = styled.div`
   display: flex;
 `;
 
-const Vicinity = styled.h3`
+const Address = styled.h3`
   margin: 8px 0;
   font-size: 14px;
   color: #a0aec0;

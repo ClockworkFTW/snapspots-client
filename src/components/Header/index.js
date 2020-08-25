@@ -33,7 +33,6 @@ const Header = () => {
 };
 
 const Wrapper = styled.div`
-  margin-bottom: 40px;
   background: #2c5282;
 `;
 

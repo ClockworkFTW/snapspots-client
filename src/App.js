@@ -69,6 +69,8 @@ const App = () => {
 
 const Main = styled.div`
   flex: 1;
+  padding: 40px 0;
+  background: #edf2f7;
 `;
 
 export default App;

@@ -7,6 +7,7 @@ import { getSpotAction } from "../reducers/spots";
 
 import Slider from "../components/Slider";
 import ActionBar from "../components/ActionBar";
+import Status from "../components/Places/Status";
 import Forecast from "../components/Forecast";
 import { ReviewList, ReviewForm, ReviewRating } from "../components/Review";
 
@@ -16,29 +17,42 @@ const SpotPage = () => {
   const spot = useSelector((state) => state.spots.data);
 
   useEffect(() => {
-    if (!spot) {
-      dispatch(getSpotAction(id));
-    }
+    dispatch(getSpotAction(id));
   }, []);
 
   return spot ? (
     <Container>
-      <Slider photos={spot.photos} height="360px">
+      <Slider photos={spot.properties.photos} height="360px">
         <Metadata>
-          <Name>{spot.name}</Name>
-          <ReviewRating reviews={spot.reviews} size="20" />
+          <Name>{spot.properties.name}</Name>
+          <Group>
+            <Status properties={spot.properties} />
+            <ReviewRating reviews={spot.properties.reviews} size="20" />
+          </Group>
+          <Address>{spot.properties.formatted_address}</Address>
         </Metadata>
       </Slider>
       <ActionBar spot={spot} />
-      <Description>{spot.description}</Description>
-      <Types>
-        {spot.type.map((type) => (
-          <Type key={type}>{type}</Type>
-        ))}
-      </Types>
-      <Forecast forecast={spot.forecast} />
-      <ReviewForm spot_id={spot.spot_id} name={spot.name} />
-      <ReviewList reviews={spot.reviews} />
+      <Section>
+        <Description>{spot.properties.description}</Description>
+        <Types>
+          {spot.properties.type.map((type) => (
+            <Type key={type}>{type}</Type>
+          ))}
+        </Types>
+      </Section>
+      <Header>Forecast</Header>
+      <Section>
+        <Forecast forecast={spot.properties.forecast} />
+      </Section>
+      <Header>Reviews</Header>
+      <Section>
+        <ReviewForm
+          spot_id={spot.properties.spot_id}
+          name={spot.properties.name}
+        />
+        <ReviewList reviews={spot.properties.reviews} />
+      </Section>
     </Container>
   ) : null;
 };
@@ -46,19 +60,44 @@ const SpotPage = () => {
 const Container = styled.div`
   max-width: 1000px;
   margin: 0 auto;
+  background: #ffffff;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  overflow: hidden;
+`;
+
+const Section = styled.div`
+  padding: 40px 20px;
+`;
+
+const Header = styled.h1`
+  padding: 20px;
+  font-size: 20px;
+  font-weight: 900;
+  color: #4a5568;
+  background: #edf2f7;
+`;
+
+const Group = styled.div`
+  display: flex;
 `;
 
 const Metadata = styled.div``;
 
 const Name = styled.h1`
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   font-size: 30px;
   font-weight: 700;
   color: #ffffff;
 `;
 
+const Address = styled.h3`
+  margin-top: 8px;
+  font-size: 14px;
+  color: #ffffff;
+`;
+
 const Description = styled.p`
-  margin: 20px 0;
   line-height: 24px;
   color: #4a5568;
 `;

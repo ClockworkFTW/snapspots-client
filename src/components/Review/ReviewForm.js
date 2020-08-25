@@ -51,9 +51,7 @@ const ReviewForm = ({ spot_id, name }) => {
   );
 };
 
-const Container = styled.div`
-  margin: 40px 0;
-`;
+const Container = styled.div``;
 
 const Form = styled.div``;
 

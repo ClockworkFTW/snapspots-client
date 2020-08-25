@@ -33,7 +33,7 @@ export const createSpotAction = (spot, history) => async (dispatch) => {
   try {
     const newSpot = await createSpot(spot);
     dispatch(spotsApiSuccess(newSpot));
-    history.push(`/spot/${newSpot.spot_id}`);
+    history.push(`/spot/${newSpot.properties.spot_id}`);
   } catch (error) {
     dispatch(spotsApiFailure(error));
   }

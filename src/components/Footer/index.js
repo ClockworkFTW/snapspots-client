@@ -12,8 +12,7 @@ const Footer = () => (
 );
 
 const Wrapper = styled.div`
-  margin-top: 40px;
-  background: #e2e8f0;
+  background: #cbd5e0;
 `;
 
 const Container = styled.div`
