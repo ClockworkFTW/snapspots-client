@@ -57,7 +57,7 @@ const App = () => {
           <PrivateRoute path="/spot/create" exact>
             <CreateSpot />
           </PrivateRoute>
-          <PublicRoute path="/spot/:id">
+          <PublicRoute path="/spot/:spot_id">
             <SpotPage />
           </PublicRoute>
         </Switch>

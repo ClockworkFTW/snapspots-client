@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
-import { createSpotAction } from "../reducers/spots";
+import { createSpotAction } from "../reducers/spot";
 
 import { typeOptions, equipmentOptions, timeOptions } from "../config";
 

@@ -6,12 +6,12 @@ import Slider from "../Slider";
 import { ReviewRating } from "../Review";
 import Status from "./Status";
 
-const Place = ({ index, properties, handleSelect }) => (
-  <Container>
-    <Photos>
+const Place = ({ index, properties, handleSelect, width }) => (
+  <Container width={width}>
+    <Photos width={width}>
       <Slider photos={properties.photos} />
     </Photos>
-    <Content onClick={() => handleSelect(index)}>
+    <Content width={width} onClick={() => handleSelect(index)}>
       <Title>
         #{index + 1} - {properties.name}
       </Title>
@@ -20,9 +20,9 @@ const Place = ({ index, properties, handleSelect }) => (
         <Status properties={properties} />
         <ReviewRating reviews={properties.reviews} size="20" />
       </Group>
-      <Description>{properties.description}</Description>
+      <Description width={width}>{properties.description}</Description>
     </Content>
-    <Favorite>
+    <Favorite width={width}>
       <FontAwesomeIcon icon={["fal", "heart"]} />
     </Favorite>
   </Container>
@@ -31,8 +31,9 @@ const Place = ({ index, properties, handleSelect }) => (
 const Container = styled.div`
   position: relative;
   display: flex;
+  flex-direction: ${(props) => (props.width > 800 ? "row" : "column")};
   margin: 20px 0;
-  padding: 20px;
+  padding: ${(props) => (props.width > 800 ? "20px" : "0")};
   border-radius: 8px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.08);
   background-color: #ffffff;
@@ -40,14 +41,18 @@ const Container = styled.div`
 
 const Photos = styled.div`
   flex: 0 0 300px;
+  flex: ${(props) => (props.width > 800 ? "0 0 300px" : "0 0 160px")};
   height: 200px;
-  border-radius: 8px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: ${(props) => (props.width > 800 ? "8px" : "0")};
+  border-bottom-right-radius: ${(props) => (props.width > 800 ? "8px" : "0")};
   overflow: hidden;
 `;
 
 const Content = styled.div`
-  height: 200px;
-  margin-left: 20px;
+  height: ${(props) => (props.width > 800 ? "200px" : "auto")};
+  padding: ${(props) => (props.width > 800 ? "0 0 0 20px" : "20px")};
   overflow: hidden;
   &:hover {
     cursor: pointer;
@@ -71,6 +76,7 @@ const Address = styled.h3`
 `;
 
 const Description = styled.p`
+  display: ${(props) => (props.width > 800 ? "visible" : "none")};
   margin-top: 10px;
   line-height: 24px;
   color: #718096;
@@ -83,7 +89,7 @@ const Favorite = styled.button`
   background: none;
   border: none;
   outline: none;
-  color: #4a5568;
+  color: ${(props) => (props.width > 800 ? "#4a5568" : "#ffffff")};
   font-size: 20px;
   &:hover {
     cursor: pointer;

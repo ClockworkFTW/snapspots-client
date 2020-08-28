@@ -16,7 +16,7 @@ const Map = ({ spots, width, height, zoom }) => {
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/outdoors-v11",
       center: spots ? spots.coords : [-10, 30],
-      zoom: spots ? 10 : zoom,
+      zoom: zoom ? zoom : 10,
     });
 
     map.on("load", () => {
@@ -66,6 +66,7 @@ const Map = ({ spots, width, height, zoom }) => {
 
 const Wrapper = styled.div`
   position: relative;
+  flex: ${(props) => `0 0 ${props.width}`};
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   border-radius: 8px;

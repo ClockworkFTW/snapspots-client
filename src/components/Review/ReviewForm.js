@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
-import { reviewSpotAction } from "../../reducers/spots";
+import { reviewSpotAction } from "../../reducers/spot";
 
 import ReviewRating from "./ReviewRating";
 

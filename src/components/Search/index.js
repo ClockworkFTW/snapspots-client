@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import { autocomplete } from "../../services/google";
-import { getSpots } from "../../services/spots";
+import { getSpotsAction } from "../../reducers/spots";
 
-const Search = ({ setSpots }) => {
+const Search = ({ pending, error }) => {
+  const dispatch = useDispatch();
+
   const [search, setSearch] = useState("");
   const [predictions, setPredictions] = useState([]);
 
@@ -15,24 +18,23 @@ const Search = ({ setSpots }) => {
   };
 
   const handleSelect = async ({ place_id, description }) => {
-    // reset search bar
     setSearch(description);
     setPredictions([]);
-
-    // fetch spots and set state
-    const spots = await getSpots(place_id);
-    setSpots(spots);
+    dispatch(getSpotsAction(place_id));
   };
 
   return (
-    <Container>
-      <Input
-        type="text"
-        placeholder="Enter a location"
-        value={search}
-        onChange={handleSearch}
-      />
-      {predictions.length === 0 ? null : (
+    <Container pending={pending} error={error}>
+      <Group>
+        <Input
+          type="text"
+          placeholder="Enter a location"
+          value={search}
+          onChange={handleSearch}
+        />
+        <Button onClick={() => setSearch("")}>clear</Button>
+      </Group>
+      {predictions && (
         <Predictions>
           {predictions.map((prediction, i) => (
             <Prediction key={i} onClick={() => handleSelect(prediction)}>
@@ -46,9 +48,14 @@ const Search = ({ setSpots }) => {
 };
 
 const Container = styled.div`
-  border: 1px solid black;
+  border: 1px solid #a0aec0;
   border-radius: 4px;
+  background: ${(props) => (props.pending ? "#BEE3F8" : "#FFFFFF")};
   overflow: hidden;
+`;
+
+const Group = styled.div`
+  display: flex;
 `;
 
 const Input = styled.input`
@@ -60,6 +67,8 @@ const Input = styled.input`
   font-family: inherit;
   font-size: 16px;
 `;
+
+const Button = styled.button``;
 
 const Predictions = styled.ul`
   padding: 0 8px;

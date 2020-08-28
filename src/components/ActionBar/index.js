@@ -43,10 +43,10 @@ const Section = styled.li`
   flex: 1;
   padding-top: 24px;
   text-align: center;
-  background: #ed8936;
+  background: #667eea;
   &:hover {
     cursor: pointer;
-    background: #f6ad55;
+    background: #7f9cf5;
   }
 `;
 
@@ -67,7 +67,7 @@ const Logo = styled.div`
 
 const Icon = styled(FontAwesomeIcon)`
   font-size: 20px;
-  color: #ed8936;
+  color: #667eea;
 `;
 
 const Text = styled.h1`

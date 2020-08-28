@@ -9,7 +9,9 @@ const Forecast = ({ forecast }) => {
       {forecast.map(({ temp, weather }, i) => (
         <Day key={i}>
           <WeatherIcon icon={weather[0].icon} />
-          {temp.min}/{temp.max}
+          <Temperature>
+            {Math.round(temp.min)}&deg; / {Math.round(temp.max)}&deg; F
+          </Temperature>
         </Day>
       ))}
     </Container>
@@ -23,6 +25,12 @@ const Container = styled.ul`
 const Day = styled.li`
   flex: 1;
   text-align: center;
+`;
+
+const Temperature = styled.div`
+  margin-top: 8px;
+  font-size: 14px;
+  color: #a0aec0;
 `;
 
 export default Forecast;

@@ -3,56 +3,101 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import { getSpotAction } from "../reducers/spots";
+import { getSpotAction } from "../reducers/spot";
+import { getSpotsAction } from "../reducers/spots";
 
+import Loader from "../components/Loader";
 import Slider from "../components/Slider";
 import ActionBar from "../components/ActionBar";
 import Status from "../components/Places/Status";
+import Time from "../components/Time";
 import Forecast from "../components/Forecast";
 import { ReviewList, ReviewForm, ReviewRating } from "../components/Review";
+import Map from "../components/Map";
+import Places from "../components/Places";
 
 const SpotPage = () => {
   const dispatch = useDispatch();
-  const { id } = useParams();
-  const spot = useSelector((state) => state.spots.data);
+  const { spot_id } = useParams();
+
+  const { pending, data, error } = useSelector((state) => state.spot);
 
   useEffect(() => {
-    dispatch(getSpotAction(id));
-  }, []);
+    if (data) {
+      console.log(spot_id, data.properties.spot_id);
+      if (spot_id !== data.properties.spot_id) {
+        dispatch(getSpotAction(spot_id));
+      }
+    } else {
+      dispatch(getSpotAction(spot_id));
+    }
+  }, [spot_id]);
 
-  return spot ? (
+  return pending ? (
+    <Loader />
+  ) : data ? (
     <Container>
-      <Slider photos={spot.properties.photos} height="360px">
+      <Slider photos={data.properties.photos} height="360px">
         <Metadata>
-          <Name>{spot.properties.name}</Name>
+          <Name>{data.properties.name}</Name>
           <Group>
-            <Status properties={spot.properties} />
-            <ReviewRating reviews={spot.properties.reviews} size="20" />
+            <Status properties={data.properties} />
+            <ReviewRating reviews={data.properties.reviews} size="20" />
           </Group>
-          <Address>{spot.properties.formatted_address}</Address>
+          <Address>{data.properties.formatted_address}</Address>
         </Metadata>
       </Slider>
-      <ActionBar spot={spot} />
-      <Section>
-        <Description>{spot.properties.description}</Description>
-        <Types>
-          {spot.properties.type.map((type) => (
-            <Type key={type}>{type}</Type>
-          ))}
-        </Types>
-      </Section>
-      <Header>Forecast</Header>
-      <Section>
-        <Forecast forecast={spot.properties.forecast} />
-      </Section>
-      <Header>Reviews</Header>
-      <Section>
-        <ReviewForm
-          spot_id={spot.properties.spot_id}
-          name={spot.properties.name}
-        />
-        <ReviewList reviews={spot.properties.reviews} />
-      </Section>
+      <ActionBar />
+      <Content>
+        <Main>
+          <Section>
+            <Description>{data.properties.description}</Description>
+            <div>
+              {data.properties.type.map((type) => (
+                <Type key={type}>{type}</Type>
+              ))}
+            </div>
+          </Section>
+          <Header>Popular Times</Header>
+          <Section>
+            <Time time={data.properties.time} />
+          </Section>
+          <Header>Forecast</Header>
+          <Section>
+            <Forecast forecast={data.properties.forecast} />
+          </Section>
+          <Header>Reviews</Header>
+          <Section>
+            <ReviewForm
+              spot_id={data.properties.spot_id}
+              name={data.properties.name}
+            />
+            <ReviewList reviews={data.properties.reviews} />
+          </Section>
+        </Main>
+        <Sidebar>
+          <Map
+            width="300px"
+            height="300px"
+            spots={{
+              coords: data.geometry.coordinates,
+              geoJSON: [data],
+            }}
+            zoom="12"
+          />
+          <h1
+            style={{
+              margin: "20px 0 10px 0",
+              fontSize: "20px",
+              fontWeight: "900",
+              color: "#4a5568",
+            }}
+          >
+            Nearby Spots
+          </h1>
+          <Places spots={data.properties.nearby} />
+        </Sidebar>
+      </Content>
     </Container>
   ) : null;
 };
@@ -66,8 +111,19 @@ const Container = styled.div`
   overflow: hidden;
 `;
 
+const Content = styled.div`
+  display: flex;
+`;
+
+const Main = styled.div``;
+
+const Sidebar = styled.div`
+  padding: 20px;
+  border-left: 1px solid #cbd5e0;
+`;
+
 const Section = styled.div`
-  padding: 40px 20px;
+  padding: 20px;
 `;
 
 const Header = styled.h1`
@@ -98,12 +154,9 @@ const Address = styled.h3`
 `;
 
 const Description = styled.p`
+  margin-bottom: 20px;
   line-height: 24px;
   color: #4a5568;
-`;
-
-const Types = styled.ul`
-  margin-top: 20px;
 `;
 
 const Type = styled.li`
@@ -111,8 +164,8 @@ const Type = styled.li`
   margin-right: 10px;
   padding: 8px 12px;
   border-radius: 6px;
-  border: 1px solid #ec8936;
-  color: #ec8936;
+  border: 1px solid #667eea;
+  color: #667eea;
   font-size: 12px;
 `;
 

@@ -33,7 +33,7 @@ const Header = () => {
 };
 
 const Wrapper = styled.div`
-  background: #2c5282;
+  background: #ffffff;
 `;
 
 const Container = styled.div`
@@ -49,7 +49,7 @@ const Logo = styled(L)`
   text-decoration: none;
   font-size: 22px;
   font-weight: 700;
-  color: white;
+  color: #5a67d8;
 `;
 
 const Links = styled.div``;
@@ -57,7 +57,7 @@ const Links = styled.div``;
 const Link = styled(L)`
   margin-left: 10px;
   text-decoration: none;
-  color: white;
+  color: #2d3748;
 `;
 
 const Button = styled.button``;

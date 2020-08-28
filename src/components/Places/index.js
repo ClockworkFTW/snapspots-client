@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { createSpotAction } from "../../reducers/spots";
+import { createSpotAction } from "../../reducers/spot";
 
 import Place from "./Place";
 
@@ -31,18 +31,34 @@ const Places = ({ spots }) => {
     }
   };
 
-  return spots ? (
-    <div>
-      {spots.geoJSON.map(({ properties }, i) => (
-        <Place
-          key={i}
-          index={i}
-          properties={properties}
-          handleSelect={handleSelect}
-        />
-      ))}
+  const [width, setWidth] = useState(null);
+  const container = useRef(null);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(container.current.offsetWidth);
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return (
+    <div ref={container}>
+      {spots
+        ? spots.geoJSON.map(({ properties }, i) => (
+            <Place
+              key={i}
+              index={i}
+              properties={properties}
+              handleSelect={handleSelect}
+              width={width}
+            />
+          ))
+        : null}
     </div>
-  ) : null;
+  );
 };
 
 export default Places;
