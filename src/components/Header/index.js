@@ -42,7 +42,7 @@ const Container = styled.div`
   align-items: center;
   max-width: 1000px;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 20px;
 `;
 
 const Logo = styled(L)`

@@ -118,12 +118,12 @@ const Content = styled.div`
 const Main = styled.div``;
 
 const Sidebar = styled.div`
-  padding: 20px;
+  padding: 26px;
   border-left: 1px solid #cbd5e0;
 `;
 
 const Section = styled.div`
-  padding: 20px;
+  padding: 26px;
 `;
 
 const Header = styled.h1`

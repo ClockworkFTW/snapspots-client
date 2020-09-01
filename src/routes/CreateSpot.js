@@ -43,7 +43,6 @@ const CreateSpot = () => {
   return (
     <Container>
       {error && <h1>something went wrong</h1>}
-
       <Row>
         <Group>
           <Header>Map</Header>
@@ -125,7 +124,7 @@ const CreateSpot = () => {
 
 const Container = styled.div`
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 40px auto;
   padding: 20px;
   background: #ffffff;
   border: 1px solid #cbd5e0;

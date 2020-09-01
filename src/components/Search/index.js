@@ -23,6 +23,11 @@ const Search = ({ pending, error }) => {
     dispatch(getSpotsAction(place_id));
   };
 
+  const handleClear = () => {
+    setSearch("");
+    setPredictions([]);
+  };
+
   return (
     <Container pending={pending} error={error}>
       <Group>
@@ -32,7 +37,7 @@ const Search = ({ pending, error }) => {
           value={search}
           onChange={handleSearch}
         />
-        <Button onClick={() => setSearch("")}>clear</Button>
+        <Button onClick={handleClear}>Clear</Button>
       </Group>
       {predictions && (
         <Predictions>
@@ -68,7 +73,17 @@ const Input = styled.input`
   font-size: 16px;
 `;
 
-const Button = styled.button``;
+const Button = styled.button`
+  padding: 0 30px;
+  border: none;
+  outline: none;
+  background: #667eea;
+  color: #ffffff;
+  font-size: 16px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 const Predictions = styled.ul`
   padding: 0 8px;
