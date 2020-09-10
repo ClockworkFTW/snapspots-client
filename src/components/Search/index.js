@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 
-import { autocomplete } from "../../services/google";
-import { getSpotsAction } from "../../reducers/spots";
+import { autocomplete, geocode } from "../../services/google";
+import { searchSpotsAction } from "../../reducers/spots";
+import { setMapViewportAction } from "../../reducers/map";
 
-const Search = ({ pending, error }) => {
+const Search = ({ explore, width }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const { pending, error } = useSelector((state) => state.spots);
 
   const [search, setSearch] = useState("");
   const [predictions, setPredictions] = useState([]);
@@ -20,7 +26,13 @@ const Search = ({ pending, error }) => {
   const handleSelect = async ({ place_id, description }) => {
     setSearch(description);
     setPredictions([]);
-    dispatch(getSpotsAction(place_id));
+    if (explore) {
+      const place = await geocode(place_id);
+      const { lat, lng } = place.geometry.location;
+      dispatch(setMapViewportAction({ zoom: 12, cLat: lat, cLng: lng }));
+    } else {
+      dispatch(searchSpotsAction(place_id, history));
+    }
   };
 
   const handleClear = () => {
@@ -29,16 +41,23 @@ const Search = ({ pending, error }) => {
   };
 
   return (
-    <Container pending={pending} error={error}>
-      <Group>
+    <Container width={width}>
+      <SearchBar pending={pending} error={error}>
+        {error ? (
+          <Icon icon={["fas", "exclamation-circle"]} error={error} />
+        ) : pending ? (
+          <Icon icon={["fas", "spinner-third"]} pending={pending} spin />
+        ) : (
+          <Icon icon={["fas", "search"]} pending={pending} />
+        )}
         <Input
           type="text"
-          placeholder="Enter a location"
+          placeholder={pending ? "Searching..." : "Enter a location..."}
           value={search}
           onChange={handleSearch}
+          onClick={handleClear}
         />
-        <Button onClick={handleClear}>Clear</Button>
-      </Group>
+      </SearchBar>
       {predictions && (
         <Predictions>
           {predictions.map((prediction, i) => (
@@ -53,47 +72,58 @@ const Search = ({ pending, error }) => {
 };
 
 const Container = styled.div`
-  border: 1px solid #a0aec0;
-  border-radius: 4px;
-  background: ${(props) => (props.pending ? "#BEE3F8" : "#FFFFFF")};
+  margin: ${({ width }) => (width ? "0 auto" : "none")};
+  width: ${({ width }) => (width ? width : "100%")};
+`;
+
+const SearchBar = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  border: 2px solid
+    ${({ pending, error }) =>
+      error ? "#F56565" : pending ? "#667eea" : "#FFFFFF"};
   overflow: hidden;
 `;
 
-const Group = styled.div`
-  display: flex;
-`;
-
 const Input = styled.input`
-  width: 100%;
+  flex: 1;
   padding: 8px;
   border: none;
   outline: none;
   background: none;
   font-family: inherit;
   font-size: 16px;
-`;
-
-const Button = styled.button`
-  padding: 0 30px;
-  border: none;
-  outline: none;
-  background: #667eea;
-  color: #ffffff;
-  font-size: 16px;
-  &:hover {
-    cursor: pointer;
+  &::placeholder {
+    color: #a0aec0;
   }
 `;
 
+const Icon = styled(FontAwesomeIcon)`
+  margin: 0 4px 0 10px;
+  color: ${({ pending, error }) =>
+    error ? "#F56565" : pending ? "#667eea" : "#CBD5E0"};
+  font-size: 20px;
+`;
+
 const Predictions = styled.ul`
-  padding: 0 8px;
+  margin-top: 10px;
+  background: #ffffff;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
 `;
 
 const Prediction = styled.li`
-  margin-bottom: 8px;
+  padding: 8px;
+  white-space: nowrap;
   &:hover {
     cursor: pointer;
     color: #5a67d8;
+    background: #ebf4ff;
   }
 `;
 

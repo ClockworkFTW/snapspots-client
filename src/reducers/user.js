@@ -23,7 +23,7 @@ const userApiFailure = (error) => ({
   error,
 });
 
-export const userInit = () => (dispatch) => {
+export const userInitAction = () => (dispatch) => {
   const token = localStorage.getItem(tokenName);
   if (token) {
     const user = jwt.verify(token, jwtSecret);

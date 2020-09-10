@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Status = ({ properties: { spot_id, account_id } }) => {
+const SpotStatus = ({ spot_id, account_id }) => {
   let status = {
     text: "Custom",
     color: "#F6AD55",
@@ -20,6 +20,7 @@ const Status = ({ properties: { spot_id, account_id } }) => {
 
 const Container = styled.div`
   display: inline-block;
+  flex-grow: 0;
   margin-right: 10px;
   padding: 4px 8px;
   border-radius: 8px;
@@ -28,4 +29,4 @@ const Container = styled.div`
   background: ${(props) => props.background};
 `;
 
-export default Status;
+export default SpotStatus;

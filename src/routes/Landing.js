@@ -1,78 +1,61 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import { getRandom } from "../services/unsplash";
+// Import services
+import { previewSpots } from "../services/spots";
 
+// Import custom components
+import Center from "../components/Center";
 import Search from "../components/Search";
+import { SpotPreviews } from "../components/Places";
 
 const Landing = () => {
-  const [photo, setPhoto] = useState(null);
+  const [spots, setSpots] = useState(null);
 
   useEffect(() => {
-    getRandom(setPhoto);
+    previewSpots(setSpots);
   }, []);
 
   return (
-    <Wrapper>
-      <Banner photo={photo}>
+    <Center>
+      {spots && (
         <Container>
-          <Center>
-            <Content>
-              <Welcome>Welcome to SnapSpots!</Welcome>
-              <Intro>
-                We'll help you find great places to take photos, anywhere in the
-                world.
-              </Intro>
-              <Search />
-            </Content>
-          </Center>
+          <Welcome>
+            <H1>Welcome to SnapSpots!</H1>
+            <H2>
+              We'll help you find great places to take photos, anywhere in the
+              world.
+            </H2>
+          </Welcome>
+          <Search width="600px" />
+          <SpotPreviews spots={spots} />
         </Container>
-      </Banner>
-    </Wrapper>
+      )}
+    </Center>
   );
 };
 
-const Wrapper = styled.div``;
-
 const Container = styled.div`
-  position: relative;
   max-width: 1000px;
-  height: 100%;
-  margin: 0 auto;
-  padding: 0 20px;
+  padding: 20px;
 `;
 
-const Center = styled.div`
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Content = styled.div`
+const Welcome = styled.div`
+  margin-bottom: 40px;
   text-align: center;
+  color: #ffffff;
+  text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4), 0px 8px 13px rgba(0, 0, 0, 0.1),
+    0px 18px 23px rgba(0, 0, 0, 0.1);
 `;
 
-const Banner = styled.div`
-  width: 100%;
-  height: 800px;
-  background-image: ${(props) => `url(${props.photo})`};
-  background-size: cover;
-`;
-
-const Welcome = styled.h1`
+const H1 = styled.h1`
+  margin-bottom: 10px;
   font-size: 80px;
   font-weight: 900;
-  color: #ffffff;
-  text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2);
 `;
 
-const Intro = styled.h2`
-  font-size: 40px;
-  font-weight: 900;
-  color: #ffffff;
-  text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2);
+const H2 = styled.h2`
+  font-size: 30px;
 `;
 
 export default Landing;

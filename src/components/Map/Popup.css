@@ -1,0 +1,14 @@
+.mapboxgl-popup-close-button {
+  display: none;
+}
+
+.mapboxgl-popup-content {
+  width: 100%;
+  padding: 0;
+  border-radius: 8px;
+}
+
+.mapboxgl-popup {
+  width: 300px;
+  max-width: inherit !important;
+}

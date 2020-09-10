@@ -1,4 +1,4 @@
-import { getSpots } from "../services/spots";
+import { searchSpots, exploreSpots } from "../services/spots";
 
 const SPOTS_API_PENDING = "SPOTS_API_PENDING";
 const SPOTS_API_SUCCESS = "SPOTS_API_SUCCESS";
@@ -18,10 +18,21 @@ const spotsApiFailure = (error) => ({
   error,
 });
 
-export const getSpotsAction = (place_id) => async (dispatch) => {
+export const searchSpotsAction = (place_id, history) => async (dispatch) => {
   dispatch(spotsApiPending());
   try {
-    const spots = await getSpots(place_id);
+    const spots = await searchSpots(place_id);
+    dispatch(spotsApiSuccess(spots));
+    history.push(`/spot/search`);
+  } catch (error) {
+    dispatch(spotsApiFailure(error));
+  }
+};
+
+export const exploreSpotsAction = (query) => async (dispatch) => {
+  dispatch(spotsApiPending());
+  try {
+    const spots = await exploreSpots(query);
     dispatch(spotsApiSuccess(spots));
   } catch (error) {
     dispatch(spotsApiFailure(error));

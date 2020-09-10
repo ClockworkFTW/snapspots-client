@@ -35,6 +35,8 @@ const ActionBar = ({ spot }) => {
 };
 
 const Container = styled.ul`
+  position: relative;
+  z-index: 20;
   display: flex;
 `;
 

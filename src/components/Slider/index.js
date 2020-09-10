@@ -1,92 +1,68 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 
-const Slider = ({ photos, children, width, height }) => {
-  const [photoIndex, setPhotoIndex] = useState(0);
+// Import Swiper components
+import SwiperCore, { Autoplay } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.min.css";
 
-  const next = () =>
-    setPhotoIndex((i) => (i === photos.length - 1 ? 0 : i + 1));
-  const prev = () =>
-    setPhotoIndex((i) => (i === 0 ? photos.length - 1 : i - 1));
+// Instal Swiper components
+SwiperCore.use([Autoplay]);
 
-  useEffect(() => {
-    if (children) {
-      const interval = setInterval(next, 3000);
-      return () => clearInterval(interval);
-    }
-  }, []);
-
-  return (
-    <Container width={width} height={height}>
-      {children ? (
-        <Content>{children}</Content>
-      ) : (
-        <Controls>
-          <Button onClick={prev}>
-            <FontAwesomeIcon icon={["far", "chevron-left"]} />
-          </Button>
-          <Button onClick={next}>
-            <FontAwesomeIcon icon={["far", "chevron-right"]} />
-          </Button>
-        </Controls>
-      )}
-      <Background photo={photos[photoIndex]} overlay={children} />
+const Slider = ({ photos, children, width, height }) => (
+  <Wrapper width={width} height={height}>
+    {children && <Content>{children}</Content>}
+    <Container>
+      <Swiper
+        spaceBetween={0}
+        slidesPerView={1}
+        autoplay={children ? true : false}
+        disableOnInteraction={false}
+        loop={true}
+        style={{ width: "100%", height: "100%" }}
+      >
+        {photos.map((photo) => (
+          <SwiperSlide>
+            <Photo photo={photo} overlay={children ? true : false} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </Container>
-  );
-};
+  </Wrapper>
+);
 
-const Container = styled.div`
+const Wrapper = styled.div`
   position: relative;
   width: ${(props) => props.width || "100%"};
   height: ${(props) => props.height || "100%"};
   background: #cbd5e0;
 `;
 
+const Container = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+`;
+
 const Content = styled.div`
-  z-index: 1;
+  z-index: 10;
   position: absolute;
   bottom: 40px;
   left: 30px;
   right: 30px;
 `;
 
-const Background = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+const Photo = styled.div`
+  width: 100%;
+  height: 100%;
   background-image: ${(props) =>
     props.overlay
       ? `linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.7)), url(${props.photo})`
       : `url(${props.photo})`};
   background-size: cover;
-`;
-
-const Controls = styled.div`
-  z-index: 1;
-  position: absolute;
-  top: 0;
-  right: 14px;
-  bottom: 0;
-  left: 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const Button = styled.button`
-  width: 30px;
-  height: 30px;
-  outline: none;
-  border: none;
-  border-radius: 100%;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.08);
-  background: #ffffff;
-  &:hover {
-    cursor: pointer;
-  }
 `;
 
 export default Slider;

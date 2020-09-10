@@ -12,7 +12,8 @@ const Footer = () => (
 );
 
 const Wrapper = styled.div`
-  background: #cbd5e0;
+  background: #4a5568;
+  border-top: 1px solid #2d3748;
 `;
 
 const Container = styled.div`
@@ -26,7 +27,7 @@ const Container = styled.div`
 
 const Link = styled.a`
   text-decoration: none;
-  color: #4a5568;
+  color: #e2e8f0;
 `;
 
 export default Footer;

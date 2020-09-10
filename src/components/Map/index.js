@@ -7,7 +7,7 @@ import Popup from "./Popup";
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
-const Map = ({ spots, width, height, zoom }) => {
+const Map = ({ spots, width, height, center, zoom, fetchSpots }) => {
   const mapContainerRef = useRef(null);
   const popUpRef = useRef(new mapboxgl.Popup({ offset: 15 }));
 
@@ -15,8 +15,8 @@ const Map = ({ spots, width, height, zoom }) => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/outdoors-v11",
-      center: spots ? spots.coords : [-10, 30],
-      zoom: zoom ? zoom : 10,
+      center: center ? center : spots ? spots.coords : [-10, 30],
+      zoom: zoom || 10,
     });
 
     map.on("load", () => {
@@ -52,10 +52,14 @@ const Map = ({ spots, width, height, zoom }) => {
       }
     });
 
+    map.on("moveend", () => {
+      fetchSpots(map.getBounds());
+    });
+
     map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
 
     return () => map.remove();
-  }, [spots]);
+  }, [spots, center]);
 
   return (
     <Wrapper width={width} height={height}>
@@ -66,9 +70,9 @@ const Map = ({ spots, width, height, zoom }) => {
 
 const Wrapper = styled.div`
   position: relative;
-  flex: ${(props) => `0 0 ${props.width}`};
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
+  flex: ${(props) => `0 0 ${props.width || "100%"}`};
+  width: ${(props) => props.width || "100%"};
+  height: ${(props) => props.height || "100%"};
   border-radius: 8px;
   overflow: hidden;
 `;

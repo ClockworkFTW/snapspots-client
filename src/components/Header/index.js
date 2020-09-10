@@ -13,53 +13,76 @@ const Header = () => {
   const handleSignOut = () => dispatch(userSignOut());
 
   return (
-    <Wrapper>
-      <Container>
+    <Container>
+      <Group>
+        <Link to="/spot/explore">Explore</Link>
+        <Link to="/spot/search">Search</Link>
+        <Link to="/spot/create">Create</Link>
+      </Group>
+      <Group>
         <Logo to="/">SnapSpots</Logo>
-        <Links>
-          <Link to="/home">home</Link>
-          <Link to="/spot/create">create</Link>
-          {user ? (
-            <Button onClick={handleSignOut}>sign out</Button>
-          ) : (
-            <Link to="/sign-in">
-              <Button>sign in</Button>
-            </Link>
-          )}
-        </Links>
-      </Container>
-    </Wrapper>
+      </Group>
+      <Group>
+        {user ? (
+          <Button onClick={handleSignOut}>sign out</Button>
+        ) : (
+          <Group>
+            <Link to="/help">Help</Link>
+            <Button to="/sign-up">Sign Up</Button>
+            <Button to="/sign-in">Log In</Button>
+          </Group>
+        )}
+      </Group>
+    </Container>
   );
 };
-
-const Wrapper = styled.div`
-  background: #ffffff;
-`;
 
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 20px;
+  padding: 10px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+`;
+
+const Group = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const Logo = styled(L)`
   text-decoration: none;
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 900;
   color: #5a67d8;
 `;
 
-const Links = styled.div``;
-
 const Link = styled(L)`
-  margin-left: 10px;
+  margin-right: 30px;
   text-decoration: none;
   color: #2d3748;
+  font-size: 14px;
+  font-weight: 700;
+  &:hover {
+    color: #5a67d8;
+  }
 `;
 
-const Button = styled.button``;
+const Button = styled(L)`
+  width: 80px;
+  margin-left: 10px;
+  text-decoration: none;
+  color: #ffffff;
+  padding: 12px 0;
+  background: #667eea;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  &:hover {
+    opacity: 0.7;
+  }
+`;
 
 export default Header;

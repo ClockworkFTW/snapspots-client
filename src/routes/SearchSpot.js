@@ -2,27 +2,26 @@ import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-import Search from "../components/Search";
 import Map from "../components/Map";
-import Places from "../components/Places";
+import { SpotList } from "../components/Places";
 
-const Home = () => {
+const SearchSpot = () => {
   const { pending, data, error } = useSelector((state) => state.spots);
 
   return (
     <Container>
-      <Header>Search</Header>
-      <Search pending={pending} />
       {error ? (
         <h1>Oh no... something went wrong!</h1>
       ) : data ? (
         <Main>
           <Header>Map</Header>
-          <Map spots={data} width="100%" height="600px" zoom="1.5" />
+          <Map spots={data} width="100%" height="600px" zoom="10" />
           <Header>Top Spots {data ? `(${data.geoJSON.length})` : null}</Header>
-          <Places spots={data} />
+          <SpotList spots={data} />
         </Main>
-      ) : null}
+      ) : (
+        <h1>No spots found...</h1>
+      )}
     </Container>
   );
 };
@@ -42,4 +41,4 @@ const Header = styled.h1`
 
 const Main = styled.div``;
 
-export default Home;
+export default SearchSpot;

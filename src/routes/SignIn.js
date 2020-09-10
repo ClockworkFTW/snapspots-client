@@ -5,6 +5,8 @@ import styled from "styled-components";
 
 import { userSignIn } from "../reducers/user";
 
+import Center from "../components/Center";
+
 const SignIn = () => {
   const dispatch = useDispatch();
 
@@ -23,19 +25,19 @@ const SignIn = () => {
   return data ? (
     <Redirect to="/home" />
   ) : (
-    <Wrapper>
+    <Center>
       <Container>
         {error && <Error>{error}</Error>}
         <Form>
           <Input
             type="text"
-            placeholder="username"
+            placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <Input
             type="password"
-            placeholder="password"
+            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -47,32 +49,52 @@ const SignIn = () => {
           Don't have an account yet? Sign up <Link to="/sign-up">here</Link>
         </p>
       </Container>
-    </Wrapper>
+    </Center>
   );
 };
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
+const Container = styled.div`
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 8px;
+  background: #ffffff;
 `;
-
-const Container = styled.div``;
 
 const Error = styled.h1`
   color: red;
 `;
 
 const Form = styled.form`
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  margin: 20px 0;
 `;
 
-const Input = styled.input``;
+const Input = styled.input`
+  margin-bottom: 20px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+  &::placeholder {
+    color: #a0aec0;
+  }
+`;
 
-const Button = styled.button``;
+const Button = styled.button`
+  padding: 10px 0;
+  background: #667eea;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  &:hover {
+    opacity: 0.7;
+  }
+`;
 
 export default SignIn;

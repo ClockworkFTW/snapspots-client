@@ -4,19 +4,18 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { getSpotAction } from "../reducers/spot";
-import { getSpotsAction } from "../reducers/spots";
 
 import Loader from "../components/Loader";
 import Slider from "../components/Slider";
 import ActionBar from "../components/ActionBar";
-import Status from "../components/Places/Status";
+import SpotStatus from "../components/Places/SpotStatus";
 import Time from "../components/Time";
 import Forecast from "../components/Forecast";
 import { ReviewList, ReviewForm, ReviewRating } from "../components/Review";
 import Map from "../components/Map";
-import Places from "../components/Places";
+import { SpotList } from "../components/Places";
 
-const SpotPage = () => {
+const ViewSpot = () => {
   const dispatch = useDispatch();
   const { spot_id } = useParams();
 
@@ -24,7 +23,6 @@ const SpotPage = () => {
 
   useEffect(() => {
     if (data) {
-      console.log(spot_id, data.properties.spot_id);
       if (spot_id !== data.properties.spot_id) {
         dispatch(getSpotAction(spot_id));
       }
@@ -41,7 +39,7 @@ const SpotPage = () => {
         <Metadata>
           <Name>{data.properties.name}</Name>
           <Group>
-            <Status properties={data.properties} />
+            <SpotStatus properties={data.properties} />
             <ReviewRating reviews={data.properties.reviews} size="20" />
           </Group>
           <Address>{data.properties.formatted_address}</Address>
@@ -95,7 +93,7 @@ const SpotPage = () => {
           >
             Nearby Spots
           </h1>
-          <Places spots={data.properties.nearby} />
+          <SpotList spots={data.properties.nearby} />
         </Sidebar>
       </Content>
     </Container>
@@ -104,7 +102,7 @@ const SpotPage = () => {
 
 const Container = styled.div`
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 30px auto 90px auto;
   background: #ffffff;
   border: 1px solid #cbd5e0;
   border-radius: 8px;
@@ -169,4 +167,4 @@ const Type = styled.li`
   font-size: 12px;
 `;
 
-export default SpotPage;
+export default ViewSpot;

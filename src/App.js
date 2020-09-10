@@ -8,16 +8,18 @@ import {
 import styled from "styled-components";
 
 // Actions
-import { userInit } from "./reducers/user";
+import { userInitAction } from "./reducers/user";
+import { getPhotoAction } from "./reducers/photo";
 
 // Routes
 import PrivateRoute from "./routes/PrivateRoute";
-import Home from "./routes/Home";
 import SignUp from "./routes/SignUp";
 import SignIn from "./routes/SignIn";
 import Landing from "./routes/Landing";
+import SearchSpot from "./routes/SearchSpot";
+import ExploreSpot from "./routes/ExploreSpot";
 import CreateSpot from "./routes/CreateSpot";
-import SpotPage from "./routes/SpotPage";
+import ViewSpot from "./routes/ViewSpot";
 
 // Components
 import Header from "./components/Header";
@@ -34,7 +36,8 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(userInit());
+    dispatch(userInitAction());
+    dispatch(getPhotoAction());
   }, [dispatch]);
 
   return (
@@ -51,14 +54,17 @@ const App = () => {
           <PublicRoute path="/sign-in">
             <SignIn />
           </PublicRoute>
-          <PublicRoute path="/home">
-            <Home />
+          <PublicRoute path="/spot/search" exact>
+            <SearchSpot />
+          </PublicRoute>
+          <PublicRoute path="/spot/explore" exact>
+            <ExploreSpot />
           </PublicRoute>
           <PrivateRoute path="/spot/create" exact>
             <CreateSpot />
           </PrivateRoute>
           <PublicRoute path="/spot/:spot_id">
-            <SpotPage />
+            <ViewSpot />
           </PublicRoute>
         </Switch>
       </Main>
@@ -68,6 +74,7 @@ const App = () => {
 };
 
 const Main = styled.div`
+  position: relative;
   flex: 1;
   background: #edf2f7;
 `;
