@@ -85,7 +85,7 @@ const SearchBar = styled.div`
   border-radius: 8px;
   border: 2px solid
     ${({ pending, error }) =>
-      error ? "#F56565" : pending ? "#667eea" : "#FFFFFF"};
+      error ? "#F56565" : pending ? "#4299E1" : "#FFFFFF"};
   overflow: hidden;
 `;
 
@@ -97,6 +97,7 @@ const Input = styled.input`
   background: none;
   font-family: inherit;
   font-size: 16px;
+  color: #2d3748;
   &::placeholder {
     color: #a0aec0;
   }
@@ -105,7 +106,7 @@ const Input = styled.input`
 const Icon = styled(FontAwesomeIcon)`
   margin: 0 4px 0 10px;
   color: ${({ pending, error }) =>
-    error ? "#F56565" : pending ? "#667eea" : "#CBD5E0"};
+    error ? "#F56565" : pending ? "#4299E1" : "#CBD5E0"};
   font-size: 20px;
 `;
 
@@ -120,10 +121,11 @@ const Predictions = styled.ul`
 const Prediction = styled.li`
   padding: 8px;
   white-space: nowrap;
+  color: #2d3748;
   &:hover {
     cursor: pointer;
-    color: #5a67d8;
-    background: #ebf4ff;
+    color: #4299e1;
+    background: #ebf8ff;
   }
 `;
 

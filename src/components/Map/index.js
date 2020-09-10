@@ -7,7 +7,7 @@ import Popup from "./Popup";
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
-const Map = ({ spots, width, height, center, zoom, fetchSpots }) => {
+const Map = ({ spots, width, height, center, zoom }) => {
   const mapContainerRef = useRef(null);
   const popUpRef = useRef(new mapboxgl.Popup({ offset: 15 }));
 
@@ -50,10 +50,6 @@ const Map = ({ spots, width, height, center, zoom, fetchSpots }) => {
           .setDOMContent(popupNode)
           .addTo(map);
       }
-    });
-
-    map.on("moveend", () => {
-      fetchSpots(map.getBounds());
     });
 
     map.addControl(new mapboxgl.NavigationControl(), "bottom-right");

@@ -27,7 +27,7 @@ const Header = () => {
           <Button onClick={handleSignOut}>sign out</Button>
         ) : (
           <Group>
-            <Link to="/help">Help</Link>
+            <Link to="/about">About</Link>
             <Button to="/sign-up">Sign Up</Button>
             <Button to="/sign-in">Log In</Button>
           </Group>
@@ -55,7 +55,7 @@ const Logo = styled(L)`
   text-decoration: none;
   font-size: 22px;
   font-weight: 900;
-  color: #5a67d8;
+  color: #4299e1;
 `;
 
 const Link = styled(L)`
@@ -65,7 +65,7 @@ const Link = styled(L)`
   font-size: 14px;
   font-weight: 700;
   &:hover {
-    color: #5a67d8;
+    color: #4299e1;
   }
 `;
 
@@ -75,7 +75,7 @@ const Button = styled(L)`
   text-decoration: none;
   color: #ffffff;
   padding: 12px 0;
-  background: #667eea;
+  background: #4299e1;
   border-radius: 8px;
   text-align: center;
   font-size: 14px;

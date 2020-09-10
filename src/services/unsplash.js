@@ -15,6 +15,6 @@ export const getRandom = async () => {
     const response = await axios.get(url, headers);
     return response.data;
   } catch (error) {
-    console.log(error);
+    throw "image could not be retrieved";
   }
 };

@@ -132,8 +132,6 @@ const Container = styled.div`
   overflow: hidden;
 `;
 
-const Column = styled.div``;
-
 const Row = styled.div`
   display: flex;
   width: 100%;

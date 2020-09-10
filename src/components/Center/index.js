@@ -1,18 +1,24 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 
 const Center = ({ children }) => {
-  const { data } = useSelector((state) => state.photo);
+  const { data, error } = useSelector((state) => state.photo);
+
+  const render = data || error;
 
   return (
-    data && (
-      <Container url={data.urls.full}>
+    render && (
+      <Container url={data && data.urls.full}>
         {children}
-        <Credits>
-          Photo by <a href={data.user.links.html}>{data.user.name}</a> on{" "}
-          <a href="https://unsplash.com/">Unsplash</a>
-        </Credits>
+        {!error && (
+          <Credits>
+            <FontAwesomeIcon icon={["far", "camera"]} /> Photo by{" "}
+            <Link href={data.user.links.html}>{data.user.name}</Link> on{" "}
+            <Link href="https://unsplash.com/">Unsplash</Link>
+          </Credits>
+        )}
       </Container>
     )
   );
@@ -27,7 +33,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: ${(props) => `url(${props.url})`};
+  background-image: ${({ url }) => `url(${url})`};
   background-size: cover;
 `;
 
@@ -38,6 +44,14 @@ const Credits = styled.p`
   padding: 8px 16px;
   background: #ffffff;
   border-radius: 8px;
+  font-size: 14px;
+  color: #718096;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.08);
+`;
+
+const Link = styled.a`
+  text-decoration: none;
+  color: #4299e1;
 `;
 
 export default Center;

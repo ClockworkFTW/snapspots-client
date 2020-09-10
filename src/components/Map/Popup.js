@@ -21,7 +21,7 @@ const Popup = ({ feature: { properties } }) => {
         <Address>{formatted_address}</Address>
         <Group>
           <SpotStatus properties={properties} />
-          <ReviewRating rating={reviews} />
+          <ReviewRating rating={reviews} size="20" />
         </Group>
       </Content>
     </Container>
@@ -48,7 +48,6 @@ const Content = styled.div`
 `;
 
 const Name = styled.h1`
-  white-space: nowrap;
   font-size: 18px;
   font-weight: 700;
   color: #2d3748;
@@ -62,6 +61,7 @@ const Address = styled.h3`
 
 const Group = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 export default Popup;

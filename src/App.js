@@ -16,6 +16,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import SignUp from "./routes/SignUp";
 import SignIn from "./routes/SignIn";
 import Landing from "./routes/Landing";
+import About from "./routes/About";
 import SearchSpot from "./routes/SearchSpot";
 import ExploreSpot from "./routes/ExploreSpot";
 import CreateSpot from "./routes/CreateSpot";
@@ -47,6 +48,9 @@ const App = () => {
         <Switch>
           <PublicRoute path="/" exact>
             <Landing />
+          </PublicRoute>
+          <PublicRoute path="/about">
+            <About />
           </PublicRoute>
           <PublicRoute path="/sign-up">
             <SignUp />

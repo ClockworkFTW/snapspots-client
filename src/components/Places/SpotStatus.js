@@ -20,9 +20,9 @@ const SpotStatus = ({ spot_id, account_id }) => {
 
 const Container = styled.div`
   display: inline-block;
-  flex-grow: 0;
+  line-height: 20px;
   margin-right: 10px;
-  padding: 4px 8px;
+  padding: 0 8px;
   border-radius: 8px;
   font-size: 12px;
   color: #ffffff;

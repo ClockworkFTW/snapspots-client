@@ -22,7 +22,7 @@ const SpotCardSmall = ({ index, spot, handleSelect, setFocus }) => {
         <Address>{formatted_address}</Address>
         <Group>
           <SpotStatus spot_id={spot_id} account_id={account_id} />
-          <ReviewRating reviews={reviews} size="16" />
+          <ReviewRating reviews={reviews} size="20" />
         </Group>
       </Content>
       <Favorite>
@@ -34,6 +34,7 @@ const SpotCardSmall = ({ index, spot, handleSelect, setFocus }) => {
 
 const Container = styled.div`
   position: relative;
+  width: 100%;
   margin: 20px 0;
   border-radius: 8px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.08);
@@ -62,6 +63,7 @@ const Title = styled.h1`
 
 const Group = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const Address = styled.h3`
@@ -78,7 +80,7 @@ const Favorite = styled.button`
   background: none;
   border: none;
   outline: none;
-  color: "#ffffff";
+  color: #f7fafc;
   font-size: 20px;
   &:hover {
     cursor: pointer;

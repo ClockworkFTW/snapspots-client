@@ -16,7 +16,7 @@ const ReviewRating = ({ reviews, rating, setRating, size }) => {
           const ratingValue = i + 1;
 
           return (
-            <Content key={i}>
+            <Star key={i}>
               <Input
                 type="radio"
                 name="rating"
@@ -31,7 +31,7 @@ const ReviewRating = ({ reviews, rating, setRating, size }) => {
                 onMouseEnter={() => (setRating ? setHover(ratingValue) : null)}
                 onMouseLeave={() => (setRating ? setHover(null) : null)}
               />
-            </Content>
+            </Star>
           );
         })}
       </Container>
@@ -47,18 +47,18 @@ const Wrapper = styled.div`
 
 const Container = styled.div``;
 
-const Content = styled.label``;
+const Star = styled.label``;
 
 const Input = styled.input`
   display: none;
 `;
 
 const Icon = styled(FontAwesomeIcon)`
-  padding: ${(props) => `${props.size * 0.2}px ${props.size * 0.1}px`};
-  font-size: ${(props) => `${props.size}px`};
-  color: ${(props) => (props.filled ? "#f4d24c" : "#e6e6e6")};
+  padding: ${({ size }) => `${size * 0.2}px ${size * 0.1}px`};
+  font-size: ${({ size }) => `${size}px`};
+  color: ${({ filled }) => (filled ? "#f4d24c" : "#e6e6e6")};
   &:hover {
-    cursor: ${(props) => props.cursor};
+    cursor: ${({ cursor }) => cursor};
   }
 `;
 

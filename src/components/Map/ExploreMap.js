@@ -195,7 +195,7 @@ const Loader = styled.div`
   right: 0;
   left: 0;
   height: 10px;
-  background: #667eea;
+  background: #4299e1;
 `;
 
 export default Map;
