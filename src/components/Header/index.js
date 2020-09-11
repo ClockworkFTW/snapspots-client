@@ -24,11 +24,16 @@ const Header = () => {
       </Group>
       <Group>
         {user ? (
-          <Button onClick={handleSignOut}>sign out</Button>
+          <Group>
+            <Link to="/about">About</Link>
+            <Button onClick={handleSignOut}>Sign Out</Button>
+          </Group>
         ) : (
           <Group>
             <Link to="/about">About</Link>
-            <Button to="/sign-up">Sign Up</Button>
+            <Button to="/sign-up" fill={true}>
+              Sign Up
+            </Button>
             <Button to="/sign-in">Log In</Button>
           </Group>
         )}
@@ -38,6 +43,7 @@ const Header = () => {
 };
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -52,10 +58,17 @@ const Group = styled.div`
 `;
 
 const Logo = styled(L)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-decoration: none;
   font-size: 22px;
   font-weight: 900;
-  color: #4299e1;
+  color: #2d3748;
+  &:hover {
+    color: #ed8936;
+  }
 `;
 
 const Link = styled(L)`
@@ -65,7 +78,7 @@ const Link = styled(L)`
   font-size: 14px;
   font-weight: 700;
   &:hover {
-    color: #4299e1;
+    color: #ed8936;
   }
 `;
 
@@ -73,15 +86,16 @@ const Button = styled(L)`
   width: 80px;
   margin-left: 10px;
   text-decoration: none;
-  color: #ffffff;
-  padding: 12px 0;
-  background: #4299e1;
+  color: ${({ fill }) => (fill ? "#ffffff" : "#ED8936")};
+  padding: 10px 0;
+  background: ${({ fill }) => (fill ? "#ED8936" : "#ffffff")};
+  border: 2px solid #ed8936;
   border-radius: 8px;
   text-align: center;
   font-size: 14px;
   font-weight: 700;
   &:hover {
-    opacity: 0.7;
+    opacity: 0.8;
   }
 `;
 

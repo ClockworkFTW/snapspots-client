@@ -85,7 +85,7 @@ const SearchBar = styled.div`
   border-radius: 8px;
   border: 2px solid
     ${({ pending, error }) =>
-      error ? "#F56565" : pending ? "#4299E1" : "#FFFFFF"};
+      error ? "#F56565" : pending ? "#ED8936" : "#FFFFFF"};
   overflow: hidden;
 `;
 
@@ -106,7 +106,7 @@ const Input = styled.input`
 const Icon = styled(FontAwesomeIcon)`
   margin: 0 4px 0 10px;
   color: ${({ pending, error }) =>
-    error ? "#F56565" : pending ? "#4299E1" : "#CBD5E0"};
+    error ? "#F56565" : pending ? "#ED8936" : "#CBD5E0"};
   font-size: 20px;
 `;
 
@@ -124,8 +124,8 @@ const Prediction = styled.li`
   color: #2d3748;
   &:hover {
     cursor: pointer;
-    color: #4299e1;
-    background: #ebf8ff;
+    color: #ed8936;
+    background: #fffaf0;
   }
 `;
 

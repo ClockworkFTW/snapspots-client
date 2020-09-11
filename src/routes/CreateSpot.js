@@ -7,15 +7,10 @@ import { createSpotAction } from "../reducers/spot";
 
 import { typeOptions, equipmentOptions, timeOptions } from "../config";
 
-import Map from "../components/Map";
+import { PickerMap } from "../components/Map";
+import Search from "../components/Search";
 import Dropdown from "../components/Dropdown";
 import PhotoPicker from "../components/PhotoPicker";
-
-const dropdownStyle = {
-  display: "inline-block",
-  width: "calc(33.33%)",
-  verticalAlign: "top",
-};
 
 const CreateSpot = () => {
   const dispatch = useDispatch();
@@ -32,7 +27,6 @@ const CreateSpot = () => {
     keywords: [],
     type: [],
     equipment: [],
-    time: [],
     photos: [],
     latitude: "37.865101",
     longitude: "-119.538330",
@@ -46,7 +40,9 @@ const CreateSpot = () => {
       <Row>
         <Group>
           <Header>Map</Header>
-          <Map width="100%" height="500px" zoom="1" />
+          <PickerMap width="100%" height="500px">
+            <Search explore={true} />
+          </PickerMap>
         </Group>
       </Row>
       <Row>
@@ -71,27 +67,21 @@ const CreateSpot = () => {
       </Row>
       <Row>
         <Group>
-          <Header>Info</Header>
+          <Header>Type</Header>
           <Dropdown
-            name="Spot Type"
+            name="What type of spot is this?"
             options={typeOptions}
             value={spot.type}
             setValue={(value) => setSpot({ ...spot, type: value })}
-            style={dropdownStyle}
           />
+        </Group>
+        <Group>
+          <Header>Equipment</Header>
           <Dropdown
-            name="Recommended Equipment"
+            name="What would you bring along?"
             options={equipmentOptions}
             value={spot.equipment}
             setValue={(value) => setSpot({ ...spot, equipment: value })}
-            style={dropdownStyle}
-          />
-          <Dropdown
-            name="Best time to visit"
-            options={timeOptions}
-            value={spot.time}
-            setValue={(value) => setSpot({ ...spot, time: value })}
-            style={dropdownStyle}
           />
         </Group>
       </Row>
@@ -125,9 +115,7 @@ const CreateSpot = () => {
 const Container = styled.div`
   max-width: 1000px;
   margin: 40px auto;
-  padding: 20px;
-  background: #ffffff;
-  border: 1px solid #cbd5e0;
+  padding: 0 20px;
   border-radius: 8px;
   overflow: hidden;
 `;
@@ -140,6 +128,10 @@ const Row = styled.div`
 
 const Group = styled.div`
   flex: 1;
+  margin-right: 20px;
+  &:nth-last-child(1) {
+    margin-right: 0;
+  }
 `;
 
 const Header = styled.h1`

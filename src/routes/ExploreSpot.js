@@ -42,6 +42,7 @@ const Container = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
+  background: #edf2f7;
 `;
 
 const Sidebar = styled.div`

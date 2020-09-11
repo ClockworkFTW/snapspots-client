@@ -33,8 +33,10 @@ const Dropdown = ({ name, options, value, setValue, style }) => {
 };
 
 const Container = styled.div`
+  width: 100%;
   border: 1px solid #e2e8f0;
   border-radius: 4px;
+  background: #ffffff;
 `;
 
 const Active = styled.div`

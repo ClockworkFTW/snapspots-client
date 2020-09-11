@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import "./Popup.css";
+import "./index.css";
 
-import Slider from "../Slider";
-import { ReviewRating } from "../Review";
-import SpotStatus from "../Places/SpotStatus";
+import Slider from "../../Slider";
+import { ReviewRating } from "../../Review";
+import SpotStatus from "../../Places/SpotStatus";
 
 const Popup = ({ feature: { properties } }) => {
   const { place_id, name, formatted_address, photos, reviews } = properties;

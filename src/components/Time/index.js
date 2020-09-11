@@ -44,7 +44,7 @@ const Bar = styled.div`
   margin-top: auto;
   width: 100%;
   height: ${(props) => `${props.height * 160 - 22}px`};
-  background: #667eea;
+  background: #ed8936;
   border-radius: 8px;
 `;
 

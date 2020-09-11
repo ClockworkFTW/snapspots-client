@@ -22,7 +22,7 @@ const Container = styled.div`
   align-items: center;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 12px 0;
+  padding: 16px 0;
 `;
 
 const Link = styled.a`

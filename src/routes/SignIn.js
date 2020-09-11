@@ -10,6 +10,8 @@ import Center from "../components/Center";
 const SignIn = () => {
   const dispatch = useDispatch();
 
+  const { data, error } = useSelector((state) => state.user);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,10 +22,8 @@ const SignIn = () => {
     dispatch(userSignIn({ username, password }));
   };
 
-  const { data, error } = useSelector((state) => state.user);
-
   return data ? (
-    <Redirect to="/home" />
+    <Redirect to="/spot/explore" />
   ) : (
     <Center>
       <Container>
@@ -54,10 +54,10 @@ const SignIn = () => {
 };
 
 const Container = styled.div`
-  max-width: 400px;
-  padding: 20px;
+  padding: 30px;
   border-radius: 8px;
   background: #ffffff;
+  border: 1px solid #e2e8f0;
 `;
 
 const Error = styled.h1`
@@ -85,7 +85,7 @@ const Input = styled.input`
 
 const Button = styled.button`
   padding: 10px 0;
-  background: #667eea;
+  background: #ed8936;
   border: none;
   outline: none;
   border-radius: 8px;
@@ -94,6 +94,9 @@ const Button = styled.button`
   color: #ffffff;
   &:hover {
     opacity: 0.7;
+  }
+  &:disabled {
+    opacity: 0.5;
   }
 `;
 

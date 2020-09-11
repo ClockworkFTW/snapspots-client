@@ -6,10 +6,10 @@ import {
   Route as PublicRoute,
 } from "react-router-dom";
 import styled from "styled-components";
+import background from "./assets/topography2.png";
 
 // Actions
 import { userInitAction } from "./reducers/user";
-import { getPhotoAction } from "./reducers/photo";
 
 // Routes
 import PrivateRoute from "./routes/PrivateRoute";
@@ -38,7 +38,6 @@ const App = () => {
 
   useEffect(() => {
     dispatch(userInitAction());
-    dispatch(getPhotoAction());
   }, [dispatch]);
 
   return (
@@ -80,7 +79,8 @@ const App = () => {
 const Main = styled.div`
   position: relative;
   flex: 1;
-  background: #edf2f7;
+  /* background: #edf2f7; */
+  background-image: url(${background});
 `;
 
 export default App;

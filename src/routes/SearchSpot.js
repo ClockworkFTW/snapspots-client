@@ -2,7 +2,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-import Map from "../components/Map";
+// Import custom components
+import Search from "../components/Search";
+import { DisplayMap } from "../components/Map";
 import { SpotList } from "../components/Places";
 
 const SearchSpot = () => {
@@ -14,8 +16,10 @@ const SearchSpot = () => {
         <h1>Oh no... something went wrong!</h1>
       ) : data ? (
         <Main>
+          <Header>Search</Header>
+          <Search />
           <Header>Map</Header>
-          <Map spots={data} width="100%" height="600px" zoom="10" />
+          <DisplayMap spots={data} width="100%" height="600px" zoom="10" />
           <Header>Top Spots {data ? `(${data.geoJSON.length})` : null}</Header>
           <SpotList spots={data} />
         </Main>
@@ -29,7 +33,7 @@ const SearchSpot = () => {
 const Container = styled.div`
   max-width: 1000px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 20px 60px 20px;
 `;
 
 const Header = styled.h1`

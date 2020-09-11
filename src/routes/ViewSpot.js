@@ -12,7 +12,7 @@ import SpotStatus from "../components/Places/SpotStatus";
 import Time from "../components/Time";
 import Forecast from "../components/Forecast";
 import { ReviewList, ReviewForm, ReviewRating } from "../components/Review";
-import Map from "../components/Map";
+import { DisplayMap } from "../components/Map";
 import { SpotList } from "../components/Places";
 
 const ViewSpot = () => {
@@ -74,7 +74,7 @@ const ViewSpot = () => {
           </Section>
         </Main>
         <Sidebar>
-          <Map
+          <DisplayMap
             width="300px"
             height="300px"
             spots={{
@@ -104,7 +104,7 @@ const Container = styled.div`
   max-width: 1000px;
   margin: 30px auto 90px auto;
   background: #ffffff;
-  border: 1px solid #cbd5e0;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   overflow: hidden;
 `;
@@ -117,7 +117,7 @@ const Main = styled.div``;
 
 const Sidebar = styled.div`
   padding: 26px;
-  border-left: 1px solid #cbd5e0;
+  border-left: 1px solid #e2e8f0;
 `;
 
 const Section = styled.div`
