@@ -6,7 +6,7 @@ import {
   Route as PublicRoute,
 } from "react-router-dom";
 import styled from "styled-components";
-import background from "./assets/topography.jpg";
+import bg from "./assets/bg1.jpg";
 
 // Actions
 import { userInitAction } from "./reducers/user";
@@ -79,9 +79,9 @@ const App = () => {
 const Main = styled.div`
   position: relative;
   flex: 1;
-  /* background: #edf2f7; */
-  background-image: url(${background});
-  background-attachment: fixed;
+  background: #edf2f7;
+  /* background-image: url(${bg});
+  background-attachment: fixed; */
 `;
 
 export default App;

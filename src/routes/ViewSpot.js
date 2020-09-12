@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { getSpotAction } from "../reducers/spot";
@@ -19,11 +19,13 @@ const ViewSpot = () => {
   const dispatch = useDispatch();
   const { spot_id } = useParams();
 
+  // prettier-ignore
+  const user = useSelector((state) => state.user);
   const { pending, data, error } = useSelector((state) => state.spot);
 
   useEffect(() => {
     if (data) {
-      if (spot_id !== data.properties.spot_id) {
+      if (spot_id !== data.spot_id) {
         dispatch(getSpotAction(spot_id));
       }
     } else {
@@ -35,46 +37,46 @@ const ViewSpot = () => {
     <Loader />
   ) : data ? (
     <Container>
-      <Slider photos={data.properties.photos} height="360px">
+      <Slider photos={data.photos} height="360px">
         <Metadata>
-          <Name>{data.properties.name}</Name>
+          <Name>{data.name}</Name>
           <Group>
-            <SpotStatus properties={data.properties} />
-            <ReviewRating reviews={data.properties.reviews} size="20" />
+            <SpotStatus spot_id={data.spot_id} account_id={data.account_id} />
+            <ReviewRating reviews={data.reviews} size="20" />
           </Group>
-          <Address>{data.properties.formatted_address}</Address>
+          <Address>{data.formatted_address}</Address>
         </Metadata>
       </Slider>
       <ActionBar />
       <Content>
         <Main>
           <Section>
-            <Description>{data.properties.description}</Description>
+            {user.data.account_id === data.account_id && (
+              <Link to={`/spot/edit/${data.spot_id}`}>edit</Link>
+            )}
+            <Description>{data.description}</Description>
             <div>
-              {data.properties.type.map((type) => (
+              {data.type.map((type) => (
                 <Type key={type}>{type}</Type>
               ))}
             </div>
           </Section>
           <Header>Popular Times</Header>
           <Section>
-            <Time time={data.properties.time} />
+            <Time review={data.reviews} />
           </Section>
           <Header>Forecast</Header>
           <Section>
-            <Forecast forecast={data.properties.forecast} />
+            <Forecast forecast={data.forecast} />
           </Section>
           <Header>Reviews</Header>
           <Section>
-            <ReviewForm
-              spot_id={data.properties.spot_id}
-              name={data.properties.name}
-            />
-            <ReviewList reviews={data.properties.reviews} />
+            <ReviewForm spot_id={data.spot_id} name={data.name} />
+            <ReviewList reviews={data.reviews} />
           </Section>
         </Main>
         <Sidebar>
-          <DisplayMap
+          {/* <DisplayMap
             width="300px"
             height="300px"
             spots={{
@@ -93,7 +95,7 @@ const ViewSpot = () => {
           >
             Nearby Spots
           </h1>
-          <SpotList spots={data.properties.nearby} />
+          <SpotList spots={data.nearby} /> */}
         </Sidebar>
       </Content>
     </Container>
@@ -116,6 +118,7 @@ const Content = styled.div`
 const Main = styled.div``;
 
 const Sidebar = styled.div`
+  flex: 0 0 300px;
   padding: 26px;
   border-left: 1px solid #e2e8f0;
 `;

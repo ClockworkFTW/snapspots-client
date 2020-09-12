@@ -42,7 +42,16 @@ export const previewSpots = async (setSpots, setError) => {
 
 export const createSpot = async (spot) => {
   try {
-    const response = await axios.post(baseUrl, spot);
+    const response = await axios.post(`${baseUrl}/new`, spot);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateSpot = async (spot) => {
+  try {
+    const response = await axios.post(`${baseUrl}/update`, spot);
     return response.data;
   } catch (error) {
     throw error;

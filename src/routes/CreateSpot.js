@@ -3,8 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
 
-// prettier-ignore
-import { initSpotAction, setSpotAction, getSpotAction, createSpotAction} from "../reducers/spot";
+import {
+  initSpotAction,
+  setSpotAction,
+  getSpotAction,
+  createSpotAction,
+  updateSpotAction,
+} from "../reducers/spot";
 
 import { typeOptions, equipmentOptions } from "../config";
 
@@ -18,9 +23,9 @@ const CreateSpot = () => {
   const history = useHistory();
 
   const { spot_id } = useParams();
-  const { pending, data, error } = useSelector((state) => state.spot);
-
   const editing = spot_id !== "new";
+
+  const { pending, data, error } = useSelector((state) => state.spot);
 
   useEffect(() => {
     if (editing) {
@@ -40,16 +45,10 @@ const CreateSpot = () => {
   const { cLat, cLng } = useSelector((state) => state.map);
 
   const handleSubmit = () => {
-    const spot = {
-      custom: true,
-      account_id,
-      ...data,
-      latitude: cLat,
-      longitude: cLng,
-    };
+    const spot = { custom: true, account_id, ...data };
 
     if (editing) {
-      dispatch(createSpotAction(spot, history));
+      dispatch(updateSpotAction(spot, history));
     } else {
       dispatch(createSpotAction(spot, history));
     }
@@ -58,7 +57,12 @@ const CreateSpot = () => {
   return (
     data && (
       <Container>
-        {error && <h1>something went wrong</h1>}
+        {error && (
+          <Error>
+            Something went wrong... please make sure all fields are filled out
+            below.
+          </Error>
+        )}
         <PickerMap editing={editing} height="500px">
           <Search explore={true} />
         </PickerMap>
@@ -72,17 +76,6 @@ const CreateSpot = () => {
                 value={data.name}
                 onChange={(e) =>
                   dispatch(setSpotAction({ name: e.target.value }))
-                }
-              />
-            </Group>
-            <Group>
-              <Header>Keywords</Header>
-              <Input
-                type="text"
-                placeholder="E.g. landscape, coastal, rocks, sea"
-                value={data.keywords}
-                onChange={(e) =>
-                  dispatch(setSpotAction({ keywords: e.target.value }))
                 }
               />
             </Group>
@@ -133,11 +126,9 @@ const CreateSpot = () => {
               />
             </Group>
           </Row>
-          <Row>
-            <Button onClick={handleSubmit}>
-              {editing ? "Update Spot" : "Create Spot"}
-            </Button>
-          </Row>
+          <Button onClick={handleSubmit}>
+            {editing ? "Update Spot" : "Create Spot"}
+          </Button>
         </Form>
       </Container>
     )
@@ -149,7 +140,15 @@ const Container = styled.div`
   margin: 40px auto;
   padding: 0 20px;
   border-radius: 8px;
-  overflow: hidden;
+`;
+
+const Error = styled.div`
+  margin-bottom: 40px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 2px solid #f56565;
+  color: #f56565;
 `;
 
 const Form = styled.div`
@@ -207,6 +206,20 @@ const Textarea = styled.textarea`
   }
 `;
 
-const Button = styled.button``;
+const Button = styled.button`
+  width: 100%;
+  padding: 10px 0;
+  background: #ed8936;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  &:hover {
+    opacity: 0.7;
+    cursor: pointer;
+  }
+`;
 
 export default CreateSpot;

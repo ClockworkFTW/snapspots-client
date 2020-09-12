@@ -16,10 +16,10 @@ const months = [
   "Dec",
 ];
 
-const Time = ({ time }) => (
+const Time = ({ reviews }) => (
   <Container>
     {months.map((month, i) => (
-      <Month key={i} active={time.includes(i.toString())}>
+      <Month key={i}>
         <Bar height={Math.random()} />
         <Text>{month}</Text>
       </Month>

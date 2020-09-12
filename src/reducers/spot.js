@@ -1,4 +1,4 @@
-import { getSpot, createSpot, reviewSpot } from "../services/spots";
+import { getSpot, createSpot, updateSpot, reviewSpot } from "../services/spots";
 
 const INIT_SPOT = "INIT_SPOT";
 const SET_SPOT = "SET_SPOT";
@@ -7,7 +7,6 @@ export const initSpotAction = () => ({
   type: INIT_SPOT,
   data: {
     name: "",
-    keywords: "",
     type: [],
     equipment: [],
     description: "",
@@ -55,7 +54,18 @@ export const createSpotAction = (spot, history) => async (dispatch) => {
   try {
     const newSpot = await createSpot(spot);
     dispatch(spotsApiSuccess(newSpot));
-    history.push(`/spot/${newSpot.properties.spot_id}`);
+    history.push(`/spot/${newSpot.spot_id}`);
+  } catch (error) {
+    dispatch(spotsApiFailure(error));
+  }
+};
+
+export const updateSpotAction = (spot, history) => async (dispatch) => {
+  dispatch(spotsApiPending());
+  try {
+    const updatedSpot = await updateSpot(spot);
+    dispatch(spotsApiSuccess(updatedSpot));
+    history.push(`/spot/${updatedSpot.spot_id}`);
   } catch (error) {
     dispatch(spotsApiFailure(error));
   }
@@ -84,7 +94,7 @@ const spotsReducer = (state = INITIAL_STATE, action) => {
     case SPOT_API_SUCCESS:
       return { ...state, pending: false, data: action.data, error: null };
     case SPOT_API_FAILURE:
-      return { ...state, pending: false, data: null, error: action.error };
+      return { ...state, pending: false, error: action.error };
     case INIT_SPOT:
       return { ...state, pending: false, data: action.data, error: null };
     case SET_SPOT:
