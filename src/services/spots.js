@@ -8,7 +8,7 @@ export const getSpot = async (id) => {
     const response = await axios.get(`${baseUrl}/${id}`);
     return response.data;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 
@@ -17,7 +17,7 @@ export const searchSpots = async (place_id) => {
     const response = await axios.get(`${baseUrl}/search/${place_id}`);
     return response.data;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 
@@ -27,16 +27,16 @@ export const exploreSpots = async (viewport) => {
     const response = await axios.get(`${baseUrl}/explore?${query}`);
     return response.data;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 
-export const previewSpots = async (setSpots) => {
+export const previewSpots = async (setSpots, setError) => {
   try {
     const response = await axios.get(`${baseUrl}/preview`);
     setSpots(response.data);
   } catch (error) {
-    console.log(error);
+    setError(error);
   }
 };
 
@@ -45,7 +45,7 @@ export const createSpot = async (spot) => {
     const response = await axios.post(baseUrl, spot);
     return response.data;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 
@@ -54,6 +54,6 @@ export const reviewSpot = async (review) => {
     const response = await axios.post(`${baseUrl}/review`, review);
     return response.data;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };

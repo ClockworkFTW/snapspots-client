@@ -6,7 +6,7 @@ import {
   Route as PublicRoute,
 } from "react-router-dom";
 import styled from "styled-components";
-import background from "./assets/topography2.png";
+import background from "./assets/topography.jpg";
 
 // Actions
 import { userInitAction } from "./reducers/user";
@@ -63,7 +63,7 @@ const App = () => {
           <PublicRoute path="/spot/explore" exact>
             <ExploreSpot />
           </PublicRoute>
-          <PrivateRoute path="/spot/create" exact>
+          <PrivateRoute path="/spot/edit/:spot_id">
             <CreateSpot />
           </PrivateRoute>
           <PublicRoute path="/spot/:spot_id">
@@ -81,6 +81,7 @@ const Main = styled.div`
   flex: 1;
   /* background: #edf2f7; */
   background-image: url(${background});
+  background-attachment: fixed;
 `;
 
 export default App;

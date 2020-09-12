@@ -1,5 +1,27 @@
 import { getSpot, createSpot, reviewSpot } from "../services/spots";
 
+const INIT_SPOT = "INIT_SPOT";
+const SET_SPOT = "SET_SPOT";
+
+export const initSpotAction = () => ({
+  type: INIT_SPOT,
+  data: {
+    name: "",
+    keywords: "",
+    type: [],
+    equipment: [],
+    description: "",
+    photos: [],
+    latitude: 10,
+    longitude: -30,
+  },
+});
+
+export const setSpotAction = (data) => ({
+  type: SET_SPOT,
+  data,
+});
+
 const SPOT_API_PENDING = "SPOT_API_PENDING";
 const SPOT_API_SUCCESS = "SPOT_API_SUCCESS";
 const SPOT_API_FAILURE = "SPOT_API_FAILURE";
@@ -63,6 +85,10 @@ const spotsReducer = (state = INITIAL_STATE, action) => {
       return { ...state, pending: false, data: action.data, error: null };
     case SPOT_API_FAILURE:
       return { ...state, pending: false, data: null, error: action.error };
+    case INIT_SPOT:
+      return { ...state, pending: false, data: action.data, error: null };
+    case SET_SPOT:
+      return { ...state, data: { ...state.data, ...action.data } };
     default:
       return state;
   }

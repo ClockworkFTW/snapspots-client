@@ -17,7 +17,7 @@ const Header = () => {
       <Group>
         <Link to="/spot/explore">Explore</Link>
         <Link to="/spot/search">Search</Link>
-        <Link to="/spot/create">Create</Link>
+        <Link to="/spot/edit/new">Create</Link>
       </Group>
       <Group>
         <Logo to="/">SnapSpots</Logo>

@@ -3,40 +3,85 @@ import mapboxgl from "mapbox-gl";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
+import { setSpotAction } from "../../reducers/spot";
+
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
-const PickMap = ({ children, width, height }) => {
+const PickMap = ({ editing, children, width, height }) => {
   const dispatch = useDispatch();
   const mapContainerRef = useRef(null);
 
   const { cLat, cLng } = useSelector((state) => state.map);
+  const { data } = useSelector((state) => state.spot);
+
+  const center = [data.longitude, data.latitude];
+  const zoom = editing ? 12 : 1;
+  const setFeature = ({ lat, lng }) => [
+    {
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: [lng, lat],
+      },
+      properties: {},
+    },
+  ];
 
   const [map, setMap] = useState(null);
+  const [alert, setAlert] = useState(null);
 
   // Initialize map and add event handlers
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/clockworkftw/ckersb0f34k7o19mz3u1we53c",
-      center: [-10, 30],
-      zoom: 1,
+      center,
+      zoom,
     });
 
     // Add navigation controls
     map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
 
+    // Add a new source and layer to the map for displaying spots
+    map.on("load", () => {
+      map.addSource("spot-data", {
+        type: "geojson",
+        data: {
+          type: "FeatureCollection",
+          features: editing
+            ? setFeature({ lat: data.latitude, lng: data.longitude })
+            : [],
+        },
+      });
+
+      map.addLayer({
+        id: "spot-layer",
+        source: "spot-data",
+        type: "symbol",
+        layout: {
+          "icon-image": "pin",
+          "icon-size": 0.08,
+          "icon-padding": 0,
+          "icon-allow-overlap": true,
+        },
+      });
+    });
+
     // Add popup on click
-    // map.on("click", "spots-layer", (e) => {
-    //   if (e.features.length) {
-    //     const feature = e.features[0];
-    //     const popupNode = document.createElement("div");
-    //     ReactDOM.render(<Popup feature={feature} />, popupNode);
-    //     popUpRef.current
-    //       .setLngLat(feature.geometry.coordinates)
-    //       .setDOMContent(popupNode)
-    //       .addTo(map);
-    //   }
-    // });
+    map.on("click", (e) => {
+      if (map.getZoom() < 12) {
+        setAlert("Please zoom in more");
+      } else {
+        setAlert(null);
+        dispatch(
+          setSpotAction({ latitude: e.lngLat.lat, longitude: e.lngLat.lng })
+        );
+        map.getSource("spot-data").setData({
+          type: "FeatureCollection",
+          features: setFeature(e.lngLat),
+        });
+      }
+    });
 
     // Add the map to state so it can be accessed in other useEffect functions
     setMap(map);
@@ -55,6 +100,7 @@ const PickMap = ({ children, width, height }) => {
 
   return (
     <Wrapper width={width} height={height}>
+      {alert && <Alert>{alert}</Alert>}
       {children && <Children>{children}</Children>}
       <Container className="map-container" ref={mapContainerRef} />
     </Wrapper>
@@ -66,6 +112,17 @@ const Wrapper = styled.div`
   flex: ${({ width }) => `0 0 ${width || "100%"}`};
   width: ${({ width }) => width || "100%"};
   height: ${({ height }) => height || "100%"};
+`;
+
+const Alert = styled.div`
+  z-index: 10;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  padding: 8px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.08);
 `;
 
 const Children = styled.div`
@@ -83,6 +140,7 @@ const Container = styled.div`
   left: 0;
   right: 0;
   border-radius: 8px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.08);
   overflow: hidden;
 `;
 

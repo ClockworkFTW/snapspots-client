@@ -7,8 +7,8 @@ import { ReviewRating } from "../Review";
 import SpotStatus from "./SpotStatus";
 
 const SpotCardSmall = ({ index, spot, handleSelect, setFocus }) => {
-  const { spot_id, account_id } = spot.properties;
-  const { name, formatted_address, reviews, photos } = spot.properties;
+  // prettier-ignore
+  const { spot_id, account_id,  name, formatted_address, reviews, photos } = spot;
 
   const title = index ? `#${index} - ${name}` : name;
 

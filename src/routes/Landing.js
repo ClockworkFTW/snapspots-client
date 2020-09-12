@@ -11,14 +11,15 @@ import { SpotPreviews } from "../components/Places";
 
 const Landing = () => {
   const [spots, setSpots] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    previewSpots(setSpots);
+    previewSpots(setSpots, setError);
   }, []);
 
   return (
-    <Center>
-      {spots && (
+    spots && (
+      <Center>
         <Container>
           <Welcome>
             <H1>Welcome to SnapSpots!</H1>
@@ -28,10 +29,10 @@ const Landing = () => {
             </H2>
           </Welcome>
           <Search width="600px" />
-          <SpotPreviews spots={spots} />
+          <SpotPreviews spots={spots} error={error} />
         </Container>
-      )}
-    </Center>
+      </Center>
+    )
   );
 };
 
@@ -41,9 +42,12 @@ const Container = styled.div`
 `;
 
 const Welcome = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 30px;
+  padding: 30px;
   text-align: center;
-  color: #2d3748;
+  color: #ffffff;
+  text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4), 0px 8px 13px rgba(0, 0, 0, 0.1),
+    0px 18px 23px rgba(0, 0, 0, 0.1);
 `;
 
 const H1 = styled.h1`
@@ -53,7 +57,7 @@ const H1 = styled.h1`
 `;
 
 const H2 = styled.h2`
-  font-size: 30px;
+  font-size: 24px;
 `;
 
 export default Landing;

@@ -23,6 +23,7 @@ const Gallery = ({ photos, name, onClick, onError }) => (
 );
 
 const Image = styled.img`
+  border-radius: 8px;
   &:hover {
     cursor: pointer;
   }
