@@ -112,6 +112,9 @@ const Wrapper = styled.div`
   flex: ${({ width }) => `0 0 ${width || "100%"}`};
   width: ${({ width }) => width || "100%"};
   height: ${({ height }) => height || "100%"};
+  border-radius: 8px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.08);
+  overflow: hidden;
 `;
 
 const Alert = styled.div`
@@ -139,9 +142,6 @@ const Container = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  border-radius: 8px;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.08);
-  overflow: hidden;
 `;
 
 export default PickMap;

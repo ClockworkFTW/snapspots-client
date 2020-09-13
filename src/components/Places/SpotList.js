@@ -3,23 +3,20 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { createSpotAction } from "../../reducers/spot";
+import { searchSpotsAction } from "../../reducers/spots";
 import { setMapViewportAction } from "../../reducers/map";
 
 import SpotCardLarge from "./SpotCardLarge";
 import SpotCardSmall from "./SpotCardSmall";
 
-const Places = () => {
+const SpotList = ({ spots }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { pending, data, error } = useSelector((state) => state.spots);
-
   const handleSelect = (i) => {
-    const spot = data.geoJSON[i];
-    const {
-      geometry: { coordinates },
-      properties: { spot_id },
-    } = spot;
+    const spot = spots[i - 1];
+    // prettier-ignore
+    const { geometry: { coordinates }, properties: { spot_id } } = spot;
 
     if (spot_id) {
       history.push(`/spot/${spot_id}`);
@@ -27,6 +24,8 @@ const Places = () => {
       const newSpot = {
         custom: false,
         ...spot.properties,
+        type: [],
+        equipment: [],
         latitude: coordinates[1],
         longitude: coordinates[0],
       };
@@ -54,8 +53,8 @@ const Places = () => {
 
   return (
     <div ref={container}>
-      {data
-        ? data.geoJSON.map((spot, i) =>
+      {spots
+        ? spots.map((spot, i) =>
             width > 800 ? (
               <SpotCardLarge
                 key={i}
@@ -81,4 +80,18 @@ const Places = () => {
   );
 };
 
-export default Places;
+export const SpotListWithData = ({ place_id }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (place_id) {
+      dispatch(searchSpotsAction(place_id));
+    }
+  }, []);
+
+  const { pending, data, error } = useSelector((state) => state.spots);
+
+  return data && <SpotList spots={data.geoJSON} />;
+};
+
+export default SpotList;

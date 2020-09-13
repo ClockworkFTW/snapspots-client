@@ -23,7 +23,9 @@ export const searchSpotsAction = (place_id, history) => async (dispatch) => {
   try {
     const spots = await searchSpots(place_id);
     dispatch(spotsApiSuccess(spots));
-    history.push(`/spot/search`);
+    if (history) {
+      history.push(`/spot/search`);
+    }
   } catch (error) {
     dispatch(spotsApiFailure(error));
   }

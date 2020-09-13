@@ -8,24 +8,22 @@ import { DisplayMap } from "../components/Map";
 import { SpotList } from "../components/Places";
 
 const SearchSpot = () => {
-  const { pending, data, error } = useSelector((state) => state.spots);
+  const { data } = useSelector((state) => state.spots);
 
   return (
     <Container>
-      {error ? (
-        <h1>Oh no... something went wrong!</h1>
-      ) : data ? (
-        <Main>
-          <Header>Search</Header>
-          <Search />
-          <Header>Map</Header>
-          <DisplayMap spots={data} width="100%" height="600px" zoom="10" />
-          <Header>Top Spots {data ? `(${data.geoJSON.length})` : null}</Header>
-          <SpotList spots={data} />
-        </Main>
-      ) : (
-        <h1>No spots found...</h1>
-      )}
+      <Header>Search</Header>
+      <Search redirect={true} />
+      <Header>Map</Header>
+      <DisplayMap
+        spots={data ? data.geoJSON : []}
+        center={data ? data.coords : [-10, 30]}
+        zoom={data ? 10 : 1}
+        width="100%"
+        height="600px"
+      />
+      <Header>Top Spots {data && `(${data.geoJSON.length})`}</Header>
+      <SpotList spots={data ? data.geoJSON : null} />
     </Container>
   );
 };
@@ -42,7 +40,5 @@ const Header = styled.h1`
   font-weight: 900;
   color: #2d3748;
 `;
-
-const Main = styled.div``;
 
 export default SearchSpot;

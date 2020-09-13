@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { Link as L, useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import {
@@ -64,7 +64,7 @@ const CreateSpot = () => {
           </Error>
         )}
         <PickerMap editing={editing} height="500px">
-          <Search explore={true} />
+          <Search />
         </PickerMap>
         <Form>
           <Row>
@@ -126,9 +126,16 @@ const CreateSpot = () => {
               />
             </Group>
           </Row>
-          <Button onClick={handleSubmit}>
-            {editing ? "Update Spot" : "Create Spot"}
-          </Button>
+          <Row>
+            <Group>
+              <Button onClick={handleSubmit} fill={true}>
+                {editing ? "Update Spot" : "Create Spot"}
+              </Button>
+            </Group>
+            <Group>
+              <Button onClick={() => history.goBack()}>Cancel</Button>
+            </Group>
+          </Row>
         </Form>
       </Container>
     )
@@ -209,15 +216,16 @@ const Textarea = styled.textarea`
 const Button = styled.button`
   width: 100%;
   padding: 10px 0;
-  background: #ed8936;
-  border: none;
-  outline: none;
+  text-decoration: none;
+  color: ${({ fill }) => (fill ? "#ffffff" : "#ED8936")};
+  background: ${({ fill }) => (fill ? "#ED8936" : "#ffffff")};
+  border: 2px solid #ed8936;
   border-radius: 8px;
+  text-align: center;
   font-size: 14px;
   font-weight: 700;
-  color: #ffffff;
   &:hover {
-    opacity: 0.7;
+    opacity: 0.8;
     cursor: pointer;
   }
 `;

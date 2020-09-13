@@ -7,8 +7,8 @@ import { ReviewRating } from "../Review";
 import SpotStatus from "./SpotStatus";
 
 const SpotCardLarge = ({ index, spot, handleSelect, setFocus }) => {
-  const { spot_id, account_id, name, description } = spot.properties;
-  const { formatted_address, photos, reviews } = spot.properties;
+  // prettier-ignore
+  const { spot_id, account_id, name, description, area, photos, reviews } = spot.properties;
 
   const title = index ? `#${index} - ${name}` : name;
 
@@ -19,7 +19,7 @@ const SpotCardLarge = ({ index, spot, handleSelect, setFocus }) => {
       </Photos>
       <Content onClick={() => (handleSelect ? handleSelect(index) : null)}>
         <Title>{title}</Title>
-        <Address>{formatted_address}</Address>
+        <Area>{area}</Area>
         <Group>
           <SpotStatus spot_id={spot_id} account_id={account_id} />
           <ReviewRating reviews={reviews} size="20" />
@@ -70,7 +70,7 @@ const Group = styled.div`
   display: flex;
 `;
 
-const Address = styled.h3`
+const Area = styled.h3`
   margin: 8px 0;
   font-size: 14px;
   color: #a0aec0;

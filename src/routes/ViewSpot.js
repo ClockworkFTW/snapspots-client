@@ -13,7 +13,7 @@ import Time from "../components/Time";
 import Forecast from "../components/Forecast";
 import { ReviewList, ReviewForm, ReviewRating } from "../components/Review";
 import { DisplayMap } from "../components/Map";
-import { SpotList } from "../components/Places";
+import { SpotListWithData } from "../components/Places";
 
 const ViewSpot = () => {
   const dispatch = useDispatch();
@@ -33,6 +33,18 @@ const ViewSpot = () => {
     }
   }, [spot_id]);
 
+  const canEdit = () => {
+    if (user.data) {
+      if (data.custom) {
+        return user.data.account_id === data.account_id;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  };
+
   return pending ? (
     <Loader />
   ) : data ? (
@@ -51,9 +63,7 @@ const ViewSpot = () => {
       <Content>
         <Main>
           <Section>
-            {user.data.account_id === data.account_id && (
-              <Link to={`/spot/edit/${data.spot_id}`}>edit</Link>
-            )}
+            {canEdit() && <Link to={`/spot/edit/${data.spot_id}`}>edit</Link>}
             <Description>{data.description}</Description>
             <div>
               {data.type.map((type) => (
@@ -76,26 +86,23 @@ const ViewSpot = () => {
           </Section>
         </Main>
         <Sidebar>
-          {/* <DisplayMap
+          <DisplayMap
             width="300px"
             height="300px"
-            spots={{
-              coords: data.geometry.coordinates,
-              geoJSON: [data],
-            }}
+            center={[data.longitude, data.latitude]}
+            spots={[
+              {
+                type: "Feature",
+                geometry: {
+                  type: "Point",
+                  coordinates: [data.longitude, data.latitude],
+                },
+                properties: { ...data },
+              },
+            ]}
             zoom="12"
           />
-          <h1
-            style={{
-              margin: "20px 0 10px 0",
-              fontSize: "20px",
-              fontWeight: "900",
-              color: "#4a5568",
-            }}
-          >
-            Nearby Spots
-          </h1>
-          <SpotList spots={data.nearby} /> */}
+          <SpotListWithData place_id={data.place_id} />
         </Sidebar>
       </Content>
     </Container>

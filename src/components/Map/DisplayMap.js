@@ -7,7 +7,7 @@ import Popup from "./Popup";
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
-const Map = ({ spots, width, height, center, zoom }) => {
+const Map = ({ spots, center, zoom, width, height }) => {
   const mapContainerRef = useRef(null);
   const popUpRef = useRef(new mapboxgl.Popup({ offset: 15 }));
 
@@ -15,8 +15,8 @@ const Map = ({ spots, width, height, center, zoom }) => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/clockworkftw/ckersb0f34k7o19mz3u1we53c",
-      center: center ? center : spots ? spots.coords : [-10, 30],
-      zoom: zoom || 10,
+      center: center,
+      zoom: zoom,
     });
 
     // Add a new source and layer to the map for displaying spots
@@ -25,7 +25,7 @@ const Map = ({ spots, width, height, center, zoom }) => {
         type: "geojson",
         data: {
           type: "FeatureCollection",
-          features: spots ? spots.geoJSON : [],
+          features: spots,
         },
         cluster: true,
         clusterMaxZoom: 14,

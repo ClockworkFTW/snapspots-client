@@ -8,7 +8,7 @@ import { autocomplete, geocode } from "../../services/google";
 import { searchSpotsAction } from "../../reducers/spots";
 import { setMapViewportAction } from "../../reducers/map";
 
-const Search = ({ explore, width }) => {
+const Search = ({ redirect, width }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -26,12 +26,12 @@ const Search = ({ explore, width }) => {
   const handleSelect = async ({ place_id, description }) => {
     setSearch(description);
     setPredictions([]);
-    if (explore) {
+    if (redirect) {
+      dispatch(searchSpotsAction(place_id, history));
+    } else {
       const place = await geocode(place_id);
       const { lat, lng } = place.geometry.location;
       dispatch(setMapViewportAction({ zoom: 12, cLat: lat, cLng: lng }));
-    } else {
-      dispatch(searchSpotsAction(place_id, history));
     }
   };
 

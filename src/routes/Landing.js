@@ -28,7 +28,7 @@ const Landing = () => {
               world.
             </H2>
           </Welcome>
-          <Search width="600px" />
+          <Search redirect={true} width="600px" />
           <SpotPreviews spots={spots} error={error} />
         </Container>
       </Center>

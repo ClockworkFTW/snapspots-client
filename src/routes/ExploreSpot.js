@@ -6,7 +6,7 @@ import { setMapViewportAction } from "../reducers/map";
 
 import Search from "../components/Search";
 import ExploreMap from "../components/Map/ExploreMap";
-import { SpotList } from "../components/Places";
+import { SpotListWithData } from "../components/Places";
 
 const ExploreSpot = () => {
   const dispatch = useDispatch();
@@ -28,8 +28,8 @@ const ExploreSpot = () => {
   return (
     <Container>
       <Sidebar>
-        <Search explore={true} />
-        <SpotList />
+        <Search />
+        <SpotListWithData />
       </Sidebar>
       <Main>{render && <ExploreMap />}</Main>
     </Container>
