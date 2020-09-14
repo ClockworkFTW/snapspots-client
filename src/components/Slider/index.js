@@ -10,30 +10,27 @@ import "swiper/swiper-bundle.min.css";
 // Instal Swiper components
 SwiperCore.use([Autoplay]);
 
-const Slider = ({ photos, children, width, height }) => {
-  console.log(photos);
-  return (
-    <Wrapper width={width} height={height}>
-      {children && <Content>{children}</Content>}
-      <Container>
-        <Swiper
-          spaceBetween={0}
-          slidesPerView={1}
-          autoplay={children ? true : false}
-          disableOnInteraction={false}
-          loop={true}
-          style={{ width: "100%", height: "100%" }}
-        >
-          {photos.map((photo) => (
-            <SwiperSlide>
-              <Photo photo={photo} overlay={children ? true : false} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </Container>
-    </Wrapper>
-  );
-};
+const Slider = ({ photos, children, width, height }) => (
+  <Wrapper width={width} height={height}>
+    {children && <Content>{children}</Content>}
+    <Container>
+      <Swiper
+        spaceBetween={0}
+        slidesPerView={1}
+        autoplay={children ? true : false}
+        disableOnInteraction={false}
+        loop={true}
+        style={{ width: "100%", height: "100%" }}
+      >
+        {photos.map((photo) => (
+          <SwiperSlide>
+            <Photo photo={photo} overlay={children ? true : false} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </Container>
+  </Wrapper>
+);
 
 const Wrapper = styled.div`
   position: relative;

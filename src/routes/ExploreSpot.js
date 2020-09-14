@@ -6,7 +6,7 @@ import { setMapViewportAction } from "../reducers/map";
 
 import Search from "../components/Search";
 import ExploreMap from "../components/Map/ExploreMap";
-import { SpotListWithData } from "../components/Places";
+import { SpotList } from "../components/Spots";
 
 const ExploreSpot = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,9 @@ const ExploreSpot = () => {
       dispatch(setMapViewportAction({ cLat: latitude, cLng: longitude }));
     };
 
-    const err = () => alert("PLEASE ENABLE LOCATION");
+    const err = () => {
+      dispatch(setMapViewportAction({ cLat: 37.7749, cLng: -122.4194 }));
+    };
 
     navigator.geolocation.getCurrentPosition(success, err);
   }, []);
@@ -28,8 +30,12 @@ const ExploreSpot = () => {
   return (
     <Container>
       <Sidebar>
-        <Search />
-        <SpotListWithData />
+        <Header>
+          <Search />
+        </Header>
+        <Content>
+          <SpotList />
+        </Content>
       </Sidebar>
       <Main>{render && <ExploreMap />}</Main>
     </Container>
@@ -46,10 +52,19 @@ const Container = styled.div`
 `;
 
 const Sidebar = styled.div`
+  position: relative;
   float: left;
   width: 400px;
   height: 100%;
-  padding: 20px;
+`;
+
+const Header = styled.div`
+  padding: 20px 20px 10px 20px;
+`;
+
+const Content = styled.div`
+  height: calc(100% - 80px);
+  padding: 0 20px 20px 20px;
   overflow: scroll;
 `;
 

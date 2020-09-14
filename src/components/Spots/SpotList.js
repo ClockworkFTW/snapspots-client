@@ -9,10 +9,42 @@ import { setMapViewportAction } from "../../reducers/map";
 import SpotCardLarge from "./SpotCardLarge";
 import SpotCardSmall from "./SpotCardSmall";
 
-const SpotList = ({ spots }) => {
+const SpotList = ({ place_id }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  useEffect(() => {
+    if (place_id) {
+      dispatch(searchSpotsAction(place_id));
+    }
+  }, []);
+
+  // Select spots from redux and sort based on average review rating
+  const spots = useSelector((state) => {
+    if (state.spots.data) {
+      return state.spots.data.geoJSON.sort((a, b) => {
+        const reviewsA = a.properties.reviews;
+        const reviewsB = b.properties.reviews;
+
+        const avgRatingReviewsA =
+          reviewsA.length === 0
+            ? 0
+            : reviewsA.reduce((acc, cur) => acc + cur.rating, 0) /
+              reviewsA.length;
+        const avgRatingReviewsB =
+          reviewsB.length === 0
+            ? 0
+            : reviewsB.reduce((acc, cur) => acc + cur.rating, 0) /
+              reviewsB.length;
+
+        return avgRatingReviewsB - avgRatingReviewsA;
+      });
+    } else {
+      return null;
+    }
+  });
+
+  // If the spot is in the database, redirect to the view page, otherwise create a new spot
   const handleSelect = (i) => {
     const spot = spots[i - 1];
     // prettier-ignore
@@ -34,10 +66,10 @@ const SpotList = ({ spots }) => {
     }
   };
 
-  // Add popup on mouse enter
+  // Add popup to the map on mouse enter
   const setFocus = (spot) => dispatch(setMapViewportAction({ focus: spot }));
 
-  // Handle resizing
+  // Handle rendering of cards based on container width
   const [width, setWidth] = useState(null);
   const container = useRef(null);
 
@@ -78,20 +110,6 @@ const SpotList = ({ spots }) => {
         : null}
     </div>
   );
-};
-
-export const SpotListWithData = ({ place_id }) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (place_id) {
-      dispatch(searchSpotsAction(place_id));
-    }
-  }, []);
-
-  const { pending, data, error } = useSelector((state) => state.spots);
-
-  return data && <SpotList spots={data.geoJSON} />;
 };
 
 export default SpotList;

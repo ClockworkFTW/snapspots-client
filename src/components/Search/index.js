@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 
 import { autocomplete, geocode } from "../../services/google";
+import { setSearchAction } from "../../reducers/search";
 import { searchSpotsAction } from "../../reducers/spots";
 import { setMapViewportAction } from "../../reducers/map";
 
@@ -12,19 +13,19 @@ const Search = ({ redirect, width }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const { search } = useSelector((state) => state);
   const { pending, error } = useSelector((state) => state.spots);
 
-  const [search, setSearch] = useState("");
   const [predictions, setPredictions] = useState([]);
 
   const handleSearch = (e) => {
     const input = e.target.value;
-    setSearch(input);
+    dispatch(setSearchAction(input));
     autocomplete(input, setPredictions);
   };
 
   const handleSelect = async ({ place_id, description }) => {
-    setSearch(description);
+    dispatch(setSearchAction(description));
     setPredictions([]);
     if (redirect) {
       dispatch(searchSpotsAction(place_id, history));
@@ -36,7 +37,7 @@ const Search = ({ redirect, width }) => {
   };
 
   const handleClear = () => {
-    setSearch("");
+    dispatch(setSearchAction(""));
     setPredictions([]);
   };
 

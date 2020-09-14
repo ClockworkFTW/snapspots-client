@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 // Import services
@@ -7,15 +8,20 @@ import { previewSpots } from "../services/spots";
 // Import custom components
 import Center from "../components/Center";
 import Search from "../components/Search";
-import { SpotPreviews } from "../components/Places";
+import { SpotPreviews } from "../components/Spots";
 
 const Landing = () => {
+  const history = useHistory();
+
   const [spots, setSpots] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     previewSpots(setSpots, setError);
   }, []);
+
+  const handleSelect = (i) =>
+    history.push(`/spot/${spots[i].properties.spot_id}`);
 
   return (
     spots && (
@@ -29,7 +35,11 @@ const Landing = () => {
             </H2>
           </Welcome>
           <Search redirect={true} width="600px" />
-          <SpotPreviews spots={spots} error={error} />
+          <SpotPreviews
+            spots={spots}
+            error={error}
+            handleSelect={handleSelect}
+          />
         </Container>
       </Center>
     )

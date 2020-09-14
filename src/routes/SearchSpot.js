@@ -5,7 +5,7 @@ import styled from "styled-components";
 // Import custom components
 import Search from "../components/Search";
 import { DisplayMap } from "../components/Map";
-import { SpotList } from "../components/Places";
+import { SpotList } from "../components/Spots";
 
 const SearchSpot = () => {
   const { data } = useSelector((state) => state.spots);
@@ -23,7 +23,7 @@ const SearchSpot = () => {
         height="600px"
       />
       <Header>Top Spots {data && `(${data.geoJSON.length})`}</Header>
-      <SpotList spots={data ? data.geoJSON : null} />
+      <SpotList />
     </Container>
   );
 };

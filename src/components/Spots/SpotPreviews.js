@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 // Import custom components
@@ -13,7 +12,7 @@ import "swiper/swiper-bundle.min.css";
 // Instal Swiper components
 SwiperCore.use([Autoplay]);
 
-const SpotPreview = ({ spots, error }) =>
+const SpotPreview = ({ spots, error, handleSelect }) =>
   error ? (
     <Error>Could not load spots...</Error>
   ) : (
@@ -26,9 +25,11 @@ const SpotPreview = ({ spots, error }) =>
     >
       {spots.map((spot, i) => (
         <SwiperSlide>
-          <Link to={`/spot/${spot.spot_id}`} style={{ textDecoration: "none" }}>
-            <SpotCardSmall key={i} spot={spot} />
-          </Link>
+          <SpotCardSmall
+            key={i}
+            spot={spot}
+            handleSelect={() => handleSelect(i)}
+          />
         </SwiperSlide>
       ))}
     </Swiper>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import Gallery from "../Places/Gallery";
+import Gallery from "../Spots/Gallery";
 
 const PhotoPicker = ({ photos, setPhotos }) => {
   const [photo, setPhoto] = useState("");

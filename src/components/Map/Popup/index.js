@@ -4,12 +4,11 @@ import "./index.css";
 
 import Slider from "../../Slider";
 import { ReviewRating } from "../../Review";
-import SpotStatus from "../../Places/SpotStatus";
+import SpotStatus from "../../Spots/SpotStatus";
 
 const Popup = ({ feature: { properties } }) => {
-  const { place_id, name, formatted_address, photos, reviews } = properties;
-
-  // const photos = JSON.parse(feature.properties.photos);
+  // prettier-ignore
+  const { spot_id, account_id, place_id, name, area, photos, reviews } = properties;
 
   return (
     <Container id={`popup-${place_id}`}>
@@ -18,10 +17,10 @@ const Popup = ({ feature: { properties } }) => {
       </Photos>
       <Content>
         <Name>{name}</Name>
-        <Address>{formatted_address}</Address>
+        <Address>{area}</Address>
         <Group>
-          <SpotStatus properties={properties} />
-          <ReviewRating rating={reviews} size="20" />
+          <SpotStatus spot_id={spot_id} account_id={account_id} />
+          <ReviewRating reviews={reviews} size="20" />
         </Group>
       </Content>
     </Container>

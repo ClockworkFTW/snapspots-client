@@ -8,12 +8,12 @@ import { getSpotAction } from "../reducers/spot";
 import Loader from "../components/Loader";
 import Slider from "../components/Slider";
 import ActionBar from "../components/ActionBar";
-import SpotStatus from "../components/Places/SpotStatus";
+import SpotStatus from "../components/Spots/SpotStatus";
 import Time from "../components/Time";
 import Forecast from "../components/Forecast";
 import { ReviewList, ReviewForm, ReviewRating } from "../components/Review";
 import { DisplayMap } from "../components/Map";
-import { SpotListWithData } from "../components/Places";
+import { SpotList } from "../components/Spots";
 
 const ViewSpot = () => {
   const dispatch = useDispatch();
@@ -102,7 +102,8 @@ const ViewSpot = () => {
             ]}
             zoom="12"
           />
-          <SpotListWithData place_id={data.place_id} />
+          <Nearby>Nearby Spots</Nearby>
+          <SpotList place_id={data.place_id} />
         </Sidebar>
       </Content>
     </Container>
@@ -118,16 +119,12 @@ const Container = styled.div`
   overflow: hidden;
 `;
 
-const Content = styled.div`
-  display: flex;
-`;
+const Content = styled.div``;
 
-const Main = styled.div``;
-
-const Sidebar = styled.div`
-  flex: 0 0 300px;
-  padding: 26px;
-  border-left: 1px solid #e2e8f0;
+const Main = styled.div`
+  float: left;
+  width: calc(100% - 352px);
+  border-right: 1px solid #e2e8f0;
 `;
 
 const Section = styled.div`
@@ -175,6 +172,20 @@ const Type = styled.li`
   border: 1px solid #667eea;
   color: #667eea;
   font-size: 12px;
+`;
+
+const Sidebar = styled.div`
+  float: right;
+  width: 352px;
+  padding: 26px;
+  border-left: 1px solid #e2e8f0;
+`;
+
+const Nearby = styled.h2`
+  margin: 40px 0 20px 0;
+  font-size: 18px;
+  font-weight: 900;
+  color: #4a5568;
 `;
 
 export default ViewSpot;

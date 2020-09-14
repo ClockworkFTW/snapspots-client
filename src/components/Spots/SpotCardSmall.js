@@ -35,7 +35,7 @@ const SpotCardSmall = ({ index, spot, handleSelect, setFocus }) => {
 const Container = styled.div`
   position: relative;
   width: 100%;
-  margin: 20px 0;
+  margin-bottom: 20px;
   border-radius: 8px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.08);
   background-color: #ffffff;

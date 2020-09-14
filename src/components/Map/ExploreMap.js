@@ -178,6 +178,7 @@ const Wrapper = styled.div`
   flex: ${(props) => `0 0 ${props.width || "100%"}`};
   width: ${(props) => props.width || "100%"};
   height: ${(props) => props.height || "100%"};
+  background: #a0aec0;
 `;
 
 const Container = styled.div`
