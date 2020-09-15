@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
-import { setMapViewportAction } from "../reducers/map";
+import { setMapAction } from "../reducers/map";
 
 import Search from "../components/Search";
 import ExploreMap from "../components/Map/ExploreMap";
@@ -10,35 +10,41 @@ import { SpotList } from "../components/Spots";
 
 const ExploreSpot = () => {
   const dispatch = useDispatch();
-  const viewport = useSelector((state) => state.map);
-  const render = viewport.cLat && viewport.cLng;
+  const { cLat, cLng } = useSelector((state) => state.map);
+  const render = cLat && cLng;
 
   // Get initial map center based on user location
   useEffect(() => {
-    const success = (position) => {
-      const { latitude, longitude } = position.coords;
-      dispatch(setMapViewportAction({ cLat: latitude, cLng: longitude }));
-    };
+    if (!render) {
+      const success = (position) => {
+        const { latitude, longitude } = position.coords;
+        dispatch(setMapAction({ cLat: latitude, cLng: longitude }));
+      };
 
-    const err = () => {
-      dispatch(setMapViewportAction({ cLat: 37.7749, cLng: -122.4194 }));
-    };
+      const err = () => {
+        dispatch(setMapAction({ cLat: 37.7749, cLng: -122.4194 }));
+      };
 
-    navigator.geolocation.getCurrentPosition(success, err);
-  }, []);
+      navigator.geolocation.getCurrentPosition(success, err);
+    }
+  }, [render]);
 
   return (
-    <Container>
-      <Sidebar>
-        <Header>
-          <Search />
-        </Header>
-        <Content>
-          <SpotList />
-        </Content>
-      </Sidebar>
-      <Main>{render && <ExploreMap />}</Main>
-    </Container>
+    render && (
+      <Container>
+        <Sidebar>
+          <Header>
+            <Search />
+          </Header>
+          <Content>
+            <SpotList />
+          </Content>
+        </Sidebar>
+        <Main>
+          <ExploreMap />
+        </Main>
+      </Container>
+    )
   );
 };
 

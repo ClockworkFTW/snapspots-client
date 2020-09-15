@@ -49,7 +49,7 @@ const ViewSpot = () => {
     <Loader />
   ) : data ? (
     <Container>
-      <Slider photos={data.photos} height="360px">
+      <Slider photos={data.photos} effect="fade" height="360px">
         <Metadata>
           <Name>{data.name}</Name>
           <Group>
@@ -124,7 +124,6 @@ const Content = styled.div``;
 const Main = styled.div`
   float: left;
   width: calc(100% - 352px);
-  border-right: 1px solid #e2e8f0;
 `;
 
 const Section = styled.div`

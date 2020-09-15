@@ -13,7 +13,7 @@ const SearchSpot = () => {
   return (
     <Container>
       <Header>Search</Header>
-      <Search redirect={true} />
+      <Search fetch={true} />
       <Header>Map</Header>
       <DisplayMap
         spots={data ? data.geoJSON : []}

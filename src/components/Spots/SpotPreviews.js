@@ -22,6 +22,7 @@ const SpotPreview = ({ spots, error, handleSelect }) =>
       autoplay={{ delay: 3000 }}
       disableOnInteraction={false}
       loop={true}
+      style={{ marginTop: "30px" }}
     >
       {spots.map((spot, i) => (
         <SwiperSlide>

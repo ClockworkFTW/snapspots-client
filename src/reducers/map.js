@@ -1,25 +1,20 @@
 const SET_MAP_VIEWPORT = "SET_MAP_VIEWPORT";
 
-export const setMapViewportAction = (viewport) => ({
+export const setMapAction = (data) => ({
   type: SET_MAP_VIEWPORT,
-  viewport,
+  data,
 });
 
 const INITIAL_STATE = {
   zoom: 10,
   cLat: null,
   cLng: null,
-  neLat: null,
-  neLng: null,
-  swLat: null,
-  swLng: null,
-  focus: null,
 };
 
 const mapReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case SET_MAP_VIEWPORT:
-      return { ...state, ...action.viewport };
+      return { ...state, ...action.data };
     default:
       return state;
   }

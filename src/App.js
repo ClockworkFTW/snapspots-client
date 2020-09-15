@@ -6,7 +6,7 @@ import {
   Route as PublicRoute,
 } from "react-router-dom";
 import styled from "styled-components";
-import bg from "./assets/bg1.jpg";
+import bg from "./assets/bg.png";
 
 // Actions
 import { userInitAction } from "./reducers/user";
@@ -79,9 +79,11 @@ const App = () => {
 const Main = styled.div`
   position: relative;
   flex: 1;
-  background: #edf2f7;
-  /* background-image: url(${bg});
-  background-attachment: fixed; */
+  /* background: #edf2f7; */
+  background-image: url(${bg});
+  background-attachment: fixed;
+  background-size: 300px 300px;
+  background-repeat: true;
 `;
 
 export default App;

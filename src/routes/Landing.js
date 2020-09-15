@@ -34,7 +34,7 @@ const Landing = () => {
               world.
             </H2>
           </Welcome>
-          <Search redirect={true} width="600px" />
+          <Search fetch={true} width="600px" />
           <SpotPreviews
             spots={spots}
             error={error}
@@ -52,22 +52,24 @@ const Container = styled.div`
 `;
 
 const Welcome = styled.div`
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   padding: 30px;
   text-align: center;
   color: #ffffff;
-  text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4), 0px 8px 13px rgba(0, 0, 0, 0.1),
-    0px 18px 23px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 0 20px #ffffff;
 `;
 
 const H1 = styled.h1`
   margin-bottom: 10px;
   font-size: 80px;
   font-weight: 900;
+  color: #ed8936;
 `;
 
 const H2 = styled.h2`
   font-size: 24px;
+  color: #2d3748;
+  font-weight: 900;
 `;
 
 export default Landing;

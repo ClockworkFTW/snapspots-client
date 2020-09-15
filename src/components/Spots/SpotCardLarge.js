@@ -13,7 +13,10 @@ const SpotCardLarge = ({ index, spot, handleSelect, setFocus }) => {
   const title = index ? `#${index} - ${name}` : name;
 
   return (
-    <Container onMouseEnter={() => (setFocus ? setFocus(spot) : null)}>
+    <Container
+      onMouseEnter={() => (setFocus ? setFocus(spot) : null)}
+      onMouseLeave={() => (setFocus ? setFocus(null) : null)}
+    >
       <Photos>
         <Slider photos={photos} />
       </Photos>
@@ -72,6 +75,7 @@ const Group = styled.div`
 
 const Area = styled.h3`
   margin: 8px 0;
+  white-space: nowrap;
   font-size: 14px;
   color: #a0aec0;
 `;

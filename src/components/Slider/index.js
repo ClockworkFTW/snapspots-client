@@ -1,23 +1,33 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
+import "./index.css";
 
 // Import Swiper components
-import SwiperCore, { Autoplay } from "swiper";
+import SwiperCore, {
+  Navigation,
+  Pagination,
+  Autoplay,
+  EffectFade,
+} from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 
-// Instal Swiper components
-SwiperCore.use([Autoplay]);
+// Install Swiper components
+SwiperCore.use([Navigation, Pagination, Autoplay, EffectFade]);
 
-const Slider = ({ photos, children, width, height }) => (
+const Slider = ({ photos, children, autoplay, effect, width, height }) => (
   <Wrapper width={width} height={height}>
     {children && <Content>{children}</Content>}
     <Container>
       <Swiper
         spaceBetween={0}
         slidesPerView={1}
-        autoplay={children ? true : false}
+        pagination={
+          effect || autoplay ? false : { clickable: true, dynamicBullets: true }
+        }
+        autoplay={autoplay || children ? true : false}
+        effect={effect}
         disableOnInteraction={false}
         loop={true}
         style={{ width: "100%", height: "100%" }}

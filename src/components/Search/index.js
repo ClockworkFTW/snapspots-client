@@ -5,39 +5,39 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 
 import { autocomplete, geocode } from "../../services/google";
-import { setSearchAction } from "../../reducers/search";
 import { searchSpotsAction } from "../../reducers/spots";
-import { setMapViewportAction } from "../../reducers/map";
+import { setMapAction } from "../../reducers/map";
 
-const Search = ({ redirect, width }) => {
+const Search = ({ fetch, width }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { search } = useSelector((state) => state);
   const { pending, error } = useSelector((state) => state.spots);
 
+  const [search, setSearch] = useState("");
   const [predictions, setPredictions] = useState([]);
 
   const handleSearch = (e) => {
     const input = e.target.value;
-    dispatch(setSearchAction(input));
+    setSearch(input);
     autocomplete(input, setPredictions);
   };
 
   const handleSelect = async ({ place_id, description }) => {
-    dispatch(setSearchAction(description));
-    setPredictions([]);
-    if (redirect) {
+    if (fetch) {
       dispatch(searchSpotsAction(place_id, history));
-    } else {
-      const place = await geocode(place_id);
-      const { lat, lng } = place.geometry.location;
-      dispatch(setMapViewportAction({ zoom: 12, cLat: lat, cLng: lng }));
     }
+
+    const place = await geocode(place_id);
+    const { lat, lng } = place.geometry.location;
+    dispatch(setMapAction({ cLat: lat, cLng: lng, zoom: 12 }));
+
+    setSearch(description);
+    setPredictions([]);
   };
 
   const handleClear = () => {
-    dispatch(setSearchAction(""));
+    setSearch("");
     setPredictions([]);
   };
 

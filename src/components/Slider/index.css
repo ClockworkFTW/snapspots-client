@@ -1,0 +1,28 @@
+.swiper-pagination-bullets {
+  bottom: 16px !important;
+}
+
+.swiper-pagination-bullet {
+  width: 8px !important;
+  height: 8px !important;
+  margin: 0 6px !important;
+  background: #ffffff !important;
+  opacity: 0.5 !important;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active-prev {
+  transform: scale(1) !important;
+}
+.swiper-pagination-bullet-active-prev-prev {
+  transform: scale(0.5) !important;
+}
+.swiper-pagination-bullet-active-next {
+  transform: scale(1) !important;
+}
+.swiper-pagination-bullet-active-next-next {
+  transform: scale(0.5) !important;
+}

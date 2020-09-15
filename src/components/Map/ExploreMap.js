@@ -4,7 +4,7 @@ import mapboxgl from "mapbox-gl";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
-import { setMapViewportAction } from "../../reducers/map";
+import { setMapAction } from "../../reducers/map";
 import { exploreSpotsAction } from "../../reducers/spots";
 
 import Popup from "./Popup";
@@ -17,18 +17,18 @@ const Map = ({ width, height }) => {
   const popUpRef = useRef(new mapboxgl.Popup({ offset: 15 }));
 
   const { pending, data, error } = useSelector((state) => state.spots);
-  const { zoom, cLat, cLng, neLat, neLng, swLat, swLng, focus } = useSelector(
-    (state) => state.map
-  );
+  // prettier-ignore
+  const { zoom, cLat, cLng, neLat, neLng, swLat, swLng, focus } = useSelector((state) => state.map);
 
   const [map, setMap] = useState(null);
 
-  const fetchSpots = (map) => {
+  const getViewport = (map) => {
     const zoom = map.getZoom();
+
     const { _ne, _sw } = map.getBounds();
     const { lat, lng } = map.getCenter();
 
-    const viewport = {
+    return {
       zoom,
       cLat: lat,
       cLng: lng,
@@ -37,9 +37,6 @@ const Map = ({ width, height }) => {
       swLat: _sw.lat,
       swLng: _sw.lng,
     };
-
-    dispatch(exploreSpotsAction(viewport));
-    dispatch(setMapViewportAction(viewport));
   };
 
   // Initialize map and add event handlers
@@ -104,6 +101,12 @@ const Map = ({ width, height }) => {
           "icon-allow-overlap": true,
         },
       });
+
+      // Fetch spots after initial load
+      dispatch(exploreSpotsAction(getViewport(map)));
+
+      // Add the map to state so it can be accessed in other useEffect functions
+      setMap(map);
     });
 
     // Add navigation controls
@@ -122,21 +125,33 @@ const Map = ({ width, height }) => {
       }
     });
 
-    // Fetch new spots after the map has moved
-    map.on("moveend", () => {
-      console.log(cLat, neLat);
-      fetchSpots(map);
+    // Update the viewport state after the map has been moved
+    map.on("zoomend", () => {
+      dispatch(setMapAction(getViewport(map)));
     });
-
-    // Fetch spots during first render
-    fetchSpots(map);
-
-    // Add the map to state so it can be accessed in other useEffect functions
-    setMap(map);
+    map.on("dragend", () => {
+      dispatch(setMapAction(getViewport(map)));
+    });
 
     // Remove the map after the component unmounts
     return () => map.remove();
   }, []);
+
+  // Update map viewport when using search bar
+  useEffect(() => {
+    if (map) {
+      map.setZoom(zoom);
+      map.setCenter([cLng, cLat]);
+      dispatch(setMapAction(getViewport(map)));
+    }
+  }, [zoom, cLat, cLng]);
+
+  // Fetch new spots whenever the viewport changes
+  useEffect(() => {
+    if (map) {
+      dispatch(exploreSpotsAction(getViewport(map)));
+    }
+  }, [neLat, neLng, swLat, swLng]);
 
   // Update spots data source whenever new spots are fetched
   useEffect(() => {
@@ -146,28 +161,25 @@ const Map = ({ width, height }) => {
     }
   }, [data]);
 
-  // Update map center
-  useEffect(() => {
-    if (map) {
-      map.setCenter([cLng, cLat]);
-    }
-  }, [cLat, cLng]);
-
   // Add popup
   useEffect(() => {
     if (map) {
-      const popupNode = document.createElement("div");
-      ReactDOM.render(<Popup feature={focus} />, popupNode);
-      popUpRef.current
-        .setLngLat(focus.geometry.coordinates)
-        .setDOMContent(popupNode)
-        .addTo(map);
+      if (focus) {
+        const popupNode = document.createElement("div");
+        ReactDOM.render(<Popup feature={focus} />, popupNode);
+        popUpRef.current
+          .setLngLat(focus.geometry.coordinates)
+          .setDOMContent(popupNode)
+          .addTo(map);
+      } else {
+        popUpRef.current.remove();
+      }
     }
   }, [focus]);
 
   return (
     <Wrapper width={width} height={height}>
-      {pending && <Loader />}
+      {pending || (error && <Status error={error} />)}
       <Container className="map-container" ref={mapContainerRef} />
     </Wrapper>
   );
@@ -189,14 +201,14 @@ const Container = styled.div`
   right: 0;
 `;
 
-const Loader = styled.div`
+const Status = styled.div`
   z-index: 1;
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
   height: 10px;
-  background: #ed8936;
+  background: ${({ error }) => (error ? "#F56565" : "#ed8936")};
 `;
 
 export default Map;

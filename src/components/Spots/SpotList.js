@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { createSpotAction } from "../../reducers/spot";
 import { searchSpotsAction } from "../../reducers/spots";
-import { setMapViewportAction } from "../../reducers/map";
+import { setMapAction } from "../../reducers/map";
 
 import SpotCardLarge from "./SpotCardLarge";
 import SpotCardSmall from "./SpotCardSmall";
@@ -67,7 +67,7 @@ const SpotList = ({ place_id }) => {
   };
 
   // Add popup to the map on mouse enter
-  const setFocus = (spot) => dispatch(setMapViewportAction({ focus: spot }));
+  const setFocus = (spot) => dispatch(setMapAction({ focus: spot }));
 
   // Handle rendering of cards based on container width
   const [width, setWidth] = useState(null);
