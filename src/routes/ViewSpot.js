@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -6,9 +6,12 @@ import styled from "styled-components";
 import { getSpotAction } from "../reducers/spot";
 
 import Loader from "../components/Loader";
+import Search from "../components/Search";
 import Slider from "../components/Slider";
 import ActionBar from "../components/ActionBar";
 import SpotStatus from "../components/Spots/SpotStatus";
+import Section from "../components/Section";
+import Equipment from "../components/Equipment";
 import Time from "../components/Time";
 import Forecast from "../components/Forecast";
 import { ReviewList, ReviewForm, ReviewRating } from "../components/Review";
@@ -20,7 +23,6 @@ const ViewSpot = () => {
   const { spot_id } = useParams();
 
   // prettier-ignore
-  const user = useSelector((state) => state.user);
   const { pending, data, error } = useSelector((state) => state.spot);
 
   useEffect(() => {
@@ -33,86 +35,87 @@ const ViewSpot = () => {
     }
   }, [spot_id]);
 
-  const canEdit = () => {
-    if (user.data) {
-      if (data.custom) {
-        return user.data.account_id === data.account_id;
-      } else {
-        return true;
-      }
-    } else {
-      return false;
-    }
-  };
-
   return pending ? (
     <Loader />
   ) : data ? (
-    <Container>
-      <Slider photos={data.photos} effect="fade" height="360px">
-        <Metadata>
-          <Name>{data.name}</Name>
-          <Group>
-            <SpotStatus spot_id={data.spot_id} account_id={data.account_id} />
-            <ReviewRating reviews={data.reviews} size="20" />
-          </Group>
-          <Address>{data.formatted_address}</Address>
-        </Metadata>
-      </Slider>
-      <ActionBar />
-      <Content>
-        <Main>
-          <Section>
-            {canEdit() && <Link to={`/spot/edit/${data.spot_id}`}>edit</Link>}
-            <Description>{data.description}</Description>
-            <div>
-              {data.type.map((type) => (
-                <Type key={type}>{type}</Type>
-              ))}
-            </div>
-          </Section>
-          <Header>Popular Times</Header>
-          <Section>
-            <Time review={data.reviews} />
-          </Section>
-          <Header>Forecast</Header>
-          <Section>
-            <Forecast forecast={data.forecast} />
-          </Section>
-          <Header>Reviews</Header>
-          <Section>
-            <ReviewForm spot_id={data.spot_id} name={data.name} />
-            <ReviewList reviews={data.reviews} />
-          </Section>
-        </Main>
-        <Sidebar>
-          <DisplayMap
-            width="300px"
-            height="300px"
-            center={[data.longitude, data.latitude]}
-            spots={[
-              {
-                type: "Feature",
-                geometry: {
-                  type: "Point",
-                  coordinates: [data.longitude, data.latitude],
+    <Wrapper>
+      <Search redirect={true} />
+      <Container>
+        <Slider photos={data.photos} effect="fade" height="360px">
+          <Metadata>
+            <Name>{data.name}</Name>
+            <Group>
+              <SpotStatus spot_id={data.spot_id} account_id={data.account_id} />
+              <ReviewRating reviews={data.reviews} size="20" />
+            </Group>
+            <Area>{data.area}</Area>
+          </Metadata>
+        </Slider>
+        <ActionBar spot={data} />
+        <Content>
+          <Main>
+            <Section>
+              <Description>{data.description}</Description>
+              <div>
+                {data.type.map((type) => (
+                  <Type key={type}>{type}</Type>
+                ))}
+              </div>
+            </Section>
+            {data.equipment.length > 0 && (
+              <Section
+                headers={[`Equipment (${data.equipment.length})`, `Notes (0)`]}
+              >
+                <Equipment equipment={data.equipment} />
+                <h1>test</h1>
+              </Section>
+            )}
+            <Section headers={["Forecast", "Sunset/Sunrise"]}>
+              <Forecast forecast={data.forecast} />
+              <h1>test</h1>
+            </Section>
+            <Section
+              headers={[`Reviews (${data.reviews.length})`, "Popular Times"]}
+            >
+              <>
+                <ReviewForm spot_id={data.spot_id} name={data.name} />
+                <ReviewList reviews={data.reviews} />
+              </>
+              <Time />
+            </Section>
+          </Main>
+          <Sidebar>
+            <DisplayMap
+              width="300px"
+              height="300px"
+              center={[data.longitude, data.latitude]}
+              spots={[
+                {
+                  type: "Feature",
+                  geometry: {
+                    type: "Point",
+                    coordinates: [data.longitude, data.latitude],
+                  },
+                  properties: { ...data },
                 },
-                properties: { ...data },
-              },
-            ]}
-            zoom="12"
-          />
-          <Nearby>Nearby Spots</Nearby>
-          <SpotList place_id={data.place_id} />
-        </Sidebar>
-      </Content>
-    </Container>
+              ]}
+              zoom="12"
+            />
+            <Nearby>Nearby Spots</Nearby>
+            {/* <SpotList place_id={data.place_id} /> */}
+          </Sidebar>
+        </Content>
+      </Container>
+    </Wrapper>
   ) : null;
 };
 
-const Container = styled.div`
+const Wrapper = styled.div`
   max-width: 1000px;
   margin: 30px auto 90px auto;
+`;
+
+const Container = styled.div`
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
@@ -124,18 +127,8 @@ const Content = styled.div``;
 const Main = styled.div`
   float: left;
   width: calc(100% - 352px);
-`;
-
-const Section = styled.div`
-  padding: 26px;
-`;
-
-const Header = styled.h1`
-  padding: 20px;
-  font-size: 20px;
-  font-weight: 900;
-  color: #4a5568;
-  background: #edf2f7;
+  height: 100%;
+  border-right: 1px solid #e2e8f0;
 `;
 
 const Group = styled.div`
@@ -151,7 +144,7 @@ const Name = styled.h1`
   color: #ffffff;
 `;
 
-const Address = styled.h3`
+const Area = styled.h3`
   margin-top: 8px;
   font-size: 14px;
   color: #ffffff;
@@ -168,16 +161,15 @@ const Type = styled.li`
   margin-right: 10px;
   padding: 8px 12px;
   border-radius: 6px;
-  border: 1px solid #667eea;
-  color: #667eea;
-  font-size: 12px;
+  border: 1px solid #4299e1;
+  color: #4299e1;
+  font-size: 14px;
 `;
 
 const Sidebar = styled.div`
   float: right;
   width: 352px;
   padding: 26px;
-  border-left: 1px solid #e2e8f0;
 `;
 
 const Nearby = styled.h2`

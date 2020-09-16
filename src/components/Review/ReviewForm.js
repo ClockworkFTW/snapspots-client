@@ -33,7 +33,11 @@ const ReviewForm = ({ spot_id, name }) => {
 
   return (
     <Container>
-      {!showForm && <Button onClick={toggle}>Write Review</Button>}
+      {!showForm && (
+        <Button onClick={toggle} fill={true}>
+          Write Review
+        </Button>
+      )}
       {showForm && (
         <Form>
           <Header>How was {name}?</Header>
@@ -43,15 +47,19 @@ const ReviewForm = ({ spot_id, name }) => {
             value={comment}
             onChange={(e) => setComment(e.target.value)}
           />
-          <Button onClick={handleSubmit}>submit</Button>
-          <Button onClick={handleCancel}>cancel</Button>
+          <Button onClick={handleSubmit} fill={true}>
+            Submit
+          </Button>
+          <Button onClick={handleCancel}>Cancel</Button>
         </Form>
       )}
     </Container>
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  margin-bottom: 60px;
+`;
 
 const Form = styled.div``;
 
@@ -65,7 +73,7 @@ const Header = styled.h1`
 const TextArea = styled.textarea`
   width: 100%;
   height: 200px;
-  margin: 10px 0;
+  margin: 10px 0 30px 0;
   padding: 10px;
   border: 1px solid #e2e8f0;
   border-radius: 4px;
@@ -77,6 +85,21 @@ const TextArea = styled.textarea`
   }
 `;
 
-const Button = styled.button``;
+const Button = styled.button`
+  width: 120px;
+  margin-right: 20px;
+  color: ${({ fill }) => (fill ? "#ffffff" : "#ED8936")};
+  padding: 10px 0;
+  background: ${({ fill }) => (fill ? "#ED8936" : "#ffffff")};
+  border: 2px solid #ed8936;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+`;
 
 export default ReviewForm;

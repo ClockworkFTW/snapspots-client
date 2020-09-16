@@ -6,7 +6,7 @@ import {
   Route as PublicRoute,
 } from "react-router-dom";
 import styled from "styled-components";
-import bg from "./assets/bg.png";
+import bg from "./assets/bg1.png";
 
 // Actions
 import { userInitAction } from "./reducers/user";
@@ -82,7 +82,7 @@ const Main = styled.div`
   /* background: #edf2f7; */
   background-image: url(${bg});
   background-attachment: fixed;
-  background-size: 300px 300px;
+  background-size: 500px 500px;
   background-repeat: true;
 `;
 

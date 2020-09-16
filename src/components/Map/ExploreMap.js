@@ -149,7 +149,9 @@ const Map = ({ width, height }) => {
   // Fetch new spots whenever the viewport changes
   useEffect(() => {
     if (map) {
-      dispatch(exploreSpotsAction(getViewport(map)));
+      if (zoom > 8) {
+        dispatch(exploreSpotsAction(getViewport(map)));
+      }
     }
   }, [neLat, neLng, swLat, swLng]);
 

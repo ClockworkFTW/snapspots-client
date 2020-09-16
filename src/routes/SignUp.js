@@ -25,7 +25,7 @@ const SignUp = () => {
   const { data, error } = useSelector((state) => state.user);
 
   return data ? (
-    <Redirect to="/home" />
+    <Redirect to="/spot/explore" />
   ) : (
     <Center>
       <Container>

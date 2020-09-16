@@ -41,6 +41,9 @@ const Container = styled.div`
   margin-bottom: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid #e2e8f0;
+  &:nth-last-child(1) {
+    border-bottom: none;
+  }
 `;
 
 const Header = styled.div`

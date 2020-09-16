@@ -1,76 +1,90 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
+
+import asset1 from "../../assets/weather/Asset 1.svg";
+import asset3 from "../../assets/weather/Asset 3.svg";
+import asset5 from "../../assets/weather/Asset 5.svg";
+import asset6 from "../../assets/weather/Asset 6.svg";
+import asset8 from "../../assets/weather/Asset 8.svg";
+import asset10 from "../../assets/weather/Asset 10.svg";
+import asset13 from "../../assets/weather/Asset 13.svg";
+import asset14 from "../../assets/weather/Asset 14.svg";
+import asset18 from "../../assets/weather/Asset 18.svg";
+import asset19 from "../../assets/weather/Asset 19.svg";
+import asset23 from "../../assets/weather/Asset 23.svg";
+import asset28 from "../../assets/weather/Asset 28.svg";
+import asset33 from "../../assets/weather/Asset 33.svg";
+import asset41 from "../../assets/weather/Asset 41.svg";
 
 const getIcon = (id) => {
   let icon;
   switch (id) {
     case "01d":
-      icon = "sun";
+      icon = asset1;
       break;
     case "01n":
-      icon = "moon";
+      icon = asset6;
       break;
     case "02d":
-      icon = "clouds-sun";
+      icon = asset3;
       break;
     case "02n":
-      icon = "clouds-moon";
+      icon = asset8;
       break;
     case "03d":
-      icon = "cloud";
+      icon = asset41;
       break;
     case "03n":
-      icon = "cloud";
+      icon = asset41;
       break;
     case "04d":
-      icon = "clouds";
+      icon = asset41;
       break;
     case "04n":
-      icon = "clouds";
+      icon = asset41;
       break;
     case "09d":
-      icon = "cloud-showers";
+      icon = asset33;
       break;
     case "09n":
-      icon = "cloud-showers";
+      icon = asset33;
       break;
     case "10d":
-      icon = "cloud-sun-rain";
+      icon = asset13;
       break;
     case "10n":
-      icon = "cloud-moon-rain";
+      icon = asset18;
       break;
     case "11d":
-      icon = "thunderstorm";
+      icon = asset14;
       break;
     case "11n":
-      icon = "thunderstorm";
+      icon = asset19;
       break;
     case "13d":
-      icon = "snowflake";
+      icon = asset23;
       break;
     case "13n":
-      icon = "snowflake";
+      icon = asset28;
       break;
     case "50d":
-      icon = "fog";
+      icon = asset5;
       break;
     case "50n":
-      icon = "fog";
+      icon = asset10;
       break;
     default:
-      icon = "sun";
+      icon = asset1;
       break;
   }
   return icon;
 };
 
-const WeatherIcon = ({ icon }) => <Container icon={["fal", getIcon(icon)]} />;
+const WeatherIcon = ({ icon }) => <Icon src={getIcon(icon)} />;
 
-const Container = styled(FontAwesomeIcon)`
-  font-size: 50px;
-  color: #718096;
+const Icon = styled.img`
+  width: 40px;
+  height: 40px;
 `;
 
 export default WeatherIcon;

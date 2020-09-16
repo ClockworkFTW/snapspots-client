@@ -1,9 +1,24 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 
 const ActionBar = ({ spot }) => {
+  const user = useSelector((state) => state.user.data);
+
+  const canEdit = () => {
+    if (user) {
+      if (spot.custom) {
+        return user.account_id === spot.account_id;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  };
+
   return (
     <Container>
       <Section>
@@ -11,6 +26,12 @@ const ActionBar = ({ spot }) => {
           <Icon icon={["far", "camera"]} />
         </Logo>
         <Text>Photos</Text>
+      </Section>
+      <Section>
+        <Logo>
+          <Icon icon={["far", "map-marked"]} />
+        </Logo>
+        <Text>Nearby</Text>
       </Section>
       <Section>
         <Logo>
@@ -24,27 +45,30 @@ const ActionBar = ({ spot }) => {
         </Logo>
         <Text>Share</Text>
       </Section>
-      <Section>
-        <Logo>
-          <Icon icon={["far", "ellipsis-h-alt"]} />
-        </Logo>
-        <Text>More</Text>
-      </Section>
+      {canEdit() && (
+        <Section to={`/spot/edit/${spot.spot_id}`}>
+          <Logo>
+            <Icon icon={["far", "pencil"]} />
+          </Logo>
+          <Text>Edit</Text>
+        </Section>
+      )}
     </Container>
   );
 };
 
-const Container = styled.ul`
+const Container = styled.div`
   position: relative;
   z-index: 20;
   display: flex;
 `;
 
-const Section = styled.li`
+const Section = styled(Link)`
   position: relative;
   flex: 1;
   padding-top: 24px;
   text-align: center;
+  text-decoration: none;
   background: #ed8936;
   &:hover {
     cursor: pointer;

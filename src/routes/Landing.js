@@ -56,7 +56,7 @@ const Welcome = styled.div`
   padding: 30px;
   text-align: center;
   color: #ffffff;
-  text-shadow: 0 0 20px #ffffff;
+  text-shadow: 0 0 10px #ffffff;
 `;
 
 const H1 = styled.h1`

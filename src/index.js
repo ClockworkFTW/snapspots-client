@@ -17,6 +17,8 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     font-family: proxima-nova, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 `;
 
