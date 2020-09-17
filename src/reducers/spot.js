@@ -25,59 +25,59 @@ const SPOT_API_PENDING = "SPOT_API_PENDING";
 const SPOT_API_SUCCESS = "SPOT_API_SUCCESS";
 const SPOT_API_FAILURE = "SPOT_API_FAILURE";
 
-const spotsApiPending = () => ({
+const spotApiPending = () => ({
   type: SPOT_API_PENDING,
 });
 
-const spotsApiSuccess = (data) => ({
+const spotApiSuccess = (data) => ({
   type: SPOT_API_SUCCESS,
   data,
 });
 
-const spotsApiFailure = (error) => ({
+const spotApiFailure = (error) => ({
   type: SPOT_API_FAILURE,
   error,
 });
 
 export const getSpotAction = (spot_id) => async (dispatch) => {
-  dispatch(spotsApiPending());
+  dispatch(spotApiPending());
   try {
     const spot = await getSpot(spot_id);
-    dispatch(spotsApiSuccess(spot));
+    dispatch(spotApiSuccess(spot));
   } catch (error) {
-    dispatch(spotsApiFailure(error));
+    dispatch(spotApiFailure(error));
   }
 };
 
 export const createSpotAction = (spot, history) => async (dispatch) => {
-  dispatch(spotsApiPending());
+  dispatch(spotApiPending());
   try {
     const newSpot = await createSpot(spot);
-    dispatch(spotsApiSuccess(newSpot));
+    dispatch(spotApiSuccess(newSpot));
     history.push(`/spot/${newSpot.spot_id}`);
   } catch (error) {
-    dispatch(spotsApiFailure(error));
+    dispatch(spotApiFailure(error));
   }
 };
 
 export const updateSpotAction = (spot, history) => async (dispatch) => {
-  dispatch(spotsApiPending());
+  dispatch(spotApiPending());
   try {
     const updatedSpot = await updateSpot(spot);
-    dispatch(spotsApiSuccess(updatedSpot));
+    dispatch(spotApiSuccess(updatedSpot));
     history.push(`/spot/${updatedSpot.spot_id}`);
   } catch (error) {
-    dispatch(spotsApiFailure(error));
+    dispatch(spotApiFailure(error));
   }
 };
 
 export const reviewSpotAction = (review) => async (dispatch) => {
-  dispatch(spotsApiPending());
+  dispatch(spotApiPending());
   try {
     const updatedSpot = await reviewSpot(review);
-    dispatch(spotsApiSuccess(updatedSpot));
+    dispatch(spotApiSuccess(updatedSpot));
   } catch (error) {
-    dispatch(spotsApiFailure(error));
+    dispatch(spotApiFailure(error));
   }
 };
 

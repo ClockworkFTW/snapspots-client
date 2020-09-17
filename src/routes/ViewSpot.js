@@ -22,12 +22,11 @@ const ViewSpot = () => {
   const dispatch = useDispatch();
   const { spot_id } = useParams();
 
-  // prettier-ignore
   const { pending, data, error } = useSelector((state) => state.spot);
 
   useEffect(() => {
     if (data) {
-      if (spot_id !== data.spot_id) {
+      if (Number(spot_id) !== Number(data.spot_id)) {
         dispatch(getSpotAction(spot_id));
       }
     } else {

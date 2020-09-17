@@ -21,6 +21,7 @@ import SearchSpot from "./routes/SearchSpot";
 import ExploreSpot from "./routes/ExploreSpot";
 import CreateSpot from "./routes/CreateSpot";
 import ViewSpot from "./routes/ViewSpot";
+import SpotPhotos from "./routes/SpotPhotos";
 
 // Components
 import Header from "./components/Header";
@@ -66,6 +67,9 @@ const App = () => {
           <PrivateRoute path="/spot/edit/:spot_id">
             <CreateSpot />
           </PrivateRoute>
+          <PublicRoute path="/spot/photos/:spot_id">
+            <SpotPhotos />
+          </PublicRoute>
           <PublicRoute path="/spot/:spot_id">
             <ViewSpot />
           </PublicRoute>
