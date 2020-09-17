@@ -64,13 +64,13 @@ const About = () => (
 const Wrapper = styled.div`
   max-width: 1000px;
   margin: 0 auto;
+  padding: 30px 20px 90px 20px;
 `;
 
 const Container = styled.div`
-  margin: 40px 20px;
   padding: 20px 30px;
   background: #ffffff;
-  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.08);
   border-radius: 8px;
 `;
 

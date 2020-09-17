@@ -8,7 +8,7 @@ import { autocomplete, geocode } from "../../services/google";
 import { searchSpotsAction } from "../../reducers/spots";
 import { setMapAction } from "../../reducers/map";
 
-const Search = ({ fetch, width }) => {
+const Search = ({ fetch, width, margin }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -42,7 +42,7 @@ const Search = ({ fetch, width }) => {
   };
 
   return (
-    <Container width={width}>
+    <Container width={width} margin={margin}>
       <SearchBar pending={pending} error={error}>
         {error ? (
           <Icon icon={["fas", "exclamation-circle"]} error={error} />
@@ -59,7 +59,7 @@ const Search = ({ fetch, width }) => {
           onClick={handleClear}
         />
       </SearchBar>
-      {predictions && (
+      {predictions.length > 0 && (
         <Predictions>
           {predictions.map((prediction, i) => (
             <Prediction key={i} onClick={() => handleSelect(prediction)}>
@@ -73,7 +73,7 @@ const Search = ({ fetch, width }) => {
 };
 
 const Container = styled.div`
-  margin: ${({ width }) => (width ? "0 auto" : "none")};
+  margin: ${({ margin }) => margin};
   width: ${({ width }) => (width ? width : "100%")};
 `;
 

@@ -34,7 +34,7 @@ const Landing = () => {
               world.
             </H2>
           </Welcome>
-          <Search fetch={true} width="600px" />
+          <Search fetch={true} width="600px" margin="30px auto" />
           <SpotPreviews
             spots={spots}
             error={error}
@@ -52,7 +52,6 @@ const Container = styled.div`
 `;
 
 const Welcome = styled.div`
-  margin-bottom: 20px;
   padding: 30px;
   text-align: center;
   color: #ffffff;

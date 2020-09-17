@@ -56,7 +56,7 @@ const CreateSpot = () => {
 
   return (
     data && (
-      <Container>
+      <Wrapper>
         {error && (
           <Error>
             Something went wrong... please make sure all fields are filled out
@@ -66,7 +66,7 @@ const CreateSpot = () => {
         <PickerMap editing={editing} height="500px">
           <Search />
         </PickerMap>
-        <Form>
+        <Container>
           <Row>
             <Group>
               <Header>Name</Header>
@@ -136,17 +136,16 @@ const CreateSpot = () => {
               <Button onClick={() => history.goBack()}>Cancel</Button>
             </Group>
           </Row>
-        </Form>
-      </Container>
+        </Container>
+      </Wrapper>
     )
   );
 };
 
-const Container = styled.div`
+const Wrapper = styled.div`
   max-width: 1000px;
-  margin: 40px auto;
-  padding: 0 20px;
-  border-radius: 8px;
+  margin: 0 auto;
+  padding: 30px 20px 90px 20px;
 `;
 
 const Error = styled.div`
@@ -158,12 +157,12 @@ const Error = styled.div`
   color: #f56565;
 `;
 
-const Form = styled.div`
+const Container = styled.div`
   margin-top: 40px;
   padding: 20px;
   background: #ffffff;
   border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.08);
 `;
 
 const Row = styled.div`

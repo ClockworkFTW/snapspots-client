@@ -20,7 +20,7 @@ const Clouds = ({ forecast }) => {
         <SwiperSlide key={i}>
           <Container>
             <Day>{moment.unix(dt).format("dddd")}</Day>
-            <WeatherIcon icon="Cloud" size="50px" />
+            <WeatherIcon icon="Cloud" size="40px" />
             <Percentage>{clouds}</Percentage>
             <Amount>
               {clouds > "75" ? "High" : clouds < "25" ? "Low" : "Med"}
@@ -38,7 +38,7 @@ const Container = styled.div`
 `;
 
 const Day = styled.h3`
-  margin-bottom: 3px;
+  margin-bottom: 8px;
   color: #4a5568;
 `;
 
@@ -48,11 +48,12 @@ const Percentage = styled.h3`
   left: 50%;
   transform: translateX(-50%);
   font-weight: 700;
+  font-size: 14px;
   color: #63b3ed;
 `;
 
 const Amount = styled.h3`
-  margin-top: 3px;
+  margin-top: 8px;
   font-size: 14px;
   color: #4a5568;
 `;

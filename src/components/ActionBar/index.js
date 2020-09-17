@@ -19,39 +19,41 @@ const ActionBar = ({ spot }) => {
     }
   };
 
+  const directionsLink = `https://www.google.com/maps/dir/Current+Location/${spot.latitude},${spot.longitude}`;
+
   return (
     <Container>
-      <Section>
+      <SectionLink to={`/spot/photos/${spot.spot_id}`}>
         <Logo>
           <Icon icon={["far", "camera"]} />
         </Logo>
         <Text>Photos</Text>
-      </Section>
-      <Section>
+      </SectionLink>
+      <SectionLink to="/spot/explore">
         <Logo>
           <Icon icon={["far", "map-marked"]} />
         </Logo>
         <Text>Nearby</Text>
-      </Section>
-      <Section>
+      </SectionLink>
+      <SectionAnchor href={directionsLink} target="_blank">
         <Logo>
           <Icon icon={["far", "location-arrow"]} />
         </Logo>
         <Text>Directions</Text>
-      </Section>
-      <Section>
+      </SectionAnchor>
+      <SectionButton>
         <Logo>
           <Icon icon={["far", "inbox-out"]} />
         </Logo>
         <Text>Share</Text>
-      </Section>
+      </SectionButton>
       {canEdit() && (
-        <Section to={`/spot/edit/${spot.spot_id}`}>
+        <SectionLink to={`/spot/edit/${spot.spot_id}`}>
           <Logo>
             <Icon icon={["far", "pencil"]} />
           </Logo>
           <Text>Edit</Text>
-        </Section>
+        </SectionLink>
       )}
     </Container>
   );
@@ -63,7 +65,33 @@ const Container = styled.div`
   display: flex;
 `;
 
-const Section = styled(Link)`
+const SectionLink = styled(Link)`
+  position: relative;
+  flex: 1;
+  padding-top: 24px;
+  text-align: center;
+  text-decoration: none;
+  background: #ed8936;
+  &:hover {
+    cursor: pointer;
+    background: #f6ad55;
+  }
+`;
+
+const SectionAnchor = styled.a`
+  position: relative;
+  flex: 1;
+  padding-top: 24px;
+  text-align: center;
+  text-decoration: none;
+  background: #ed8936;
+  &:hover {
+    cursor: pointer;
+    background: #f6ad55;
+  }
+`;
+
+const SectionButton = styled.div`
   position: relative;
   flex: 1;
   padding-top: 24px;

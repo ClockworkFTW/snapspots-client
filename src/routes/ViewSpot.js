@@ -39,7 +39,7 @@ const ViewSpot = () => {
     <Loader />
   ) : data ? (
     <Wrapper>
-      <Search redirect={true} />
+      <Search redirect={true} margin="0 0 20px 0" />
       <Container>
         <Slider photos={data.photos} effect="fade" height="360px">
           <Metadata>
@@ -113,12 +113,13 @@ const ViewSpot = () => {
 
 const Wrapper = styled.div`
   max-width: 1000px;
-  margin: 30px auto 90px auto;
+  margin: 0 auto;
+  padding: 30px 20px 90px 20px;
 `;
 
 const Container = styled.div`
   background: #ffffff;
-  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.08);
   border-radius: 8px;
   overflow: hidden;
 `;
