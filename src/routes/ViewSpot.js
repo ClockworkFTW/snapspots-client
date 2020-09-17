@@ -13,7 +13,7 @@ import SpotStatus from "../components/Spots/SpotStatus";
 import Section from "../components/Section";
 import Equipment from "../components/Equipment";
 import Time from "../components/Time";
-import Forecast from "../components/Forecast";
+import { Weather, Clouds, Daylight } from "../components/Forecast";
 import { ReviewList, ReviewForm, ReviewRating } from "../components/Review";
 import { DisplayMap } from "../components/Map";
 import { SpotList } from "../components/Spots";
@@ -70,9 +70,10 @@ const ViewSpot = () => {
                 <h1>test</h1>
               </Section>
             )}
-            <Section headers={["Forecast", "Sunset/Sunrise"]}>
-              <Forecast forecast={data.forecast} />
-              <h1>test</h1>
+            <Section headers={["Forecast", "Clouds", "Daylight"]}>
+              <Weather forecast={data.forecast} />
+              <Clouds forecast={data.forecast} />
+              <Daylight forecast={data.forecast} />
             </Section>
             <Section
               headers={[`Reviews (${data.reviews.length})`, "Popular Times"]}

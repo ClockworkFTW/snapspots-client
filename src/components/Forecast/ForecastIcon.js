@@ -15,6 +15,9 @@ import asset23 from "../../assets/weather/Asset 23.svg";
 import asset28 from "../../assets/weather/Asset 28.svg";
 import asset33 from "../../assets/weather/Asset 33.svg";
 import asset41 from "../../assets/weather/Asset 41.svg";
+import asset43 from "../../assets/weather/Asset 43.svg";
+import asset44 from "../../assets/weather/Asset 44.svg";
+import asset45 from "../../assets/weather/Asset 45.svg";
 
 const getIcon = (id) => {
   let icon;
@@ -73,6 +76,15 @@ const getIcon = (id) => {
     case "50n":
       icon = asset10;
       break;
+    case "Sunrise":
+      icon = asset43;
+      break;
+    case "Sunset":
+      icon = asset44;
+      break;
+    case "Cloud":
+      icon = asset45;
+      break;
     default:
       icon = asset1;
       break;
@@ -80,11 +92,13 @@ const getIcon = (id) => {
   return icon;
 };
 
-const WeatherIcon = ({ icon }) => <Icon src={getIcon(icon)} />;
+const ForecastIcon = ({ icon, size }) => (
+  <Icon src={getIcon(icon)} size={size} />
+);
 
 const Icon = styled.img`
-  width: 40px;
-  height: 40px;
+  width: ${({ size }) => size};
+  height: ${({ size }) => size};
 `;
 
-export default WeatherIcon;
+export default ForecastIcon;

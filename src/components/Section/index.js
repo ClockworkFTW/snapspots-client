@@ -4,8 +4,6 @@ import styled from "styled-components";
 const Section = ({ headers, children }) => {
   const [active, setActive] = useState(0);
 
-  console.log(children);
-
   return (
     <Container>
       {headers && (
