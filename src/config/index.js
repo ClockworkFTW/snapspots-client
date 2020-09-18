@@ -29,18 +29,3 @@ export const equipmentOptions = [
   "Macro Lens",
   "An Assistant",
 ];
-
-export const timeOptions = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];

@@ -1,30 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import Avatar from "react-avatar";
 import styled from "styled-components";
 
+import ProfileAvatar from "./ProfileAvatar";
 import ReviewRating from "./ReviewRating";
 
 const ReviewList = ({ reviews }) =>
   reviews.map(({ review_id, account_id, username, rating, comment, time }) => (
     <Container key={review_id}>
       <Header>
-        <Avatars
-          name={username}
-          size="46"
-          color={Avatar.getRandomColor("name", [
-            "#E53E3E",
-            "#ED8936",
-            "#ECC94B",
-            "#48BB78",
-            "#38B2AC",
-            "#4299E1",
-            "#667EEA",
-            "#9F7AEA",
-            "#ED64A6",
-          ])}
-        />
+        <ProfileAvatar name={username} size="46" src={null} />
         <Metadata>
           <Name to={`/user/${account_id}`}>{username}</Name>
           <Group>
@@ -52,14 +38,8 @@ const Header = styled.div`
   margin-bottom: 10px;
 `;
 
-const Avatars = styled(Avatar)`
-  margin-right: 16px;
-  flex: 0 0 40px;
-  border-radius: 100%;
-`;
-
 const Metadata = styled.div`
-  margin-bottom: 10px;
+  margin-left: 10px;
 `;
 
 const Name = styled(Link)`

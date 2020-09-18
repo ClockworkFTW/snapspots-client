@@ -8,6 +8,7 @@ import { setMapAction } from "../../reducers/map";
 
 import SpotCardLarge from "./SpotCardLarge";
 import SpotCardSmall from "./SpotCardSmall";
+import Profile from "../../routes/Profile";
 
 const SpotList = ({ place_id }) => {
   const dispatch = useDispatch();
@@ -44,7 +45,9 @@ const SpotList = ({ place_id }) => {
     }
   });
 
-  // If the spot is in the database, redirect to the view page, otherwise create a new spot
+  const user = useSelector((state) => state.user.data);
+
+  // If the spot is in the database, redirect to the view page, otherwise create a new spot if the user is logged in
   const handleSelect = (i) => {
     const spot = spots[i - 1];
     // prettier-ignore
@@ -53,16 +56,21 @@ const SpotList = ({ place_id }) => {
     if (spot_id) {
       history.push(`/spot/${spot_id}`);
     } else {
-      const newSpot = {
-        custom: false,
-        ...spot.properties,
-        type: [],
-        equipment: [],
-        latitude: coordinates[1],
-        longitude: coordinates[0],
-      };
+      if (user) {
+        const newSpot = {
+          custom: false,
+          account_id: user.account_id,
+          ...spot.properties,
+          type: [],
+          equipment: [],
+          latitude: coordinates[1],
+          longitude: coordinates[0],
+        };
 
-      dispatch(createSpotAction(newSpot, history));
+        dispatch(createSpotAction(newSpot, history));
+      } else {
+        history.push("/sign-in");
+      }
     }
   };
 

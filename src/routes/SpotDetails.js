@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import moment from "moment";
 import styled from "styled-components";
 
 import { getSpotAction } from "../reducers/spot";
@@ -11,6 +12,7 @@ import Slider from "../components/Slider";
 import ActionBar from "../components/ActionBar";
 import SpotStatus from "../components/Spots/SpotStatus";
 import Section from "../components/Section";
+import ProfileAvatar from "../components/Review/ProfileAvatar";
 import Equipment from "../components/Equipment";
 import Time from "../components/Time";
 import { Weather, Clouds, Daylight } from "../components/Forecast";
@@ -44,7 +46,7 @@ const ViewSpot = () => {
           <Metadata>
             <Name>{data.name}</Name>
             <Group>
-              <SpotStatus spot_id={data.spot_id} account_id={data.account_id} />
+              <SpotStatus spot_id={data.spot_id} custom={data.custom} />
               <ReviewRating reviews={data.reviews} size="20" />
             </Group>
             <Area>{data.area}</Area>
@@ -54,6 +56,29 @@ const ViewSpot = () => {
         <Content>
           <Main>
             <Section>
+              <Link
+                to={`/profile/${data.account.account_id}`}
+                style={{ textDecoration: "none" }}
+              >
+                <Profile>
+                  <ProfileAvatar
+                    name={data.account.username}
+                    size="46"
+                    src={null}
+                  />
+                  <ProfileMetadata>
+                    <CreatedBy>
+                      {data.custom ? "Created" : "Discovered"} by{" "}
+                      <span style={{ fontWeight: "700" }}>
+                        {data.account.username}
+                      </span>
+                    </CreatedBy>
+                    <CreatedOn>
+                      {moment(data.create_on).format("MMM DD, YYYY")}
+                    </CreatedOn>
+                  </ProfileMetadata>
+                </Profile>
+              </Link>
               <Description>{data.description}</Description>
               <div>
                 {data.type.map((type) => (
@@ -151,6 +176,26 @@ const Area = styled.h3`
   color: #ffffff;
 `;
 
+const Profile = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const ProfileMetadata = styled.div`
+  margin-left: 10px;
+`;
+
+const CreatedBy = styled.h1`
+  margin-bottom: 6px;
+  color: #2d3748;
+`;
+
+const CreatedOn = styled.h3`
+  font-size: 14px;
+  color: #a0aec0;
+`;
+
 const Description = styled.p`
   margin-bottom: 20px;
   line-height: 24px;
@@ -159,7 +204,7 @@ const Description = styled.p`
 
 const Type = styled.li`
   display: inline-block;
-  margin-right: 10px;
+  margin: 0 10px 10px 0;
   padding: 8px 12px;
   border-radius: 6px;
   border: 1px solid #4299e1;

@@ -8,7 +8,7 @@ import SpotStatus from "./SpotStatus";
 
 const SpotCardLarge = ({ index, spot, handleSelect, setFocus }) => {
   // prettier-ignore
-  const { spot_id, account_id, name, description, area, photos, reviews } = spot.properties;
+  const { spot_id, name, description, area, photos, reviews, custom } = spot.properties;
 
   const title = index ? `#${index} - ${name}` : name;
 
@@ -24,7 +24,7 @@ const SpotCardLarge = ({ index, spot, handleSelect, setFocus }) => {
         <Title>{title}</Title>
         <Area>{area}</Area>
         <Group>
-          <SpotStatus spot_id={spot_id} account_id={account_id} />
+          <SpotStatus spot_id={spot_id} custom={custom} />
           <ReviewRating reviews={reviews} size="20" />
         </Group>
         <Description>{description}</Description>

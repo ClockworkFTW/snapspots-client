@@ -17,11 +17,12 @@ import SignUp from "./routes/SignUp";
 import SignIn from "./routes/SignIn";
 import Landing from "./routes/Landing";
 import About from "./routes/About";
-import SearchSpot from "./routes/SearchSpot";
-import ExploreSpot from "./routes/ExploreSpot";
-import CreateSpot from "./routes/CreateSpot";
-import ViewSpot from "./routes/ViewSpot";
+import SpotExplorer from "./routes/SpotExplorer";
+import SpotSearch from "./routes/SpotSearch";
+import SpotEditor from "./routes/SpotEditor";
+import SpotDetails from "./routes/SpotDetails";
 import SpotPhotos from "./routes/SpotPhotos";
+import Profile from "./routes/Profile";
 
 // Components
 import Header from "./components/Header";
@@ -58,21 +59,24 @@ const App = () => {
           <PublicRoute path="/sign-in">
             <SignIn />
           </PublicRoute>
-          <PublicRoute path="/spot/search" exact>
-            <SearchSpot />
+          {/* <PublicRoute path="/spot/search" exact>
+            <SpotSearch />
           </PublicRoute>
           <PublicRoute path="/spot/explore" exact>
-            <ExploreSpot />
-          </PublicRoute>
+            <SpotExplorer />
+          </PublicRoute> */}
           <PrivateRoute path="/spot/edit/:spot_id">
-            <CreateSpot />
+            <SpotEditor />
           </PrivateRoute>
           <PublicRoute path="/spot/photos/:spot_id">
             <SpotPhotos />
           </PublicRoute>
           <PublicRoute path="/spot/:spot_id">
-            <ViewSpot />
+            <SpotDetails />
           </PublicRoute>
+          <PrivateRoute path="/profile/:user_id">
+            <Profile />
+          </PrivateRoute>
         </Switch>
       </Main>
       <Footer />

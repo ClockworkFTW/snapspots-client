@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 
-const SpotStatus = ({ spot_id, account_id }) => {
+const SpotStatus = ({ spot_id, custom }) => {
   let status = {
     text: "Custom",
     color: "#F6AD55",
   };
 
-  if (!spot_id && !account_id) {
+  if (!spot_id && !custom) {
     status.text = "Undiscovered";
     status.color = "#63B3ED";
-  } else if (spot_id && !account_id) {
+  } else if (spot_id && !custom) {
     status.text = "Discovered";
     status.color = "#68D391";
   }
