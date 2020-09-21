@@ -1,6 +1,8 @@
 import axios from "axios";
 import queryString from "query-string";
 
+import { setAuthHeader } from "../util";
+
 const baseUrl = "http://localhost:3005/spots";
 
 export const getSpot = async (id) => {
@@ -42,7 +44,7 @@ export const previewSpots = async (setSpots, setError) => {
 
 export const createSpot = async (spot) => {
   try {
-    const response = await axios.post(`${baseUrl}/new`, spot);
+    const response = await axios.post(`${baseUrl}/new`, spot, setAuthHeader());
     return response.data;
   } catch (error) {
     throw error;
@@ -51,7 +53,11 @@ export const createSpot = async (spot) => {
 
 export const updateSpot = async (spot) => {
   try {
-    const response = await axios.post(`${baseUrl}/update`, spot);
+    const response = await axios.post(
+      `${baseUrl}/update`,
+      spot,
+      setAuthHeader()
+    );
     return response.data;
   } catch (error) {
     throw error;
@@ -60,7 +66,11 @@ export const updateSpot = async (spot) => {
 
 export const reviewSpot = async (review) => {
   try {
-    const response = await axios.post(`${baseUrl}/review`, review);
+    const response = await axios.post(
+      `${baseUrl}/review`,
+      review,
+      setAuthHeader()
+    );
     return response.data;
   } catch (error) {
     throw error;

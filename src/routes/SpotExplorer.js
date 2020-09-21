@@ -8,7 +8,7 @@ import Search from "../components/Search";
 import ExploreMap from "../components/Map/ExploreMap";
 import { SpotList } from "../components/Spots";
 
-const ExploreSpot = () => {
+const SpotExplorer = () => {
   const dispatch = useDispatch();
   const { cLat, cLng } = useSelector((state) => state.map);
   const render = cLat && cLng;
@@ -80,4 +80,4 @@ const Main = styled.div`
   height: 100%;
 `;
 
-export default ExploreSpot;
+export default SpotExplorer;

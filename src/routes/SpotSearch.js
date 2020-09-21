@@ -7,7 +7,7 @@ import Search from "../components/Search";
 import { DisplayMap } from "../components/Map";
 import { SpotList } from "../components/Spots";
 
-const SearchSpot = () => {
+const SpotSearch = () => {
   const { data } = useSelector((state) => state.spots);
 
   return (
@@ -41,4 +41,4 @@ const Header = styled.h1`
   color: #2d3748;
 `;
 
-export default SearchSpot;
+export default SpotSearch;

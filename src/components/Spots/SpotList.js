@@ -8,7 +8,6 @@ import { setMapAction } from "../../reducers/map";
 
 import SpotCardLarge from "./SpotCardLarge";
 import SpotCardSmall from "./SpotCardSmall";
-import Profile from "../../routes/Profile";
 
 const SpotList = ({ place_id }) => {
   const dispatch = useDispatch();

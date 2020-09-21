@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { getUser, createUser } from "../services/users";
 
 const jwtSecret = process.env.REACT_APP_JWT_SECRET;
-const tokenName = "snapspots_user_token";
+export const tokenName = "snapspots_user_token";
 
 const USER_API_PENDING = "USER_API_PENDING";
 const USER_API_SUCCESS = "USER_API_SUCCESS";

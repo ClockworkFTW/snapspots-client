@@ -59,10 +59,10 @@ const App = () => {
           <PublicRoute path="/sign-in">
             <SignIn />
           </PublicRoute>
-          {/* <PublicRoute path="/spot/search" exact>
+          <PublicRoute path="/spot/search" exact>
             <SpotSearch />
           </PublicRoute>
-          <PublicRoute path="/spot/explore" exact>
+          {/* <PublicRoute path="/spot/explore" exact>
             <SpotExplorer />
           </PublicRoute> */}
           <PrivateRoute path="/spot/edit/:spot_id">
