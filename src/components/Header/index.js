@@ -5,6 +5,8 @@ import styled from "styled-components";
 
 import { userSignOut } from "../../reducers/user";
 
+import { ProfileButton } from "../Profile";
+
 const Header = () => {
   const dispatch = useDispatch();
 
@@ -27,6 +29,7 @@ const Header = () => {
           <Group>
             <Link to="/about">About</Link>
             <Button onClick={handleSignOut}>Sign Out</Button>
+            <ProfileButton user={user} />
           </Group>
         ) : (
           <Group>

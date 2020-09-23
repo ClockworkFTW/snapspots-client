@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { getProfileAction } from "../reducers/profile";
 
 import Loader from "../components/Loader";
-import ProfileAvatar from "../components/Review/ProfileAvatar";
+import { ProfileAvatar } from "../components/Profile";
 
 const Profile = () => {
   const dispatch = useDispatch();

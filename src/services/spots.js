@@ -3,7 +3,7 @@ import queryString from "query-string";
 
 import { setAuthHeader } from "../util";
 
-const baseUrl = "http://localhost:3005/spots";
+const baseUrl = "/api/spots";
 
 export const getSpot = async (id) => {
   try {

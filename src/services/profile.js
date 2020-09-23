@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:3005/profile";
+const baseUrl = "/api/profile";
 
 export const getProfile = async (account_id) => {
   try {

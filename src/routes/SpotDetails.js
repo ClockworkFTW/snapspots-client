@@ -12,7 +12,7 @@ import Slider from "../components/Slider";
 import ActionBar from "../components/ActionBar";
 import SpotStatus from "../components/Spots/SpotStatus";
 import Section from "../components/Section";
-import ProfileAvatar from "../components/Review/ProfileAvatar";
+import { ProfileTag } from "../components/Profile";
 import Equipment from "../components/Equipment";
 import Time from "../components/Time";
 import { Weather, Clouds, Daylight } from "../components/Forecast";
@@ -56,29 +56,7 @@ const ViewSpot = () => {
         <Content>
           <Main>
             <Section>
-              <Link
-                to={`/profile/${data.account.account_id}`}
-                style={{ textDecoration: "none" }}
-              >
-                <Profile>
-                  <ProfileAvatar
-                    name={data.account.username}
-                    size="46"
-                    src={null}
-                  />
-                  <ProfileMetadata>
-                    <CreatedBy>
-                      {data.custom ? "Created" : "Discovered"} by{" "}
-                      <span style={{ fontWeight: "700" }}>
-                        {data.account.username}
-                      </span>
-                    </CreatedBy>
-                    <CreatedOn>
-                      {moment(data.create_on).format("MMM DD, YYYY")}
-                    </CreatedOn>
-                  </ProfileMetadata>
-                </Profile>
-              </Link>
+              {data.account && <ProfileTag spot={data} />}
               <Description>{data.description}</Description>
               <div>
                 {data.type.map((type) => (
@@ -174,26 +152,6 @@ const Area = styled.h3`
   margin-top: 8px;
   font-size: 14px;
   color: #ffffff;
-`;
-
-const Profile = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const ProfileMetadata = styled.div`
-  margin-left: 10px;
-`;
-
-const CreatedBy = styled.h1`
-  margin-bottom: 6px;
-  color: #2d3748;
-`;
-
-const CreatedOn = styled.h3`
-  font-size: 14px;
-  color: #a0aec0;
 `;
 
 const Description = styled.p`

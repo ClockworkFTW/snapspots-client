@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import styled from "styled-components";
 
-import ProfileAvatar from "./ProfileAvatar";
+import { ProfileAvatar } from "../Profile";
 import ReviewRating from "./ReviewRating";
 
 const ReviewList = ({ reviews }) =>
