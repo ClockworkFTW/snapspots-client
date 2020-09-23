@@ -16,11 +16,3 @@ export const setCors = (api) => {
     return api;
   }
 };
-
-export const setKey = (devKey, prodKey) => {
-  if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-    return devKey;
-  } else {
-    return prodKey;
-  }
-};
