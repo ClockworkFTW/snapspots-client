@@ -1,14 +1,17 @@
 import axios from "axios";
 
-import { setCors } from "../util";
+import { setCors, setKey } from "../util";
 
 const api = "https://maps.googleapis.com/maps/api";
-const key = process.env.REACT_APP_GOOGLE_API_KEY;
+const devKey = process.envprocess.env.REACT_APP_GOOGLE_API_KEY;
+const prodKey = process.env.GOOGLE_API_KEY;
 
 export const autocomplete = async (input, setPredictions) => {
   const endpoint = "place/autocomplete/json";
 
-  const url = `${setCors(api)}/${endpoint}?key=${key}&input=${input}`;
+  // prettier-ignore
+  const url = `${setCors(api)}/${endpoint}?key=${setKey(devKey, prodKey)}&input=${input}`;
+
   try {
     const response = await axios.get(url);
     setPredictions(response.data.predictions);
@@ -20,7 +23,9 @@ export const autocomplete = async (input, setPredictions) => {
 export const geocode = async (place_id) => {
   const endpoint = "geocode/json";
 
-  const url = `${setCors(api)}/${endpoint}?key=${key}&place_id=${place_id}`;
+  // prettier-ignore
+  const url = `${setCors(api)}/${endpoint}?key=${setKey(devKey, prodKey)}&place_id=${place_id}`;
+
   try {
     const response = await axios.get(url);
     return response.data.results[0];
