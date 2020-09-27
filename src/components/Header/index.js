@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link as L } from "react-router-dom";
 import styled from "styled-components";
+import logo from "../../assets/logo.png";
 
 import { userSignOut } from "../../reducers/user";
 
@@ -34,7 +35,7 @@ const Header = () => {
         ) : (
           <Group>
             <Link to="/about">About</Link>
-            <Button to="/sign-up" fill={true}>
+            <Button to="/sign-up" type="fill">
               Sign Up
             </Button>
             <Button to="/sign-in">Log In</Button>
@@ -89,9 +90,9 @@ const Button = styled(L)`
   width: 80px;
   margin-left: 10px;
   text-decoration: none;
-  color: ${({ fill }) => (fill ? "#ffffff" : "#ED8936")};
+  color: ${({ type }) => (type === "fill" ? "#ffffff" : "#ED8936")};
   padding: 10px 0;
-  background: ${({ fill }) => (fill ? "#ED8936" : "#ffffff")};
+  background: ${({ type }) => (type === "fill" ? "#ED8936" : "#ffffff")};
   border: 2px solid #ed8936;
   border-radius: 8px;
   text-align: center;

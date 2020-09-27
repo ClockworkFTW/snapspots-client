@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import moment from "moment";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { getSpotAction } from "../reducers/spot";
@@ -89,7 +88,7 @@ const ViewSpot = () => {
           </Main>
           <Sidebar>
             <DisplayMap
-              width="300px"
+              width="100%"
               height="300px"
               center={[data.longitude, data.latitude]}
               spots={[
@@ -105,7 +104,7 @@ const ViewSpot = () => {
               zoom="12"
             />
             <Nearby>Nearby Spots</Nearby>
-            {/* <SpotList place_id={data.place_id} /> */}
+            <SpotList place_id={data.place_id} />
           </Sidebar>
         </Content>
       </Container>
@@ -133,6 +132,10 @@ const Main = styled.div`
   width: calc(100% - 352px);
   height: 100%;
   border-right: 1px solid #e2e8f0;
+  @media (max-width: 800px) {
+    float: none;
+    width: 100%;
+  }
 `;
 
 const Group = styled.div`
@@ -174,6 +177,10 @@ const Sidebar = styled.div`
   float: right;
   width: 352px;
   padding: 26px;
+  @media (max-width: 800px) {
+    float: none;
+    width: 100%;
+  }
 `;
 
 const Nearby = styled.h2`

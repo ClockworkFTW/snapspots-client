@@ -26,14 +26,15 @@ const Slider = ({ photos, children, autoplay, effect, width, height }) => (
         pagination={
           effect || autoplay ? false : { clickable: true, dynamicBullets: true }
         }
-        autoplay={autoplay || children ? true : false}
+        autoplay={
+          autoplay || children ? { disableOnInteraction: false } : false
+        }
         effect={effect}
-        disableOnInteraction={false}
         loop={true}
         style={{ width: "100%", height: "100%" }}
       >
-        {photos.map((photo) => (
-          <SwiperSlide>
+        {photos.map((photo, i) => (
+          <SwiperSlide key={i}>
             <Photo photo={photo} overlay={children ? true : false} />
           </SwiperSlide>
         ))}
